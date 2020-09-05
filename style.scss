@@ -1,0 +1,32 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+    background-color: black;
+	font-family: sans-serif;
+	scroll-snap-type: x mandatory;	
+	display: flex;
+	-webkit-overflow-scrolling: touch;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+section {
+    padding: 1rem;
+	min-width: 100vw;
+	min-height: 100vh;
+	scroll-snap-align: start;
+	text-align: center;
+	position: relative;
+}
+
+h1	{
+	text-align: center;
+	color: white;
+	width: 100%;
+	left: 0;
+	font-size: calc(1rem + 3vw);
+}
