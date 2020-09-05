@@ -10,7 +10,7 @@ body {
   font-family: 'Solway', serif;
 }
 
-div.content {
+div.window {
   -ms-scroll-snap-type: x mandatory;
       scroll-snap-type: x mandatory;
   display: -webkit-box;
@@ -91,12 +91,12 @@ div.category img.arrow {
   width: 2.5em;
 }
 
-div.selected p {
+div.category.selected p {
   font-weight: bolder;
   font-size: 1.8em;
 }
 
-div.selected img.categoryIcon {
+div.category.selected img.categoryIcon {
   height: 7em;
   width: 7em;
 }
@@ -104,6 +104,13 @@ div.selected img.categoryIcon {
 div.link {
   padding: 1em;
   font-weight: normal;
+  font-size: 1.3em;
+  text-decoration: underline;
+}
+
+div.link.selected {
+  padding: 1em;
+  font-weight: bold;
   font-size: 1.3em;
   text-decoration: underline;
 }

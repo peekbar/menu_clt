@@ -10,15 +10,32 @@
     <script>
         var selected = 0;
 
+        var products = [
+            '<div class="product"><table><tr><th>Sommerlicher Salat</th><td class="price">6,90</td></tr><tr><td>mit Brotkrustln</td></tr></table></div><div class="product"><table><tr><th>Tafelspitzsülze</th><td class="price">11,00</td></tr><tr><td>mit Frühlingssalat und Radieserlvinaigrette</td></tr></table></div><div class="product"><table><tr><th>Lauwarmer Spargelsalat</th><td class="price">13,50</td></tr><tr><td>mit Garnelen</td></tr></table></div><div class="product"><table><tr><th>Tafelspitzbrühe</th><td class="price">3,70</td></tr><tr><td>mit Pfannkuchenstreifen</td></tr></table></div><div class="product"><table><tr><th>Aufgeschlagene Meerrettichsuppe</th><td class="price">4,90</td></tr><tr><td>mit Brotkrustln</td></tr></table></div>',
+            '<div class="product"><table><tr><th>Schnitzel</th><td class="price">11,90</td></tr><tr><td>mit Kartoffel-Gurkensalat</td></tr></table></div><div class="product"><table><tr><th>Cordon Bleu von der Schweinelende</th><td class="price">14,50</td></tr><tr><td>mit Kartoffel-Gurkensalat</td></tr></table></div><div class="product"><table><tr><th>Schweinebraten</th><td class="price">9,80</td></tr><tr><td>mit Semmelknödel und Krautsalat</td></tr></table></div><div class="product"><table><tr><th>Schweinelende in der Röstzwiebelkruste</th><td class="price">14,50</td></tr><tr><td>auf Gemüse, Pfefferrahmsoße und gebackenen Kartoffel-Mandelbällchen</td></tr></table></div><div class="product"><table><tr><th>Rindersaftgulasch</th><td class="price">13,90</td></tr><tr><td>mit Semmelknödel und Salat</td></tr></table></div><div class="product"><table><tr><th>Zart geschmorter Kalbstafelspitz</th><td class="price">17,50</td></tr><tr><td>mit Pepperonata und Bärlauchknödel</td></tr></table></div><div class="product"><table><tr><th>Rindersteak vom Grill</th><td class="price">22,90</td></tr><tr><td>aus dem Gewürz-Coffeerup, Guacamole Gemüse und Thymiankartoffeln</td></tr></table></div><div class="product"><table><tr><th>Lammrücken in der Kräuterkruste</th><td class="price">24,50</td></tr><tr><td>auf Spargelrisotto und Pestojus</td></tr></table></div><div class="product"><table><tr><th>Beilagensalat</th><td class="price">3,50</td></tr></table></div>',
+            '<div class="product"><table><tr><th>Polenta-Ziegenkäusestrudel</th><td class="price">12,90</td></tr><tr><td>mit Pepperonata & jungen Salat</td></tr></table></div><div class="product"><table><tr><th>Bärlauchknödel</th><td class="price">12,90</td></tr><tr><td>mit Pepperonata und Parmesan</td></tr></table></div>',
+            '<div class="product"><table><tr><th>Schweizer Wurstsalat</th><td class="price">7,50</td></tr><tr><td>mit Zwiebelringen und Brot</td></tr></table></div><div class="product"><table><tr><th>Kalter Braten</th><td class="price">7,00</td></tr><tr><td>mit Meerrettich, Brot & Salat</td></tr></table></div><div class="product"><table><tr><th>Bauernspeckbrot</th><td class="price">8,50</td></tr><tr><td>mit Essiggurken</td></tr></table></div><div class="product"><table><tr><th>Salat und Falafel</th><td class="price">12,50</td></tr><tr><td>mit Couscous, Rote Beete und Schnittlauchjoghurt (veggie)</td></tr></table></div><div class="product"><table><tr><th>Spezial Salat</th><td class="price">12,90</td></tr><tr><td>mit Kaspressknödel</td></tr></table></div>',
+            '<div class="product"><table><tr><th>Hollunderblüten Panna Cotta</th><td class="price">6,50</td></tr><tr><td>Rhabarber, Erdbeeren, weiße Schokolade</td></tr></table></div><div class="product"><table><tr><th>Schokoladenmousse</th><td class="price">7,50</td></tr><tr><td>mit Mango und Sorbet</td></tr></table></div><div class="product"><table><tr><th>Marillenknödel</th><td class="price">6,50</td></tr><tr><td>mit süße Brösel und Vanilleeis</td></tr></table></div>',
+            '<div class="product"><table><tr><th>Wasser</th><td class="price">2,50</td></tr></table></div><div class="product"><table><tr><th>Holunderschorle</th><td class="price">3,50</td></tr></table></div><div class="product"><table><tr><th>Orangenlimonade</th><td class="price">3,50</td></tr></table></div>',
+            '<p>Impressum</p>',
+            '<p>Über diese Seite</p>'
+        ]
+
         function selectNew(clicked_id) {
             document.getElementById(selected).classList.remove('selected');
             document.getElementById(clicked_id).classList.add('selected');
             selected = clicked_id;
+
+            document.getElementById('content').innerHTML = products[selected];
+        }
+
+        function init() {
+            document.getElementById('content').innerHTML = products[selected];
         }
     </script>
 </head>
-<body>
-    <div class="content">
+<body onload="init()">
+    <div class="window">
         <section>
             <header>
                 <h1>DemoPage</h1>
@@ -54,45 +71,14 @@
                 <p>Getränke</p>
                 <img class="arrow" src="core_icons/arrow_right.svg" alt="go to arrow">
             </div>
-            <div class="link" id="6">
+            <div onclick="selectNew(this.id)" class="link" id="6">
                 <p>Impressum</p>
             </div>
-            <div class="link" id="7">
+            <div onclick="selectNew(this.id)" class="link" id="7">
                 <p>Über diese Seite</p>
             </div>
         </section>
-        <section>
-            <div class="product">
-                <table>
-                    <tr><th>Sommerlicher Salat</th><td class="price">6,90</td></tr>
-                    <tr><td>mit Brotkrustln</td></tr>
-                </table>
-            </div>
-            <div class="product">
-                <table>
-                    <tr><th>Tafelspitzsülze</th><td class="price">11,00</td></tr>
-                    <tr><td>mit Frühlingssalat und Radieserlvinaigrette</td></tr>
-                </table>
-            </div>
-            <div class="product">
-                <table>
-                    <tr><th>Lauwarmer Spargelsalat</th><td class="price">13,50</td></tr>
-                    <tr><td>mit Garnelen</td></tr>
-                </table>
-            </div>
-            <div class="product">
-                <table>
-                    <tr><th>Tafelspitzbrühe</th><td class="price">3,70</td></tr>
-                    <tr><td>mit Pfannkuchenstreifen</td></tr>
-                </table>
-            </div>
-            <div class="product">
-                <table>
-                    <tr><th>Aufgeschlagene Meerrettichsuppe</th><td class="price">4,90</td></tr>
-                    <tr><td>mit Brotkrustln</td></tr>
-                </table>
-            </div>
-        </section>
+        <section id="content"></section>
     </div>
 
     <div class="navigation">

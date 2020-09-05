@@ -10,7 +10,7 @@ body {
   font-family: 'Solway', serif;
 }
 
-div.content {
+div.window {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
