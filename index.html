@@ -3,24 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="mobile.css" media="screen and (orientation:portrait)">
+    <link rel="stylesheet" type="text/css" href="desktop.css" media="screen and (orientation:landscape)">
+    <link href="https://fonts.googleapis.com/css2?family=Solway:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
-    <section>
-        <h1>Test 1</h1>
-        <h1>Test 1</h1>
-        <h1>Test 1</h1>
-        <h1>Test 1</h1>
-        <h1>Test 1</h1>
-        <h1>Test 1</h1>
-        <h1>Test 1</h1>
-        <h1>Test 1</h1>
-        <h1>Test 1</h1>
-        <h1>Test 1</h1>
-    </section>
-    <section>
-        <h1>Test 2</h1>
-    </section>
+    <div class="content">
+        <section>
+            <header>
+                <h1>DemoPage</h1>
+                <img src="core_icons/phone.svg" alt="call">
+            </header>
+            <div class="category selected" id="0">
+                <img class="categoryIcon" src="icons/icon1.png" alt="category icon">
+                <p>Vorspeisen</p>
+                <img class="arrow" src="core_icons/arrow_right.svg" alt="go to arrow">
+            </div>
+            <div class="category" id="0">
+                <img class="categoryIcon" src="icons/icon2.png" alt="category icon">
+                <p>Hauptspeisen</p>
+                <img class="arrow" src="core_icons/arrow_right.svg" alt="go to arrow">
+            </div><div class="category" id="0">
+                <img class="categoryIcon" src="icons/icon3.png" alt="category icon">
+                <p>Veggie</p>
+                <img class="arrow" src="core_icons/arrow_right.svg" alt="go to arrow">
+            </div><div class="category" id="0">
+                <img class="categoryIcon" src="icons/icon4.png" alt="category icon">
+                <p>Brotzeit</p>
+                <img class="arrow" src="core_icons/arrow_right.svg" alt="go to arrow">
+            </div><div class="category" id="0">
+                <img class="categoryIcon" src="icons/icon5.png" alt="category icon">
+                <p>Dessert</p>
+                <img class="arrow" src="core_icons/arrow_right.svg" alt="go to arrow">
+            </div><div class="category" id="0">
+                <img class="categoryIcon" src="icons/icon6.png" alt="category icon">
+                <p>Getränke</p>
+                <img class="arrow" src="core_icons/arrow_right.svg" alt="go to arrow">
+            </div>
+            <div class="link" id="6">
+                <p>Impressum</p>
+            </div>
+            <div class="link" id="7">
+                <p>Über diese Seite</p>
+            </div>
+        </section>
+        <section>
+            <div class="product">
+                <table>
+                    <tr><th>Sommerlicher Salat</th><td class="price">6,90</td></tr>
+                    <tr><td>mit Brotkrustln</td></tr>
+                </table>
+            </div>
+            <div class="product">
+                <table>
+                    <tr><th>Tafelspitzsülze</th><td class="price">11,00</td></tr>
+                    <tr><td>mit Frühlingssalat und Radieserlvinaigrette</td></tr>
+                </table>
+            </div>
+            <div class="product">
+                <table>
+                    <tr><th>Lauwarmer Spargelsalat</th><td class="price">13,50</td></tr>
+                    <tr><td>mit Garnelen</td></tr>
+                </table>
+            </div>
+            <div class="product">
+                <table>
+                    <tr><th>Tafelspitzbrühe</th><td class="price">3,70</td></tr>
+                    <tr><td>mit Pfannkuchenstreifen</td></tr>
+                </table>
+            </div>
+            <div class="product">
+                <table>
+                    <tr><th>Aufgeschlagene Meerrettichsuppe</th><td class="price">4,90</td></tr>
+                    <tr><td>mit Brotkrustln</td></tr>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <div class="navigation">
+        <div class="navigationElement">
+            <p>Startseite</p>
+        </div>
+        <div class="spacer"></div>
+        <div class="navigationElement">
+            <p>Vorspeisen</p>
+        </div>
+    </div>
 </body>
 </html>

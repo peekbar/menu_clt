@@ -1,0 +1,112 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: white;
+  font-family: 'Solway', serif;
+}
+
+div.content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+header h1 {
+  text-align: left;
+  font-size: 2em;
+}
+
+header img {
+  width: 2.5em;
+  height: 2.5em;
+}
+
+section {
+  padding: 1rem;
+  width: 50vw;
+  min-height: 100vh;
+  text-align: center;
+  position: relative;
+}
+
+h1 {
+  text-align: center;
+  color: black;
+  width: 100%;
+  left: 0;
+  font-size: 1.5em;
+}
+
+div.category {
+  padding: 1em;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-weight: 700;
+  width: calc(50vw - 2em);
+}
+
+div.category p {
+  font-weight: bold;
+  font-size: 1.6em;
+  padding: 1em;
+}
+
+div.category img.categoryIcon {
+  height: 6em;
+  width: 6em;
+}
+
+div.category img.arrow {
+  margin: 1em;
+  height: 2.5em;
+  width: 2.5em;
+}
+
+div.link {
+  padding: 1em;
+  font-weight: normal;
+  font-size: 1.3em;
+  text-decoration: underline;
+}
+
+table {
+  padding: 1rem;
+  width: calc(50vw - 2rem);
+  text-align: left;
+}
+
+table th {
+  font-size: 1.4em;
+  font-weight: bolder;
+}
+
+table td {
+  font-size: 1.4em;
+}
+
+table .price {
+  text-align: right;
+}
+
+div.navigation {
+  display: none;
+}
+/*# sourceMappingURL=desktop.css.map */
