@@ -50,6 +50,7 @@ div.category {
     display: flex;
     font-weight: 700;
     width: calc(50vw - 2em);
+    user-select: none;
 
     p {
         font-weight: bold;
@@ -66,6 +67,18 @@ div.category {
         margin: 1em;
         height: 2.5em;
         width: 2.5em;
+    }
+}
+
+div.selected {
+    p {
+        font-weight: bolder;
+        font-size: 1.8em;
+    }
+
+    img.categoryIcon {
+        height: 7em;
+        width: 7em;
     }
 }
 

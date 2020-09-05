@@ -61,6 +61,10 @@ div.category {
   display: flex;
   font-weight: 700;
   width: calc(50vw - 2em);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 div.category p {
@@ -78,6 +82,16 @@ div.category img.arrow {
   margin: 1em;
   height: 2.5em;
   width: 2.5em;
+}
+
+div.selected p {
+  font-weight: bolder;
+  font-size: 1.8em;
+}
+
+div.selected img.categoryIcon {
+  height: 7em;
+  width: 7em;
 }
 
 div.link {
