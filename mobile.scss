@@ -130,6 +130,7 @@ div.navigation {
     width: calc(100vw - 2em);
     position: fixed;
     bottom: 0;
+    user-select: none;
 
     div.spacer {
         width: 0.1em;

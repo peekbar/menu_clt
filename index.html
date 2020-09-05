@@ -27,15 +27,37 @@
             selected = clicked_id;
 
             document.getElementById('content').innerHTML = products[selected];
+
+            document.getElementById('window').scrollBy({left: document.body.clientWidth, top: 0, behavior:'smooth'});
         }
 
         function init() {
             document.getElementById('content').innerHTML = products[selected];
         }
     </script>
+    <script>
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollLeft > document.body.width || document.documentElement.scrollLeft > screen.width) {
+                console.log('right');
+            } else {
+                console.log('left');
+            }
+        }
+    </script>
+    <script>
+        function scrollToRight() {
+            document.getElementById('window').scrollBy({left: document.body.clientWidth, top: 0, behavior:'smooth'});
+        }
+
+        function scrollToLeft() {
+            document.getElementById('window').scrollBy({left: -document.body.clientWidth, behavior:'smooth'});
+        }
+    </script>
 </head>
 <body onload="init()">
-    <div class="window">
+    <div id="window" class="window">
         <section>
             <header>
                 <h1>DemoPage</h1>
@@ -49,11 +71,11 @@
     </div>
 
     <div class="navigation">
-        <div class="navigationElement">
+        <div onclick="scrollToLeft()" class="navigationElement">
             <p>Startseite</p>
         </div>
         <div class="spacer"></div>
-        <div class="navigationElement">
+        <div onclick="scrollToRight()" class="navigationElement">
             <p>Vorspeisen</p>
         </div>
     </div>
