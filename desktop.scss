@@ -70,7 +70,7 @@ div.category {
     }
 }
 
-div.selected {
+div.category.selected {
     p {
         font-weight: bolder;
         font-size: 1.8em;
@@ -85,6 +85,13 @@ div.selected {
 div.link {
     padding: 1em;
     font-weight: normal;
+    font-size: 1.3em;
+    text-decoration: underline;
+}
+
+div.link.selected {
+    padding: 1em;
+    font-weight: bold;
     font-size: 1.3em;
     text-decoration: underline;
 }
