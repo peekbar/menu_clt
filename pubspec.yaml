@@ -1,0 +1,8 @@
+name: menu_tool
+version: 1.0.0
+publish_to: none
+environment:
+  sdk: '>=2.0.0 <3.0.0'
+dependencies:
+  args: ^1.6.0
+  mysql1: ^0.17.1
