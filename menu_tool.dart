@@ -5,7 +5,6 @@ import 'package:args/args.dart';
 import 'package:mysql1/mysql1.dart';
 
 import 'models/models.dart';
-import 'generators/generators.dart';
 
 void main(List<String> arguments) async {
   var parser = ArgParser();
@@ -20,11 +19,10 @@ void main(List<String> arguments) async {
     case 'i':
     case 'init':
       print('init');
-      new Directory('menus/company_name')
-          .create(recursive: true)
-          .then((Directory directory) {
-        print(directory.path);
-      });
+      Menu menu = Menu();
+      menu.companyName = 'test';
+      menu.menuName = 'testMenu';
+      await addWebmanifest('', menu);
       // if argument init: init this program
       // create database: don't do this when there is a database in database dir
       // don't run upgade as the database is empty
@@ -51,6 +49,11 @@ void main(List<String> arguments) async {
         // deploy them to the server
       }
       break;
+    case 'l':
+    case 'list':
+      // returns all menus in the menus/ folder
+      // returns all menus in the database
+      break;
     case 'h':
     case 'help':
       print('Welcome to the help center.');
@@ -71,12 +74,11 @@ void main(List<String> arguments) async {
 }
 
 // updates the web directory to the newest version from Github
-// returns true if the directory was updated to a new version
-// returns false if the directory is already up to date
-bool updateFromGit(int currentVersion) {
-  return true;
+void updateFromGit() {
+  // update
 }
 
+// get the menu from the database and returns a list of menus
 List<Menu> getMenus(String menuName) {
   List<Menu> menus = [];
 
@@ -92,11 +94,60 @@ List<Menu> getMenus(String menuName) {
 // creates a menu from the database and returns it
 void generateWeb(Menu menu) {
   String categories = menu.getCategories();
-  List<String> products = [];
+  var products = new StringBuffer();
 
-  // for (Category category in menu.categories) {
-  //   var buffer = StringBuffer();
-  //   buffer.write(category.getProducts());
-  //   if (category.id)
-  // }
+  var i = menu.categories.length;
+  for (Category category in menu.categories) {
+    i--;
+    products.write(category.getProducts());
+    if (i != 0) {
+      products.write(',');
+    }
+  }
+
+  products.write(',' + menu.imprint.toWeb());
+
+  addToIndex('menus/' + menu.menuName + '/index.html', menu.companyName,
+      categories, products.toString());
+  addWebmanifest('menus/' + menu.menuName + '/manifest.webmanifest', menu);
+}
+
+// add all the files to the new directory (delete before copying)
+void copyAllFilesTo(String path) {
+  final dir = Directory(path);
+  dir.deleteSync(recursive: true);
+
+  new Directory('menus/company_name')
+      .create(recursive: true)
+      .then((Directory directory) {
+    print(directory.path);
+  });
+  // copy /web directory to the path
+}
+
+// adds all the information to the index.html
+void addToIndex(
+    String path, String companyName, String categories, String products) {
+  // load in menu_name/index.html
+  // add the companyName to peekbar:title
+  // add the categories to peekbar:categories
+  // add the products to 'peekbar:products'
+}
+
+// adds all the necessary information to the web manifest
+void addWebmanifest(String path, Menu menu) async {
+  var buffer = StringBuffer();
+  buffer.write('{');
+  buffer.write('"name": "' + menu.companyName + '",');
+  buffer.write('"short_name": "' + menu.companyName + '",');
+  buffer.write('"start_url": ".",');
+  buffer.write('"display": "standalone",');
+  buffer.write('"background_color": "#fff",');
+  buffer.write('"theme_color": "#fff",');
+  buffer.write('"description": "A digital menu made by peekbar."');
+  buffer.write('}');
+
+  var file = await new File('menus/' + menu.menuName + '/manifest.webmanifest')
+      .create(recursive: true);
+  file.writeAsString(buffer.toString());
 }
