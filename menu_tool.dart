@@ -77,7 +77,26 @@ bool updateFromGit(int currentVersion) {
   return true;
 }
 
+List<Menu> getMenus(String menuName) {
+  List<Menu> menus = [];
+
+  if (menuName == null || menuName == '') {
+    // return all menus
+  } else {
+    // return only the menu with the menuName
+  }
+
+  return menus;
+}
+
 // creates a menu from the database and returns it
-Menu getMenu() {
-  return null;
+void generateWeb(Menu menu) {
+  String categories = menu.getCategories();
+  List<String> products = [];
+
+  // for (Category category in menu.categories) {
+  //   var buffer = StringBuffer();
+  //   buffer.write(category.getProducts());
+  //   if (category.id)
+  // }
 }

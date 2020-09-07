@@ -20,4 +20,14 @@ class Category {
         '</p><img class="arrow" src="core_icons/arrow_right.svg" alt="go to arrow"></div>');
     return buffer.toString();
   }
+
+  String getProducts() {
+    var buffer = new StringBuffer();
+
+    for (Product product in products) {
+      buffer.write(product.toWeb());
+    }
+
+    return buffer.toString();
+  }
 }

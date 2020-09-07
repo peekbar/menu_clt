@@ -7,4 +7,14 @@ class Menu {
   String icon;
   List<Category> categories;
   Imprint imprint;
+
+  String getCategories() {
+    var buffer = new StringBuffer();
+
+    for (Category category in categories) {
+      buffer.write(category.toWeb());
+    }
+
+    return buffer.toString();
+  }
 }
