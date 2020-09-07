@@ -4,11 +4,10 @@ import 'dart:async';
 import 'package:args/args.dart';
 import 'package:mysql1/mysql1.dart';
 
+import 'models/models.dart';
 import 'generators/generators.dart';
 
 void main(List<String> arguments) async {
-  exitCode = 0; // presume success
-
   var parser = ArgParser();
   var results = parser.parse(arguments);
 
@@ -55,6 +54,13 @@ void main(List<String> arguments) async {
     case 'h':
     case 'help':
       print('Welcome to the help center.');
+      print('Available commands:');
+      print(' - init (initialize the program)');
+      print(' - upgrade (upgrades all menus to a newer version, if available)');
+      print(' - upgrade menu_name (upgrades only menu_name to a newer version');
+      print(' -   or creates it from the database if it is not yet available,');
+      print(' -   please make sure the menu_name is in the right format)');
+      print(' - help (prints help instructions)');
       exit(1);
       break;
     default:
@@ -62,4 +68,16 @@ void main(List<String> arguments) async {
       print('Please use \'help\' for more information about this program.');
       exit(1);
   }
+}
+
+// updates the web directory to the newest version from Github
+// returns true if the directory was updated to a new version
+// returns false if the directory is already up to date
+bool updateFromGit(int currentVersion) {
+  return true;
+}
+
+// creates a menu from the database and returns it
+Menu getMenu() {
+  return null;
 }
