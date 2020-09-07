@@ -2,8 +2,9 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:args/args.dart';
-
 import 'package:mysql1/mysql1.dart';
+
+import 'generators/generators.dart';
 
 void main(List<String> arguments) async {
   exitCode = 0; // presume success
