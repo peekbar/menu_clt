@@ -47,6 +47,9 @@ void main(List<String> arguments) async {
     case 'list':
       // returns all menus in the database
       print('All the available menus in the database:');
+      for (String menuName in await getAvailableMenus()) {
+        print(menuName);
+      }
 
       // prints all menus in the menus/ directory
       print('The menus already generated once:');
@@ -80,6 +83,13 @@ void main(List<String> arguments) async {
 // updates the web directory to the newest version from Github
 void updateFromGit() {
   // update
+}
+
+// creates a list of all the menus available in the database
+Future<List<String>> getAvailableMenus() async {
+  List<String> menuNames = [];
+  // get menu names from the database
+  return menuNames;
 }
 
 // get the menu from the database and returns a list of menus
