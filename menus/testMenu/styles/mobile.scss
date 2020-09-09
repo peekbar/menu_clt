@@ -1,0 +1,148 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+    background-color: white;
+	font-family: 'Solway', serif;
+}
+
+div.window {
+	scroll-snap-type: x mandatory;	
+	display: flex;
+	-webkit-overflow-scrolling: touch;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+header {
+    display: flex;
+
+    h1 {
+        text-align: left;
+        font-size: 2em;
+    }
+
+    img {
+        width: 2.5em;
+        height: 2.5em;
+    }
+}
+
+section {
+    padding: 1rem;
+    padding-bottom: 7em; // height of navigation
+	min-width: 100vw;
+	min-height: 100vh;
+	scroll-snap-align: start;
+	text-align: center;
+	position: relative;
+}
+
+h1 {
+	text-align: center;
+	color: black;
+	width: 100%;
+    left: 0;
+    font-size: 1.5em;
+}
+
+div.category {
+    padding: 1em;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    font-weight: 700;
+    width: calc(100vw - 2em);
+    user-select: none;
+
+    p {
+        font-weight: bold;
+        font-size: 1.6em;
+        padding: 1em;
+    }
+
+    img.categoryIcon {
+        height: 5em;
+        width: 5em;
+    }
+
+    img.arrow {
+        margin: 1em;
+        height: 2.5em;
+        width: 2.5em;
+    }
+}
+
+div.category.selected {
+    p {
+        font-weight: bolder;
+        font-size: 1.8em;
+    }
+
+    img.categoryIcon {
+        height: 7em;
+        width: 7em;
+    }
+}
+
+div.link {
+    padding: 1em;
+    font-weight: normal;
+    font-size: 1.3em;
+    text-decoration: underline;
+}
+
+div.link.selected {
+    padding: 1em;
+    font-weight: bold;
+    font-size: 1.3em;
+    text-decoration: underline;
+}
+
+table {
+    padding: 1rem;
+    width: calc(100vw - 2rem);
+    text-align: left;
+
+    th {
+        font-size: 1.4em;
+        font-weight: bolder;
+    }
+
+    td {
+        font-size: 1.4em;
+    }
+
+    td.price {
+        text-align: right;
+    }
+}
+
+div.navigation {
+    border-radius: 1em;
+    margin: 1em;
+    display: flex;
+    color: black;
+    background-color: grey;
+    width: calc(100vw - 2em);
+    position: fixed;
+    bottom: 0;
+    user-select: none;
+
+    div.spacer {
+        width: 0.1em;
+    }
+    
+    div.navigationElement {
+        margin: 0.5em;
+        height: 3em;
+        border-radius: 1em;
+        padding: 1em;
+        width: calc(50vw - 1em);
+        text-align: center;
+        background-color: lightgray;
+    }
+}

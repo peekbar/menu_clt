@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" type="text/css" href="styles/mobile.css" media="screen and (orientation:portrait)">
+    <link rel="stylesheet" type="text/css" href="styles/desktop.css" media="screen and (orientation:landscape)">
+    <link href="https://fonts.googleapis.com/css2?family=Solway:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <title>peekbar:title</title>
+    <script>
+        var selected = 0;
+
+        var products = [
+            'peekbar:products','<p>Über diese Seite</p>'
+        ]
+
+        function selectNew(clicked_id) {
+            document.getElementById(selected).classList.remove('selected');
+            document.getElementById(clicked_id).classList.add('selected');
+            selected = clicked_id;
+
+            document.getElementById('content').innerHTML = products[selected];
+
+            document.getElementById('window').scrollBy({left: document.body.clientWidth, top: 0, behavior:'smooth'});
+        }
+
+        function init() {
+            document.getElementById('content').innerHTML = products[selected];
+        }
+    </script>
+    <script>
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollLeft > document.body.width || document.documentElement.scrollLeft > screen.width) {
+                console.log('right');
+            } else {
+                console.log('left');
+            }
+        }
+    </script>
+    <script>
+        function scrollToRight() {
+            document.getElementById('window').scrollBy({left: document.body.clientWidth, top: 0, behavior:'smooth'});
+        }
+
+        function scrollToLeft() {
+            document.getElementById('window').scrollBy({left: -document.body.clientWidth, behavior:'smooth'});
+        }
+    </script>
+</head>
+<body onload="init()">
+    <div id="window" class="window">
+        <section>
+            <header>
+                <h1>DemoPage</h1>
+                <a href="tel:peekbar:phone"><img src="core_icons/phone.svg" alt="call"></a>
+            </header>
+            <div class="categories">
+                peekbar:categories
+            </div>
+        </section>
+        <section id="content"></section>
+    </div>
+
+    <div class="navigation">
+        <div onclick="scrollToLeft()" class="navigationElement">
+            <p>Startseite</p>
+        </div>
+        <div class="spacer"></div>
+        <div onclick="scrollToRight()" class="navigationElement">
+            <p>Vorspeisen</p>
+        </div>
+    </div>
+</body>
+</html>
+
+<!-- categoriy without the formatting -->
+<!-- <div onclick="selectNew(this.id)" class="category selected" id="0">
+        <img class="categoryIcon" src="icons/icon1.png" alt="category icon">
+        <p>Vorspeisen</p>
+        <img class="arrow" src="core_icons/arrow_right.svg" alt="go to arrow">
+    </div> -->
+
+<!-- product without the formatting -->
+<!-- <div class="product">
+        <table>
+            <tr>
+                <th>Sommerlicher Salat</th>
+                <td class="price">6,90</td>
+            </tr>
+            <tr>
+                <td>mit Brotkrustln</td>
+            </tr>
+        </table>
+    </div> -->

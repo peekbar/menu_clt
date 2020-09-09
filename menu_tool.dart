@@ -101,16 +101,16 @@ List<Menu> getMenus(String menuName) {
 }
 
 // add all the files to the new directory (delete before copying)
-void copyAllFilesTo(Menu menu) {
-  final dir = Directory('menus/' + menu.menuName);
-  dir.deleteSync(recursive: true);
+void copyAllFilesTo(Menu menu) async {
+  var directory = new Directory('menus/' + menu.menuName);
 
-  new Directory('menus/' + menu.menuName)
-      .create(recursive: true)
-      .then((Directory directory) {
-    print(directory.path);
-  });
-  // copy /web directory to the path
+  if (await directory.exists()) {
+    await directory.deleteSync(recursive: true);
+  }
+
+  await Process.run('cp', ['-r', 'web', 'menus/']);
+
+  await new Directory('menus/web').rename('menus/' + menu.menuName);
 }
 
 // adds all the information to the index.html
