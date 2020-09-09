@@ -18,12 +18,13 @@ void main(List<String> arguments) async {
   switch (results.rest[0]) {
     case 't':
     case 'test':
-      print('test');
-      Menu menu = Menu();
-      menu.companyName = 'test';
-      menu.menuName = 'testMenu';
-      copyAllFilesTo(menu);
-      //await addWebmanifest(menu);
+      print('This command is only for testing purposes.');
+      // print('test');
+      // Menu menu = Menu();
+      // menu.companyName = 'test';
+      // menu.menuName = 'testMenu';
+      // await copyAllFilesTo(menu);
+      // await addWebmanifest(menu);
       //await addIndex(menu);
       break;
     case 'u':
@@ -32,21 +33,16 @@ void main(List<String> arguments) async {
         print('Only upgrading \'' +
             results.rest[1].toString() +
             '\' to a new version.');
-        // if argument upgrade _company_name_: check for of the menu
-        // compare info.json from web dir with info.json from menus/_company_name_ dir
-        // if dir is not there: new company
-        // create new if necessary and then deploy
+        await upgrade(await getMenus(results.rest[1].toString()));
+        print('The menu should be up to date now.');
       } else {
         print('Upgrading all menus to a new version.');
-        // if argument upgrade: get new web from github
-        // save the version of /web/info.json
-        // remove the web folder
-        // dowload the new web folder from git
-        // if the version is the same: do nothing
-        // if version is different: run over all menus in the database
-        // create new dir for new menus if necessary
-        // deploy them to the server
+        await upgrade(await getMenus(null));
+        print('All menus in the database should be up to date now.');
+        print(
+            'Menu is still not here? Check the available menus with the list command.');
       }
+
       break;
     case 'l':
     case 'list':
@@ -88,7 +84,7 @@ void updateFromGit() {
 }
 
 // get the menu from the database and returns a list of menus
-List<Menu> getMenus(String menuName) {
+Future<List<Menu>> getMenus(String menuName) async {
   List<Menu> menus = [];
 
   if (menuName == null || menuName == '') {
@@ -100,6 +96,14 @@ List<Menu> getMenus(String menuName) {
   return menus;
 }
 
+void upgrade(List<Menu> menus) async {
+  for (Menu menu in menus) {
+    copyAllFilesTo(menu);
+    addIndex(menu);
+    addWebmanifest(menu);
+  }
+}
+
 // add all the files to the new directory (delete before copying)
 void copyAllFilesTo(Menu menu) async {
   var directory = new Directory('menus/' + menu.menuName);
@@ -109,11 +113,10 @@ void copyAllFilesTo(Menu menu) async {
   }
 
   await Process.run('cp', ['-r', 'web', 'menus/']);
-
   await new Directory('menus/web').rename('menus/' + menu.menuName);
 }
 
-// adds all the information to the index.html
+// adds all the information to the index.html and writes it in the menu directory
 void addIndex(Menu menu) async {
   var index;
 
@@ -125,12 +128,13 @@ void addIndex(Menu menu) async {
     index = contents;
   });
 
-  var file = await new File('menus/' + menu.menuName + '/index.html');
-  file.create(recursive: true);
-  file.writeAsString(index);
+  await new File('menus/' + menu.menuName + '/index.html')
+    ..create(recursive: true)
+    ..writeAsString(index);
 }
 
-// adds all the necessary information to the web manifest
+// adds all the necessary information to the web manifest and copies it to the right directory
+// always use after copyAllFilesTo()
 void addWebmanifest(Menu menu) async {
   var buffer = StringBuffer();
   buffer.write('{');
@@ -143,7 +147,7 @@ void addWebmanifest(Menu menu) async {
   buffer.write('"description": "A digital menu made by peekbar."');
   buffer.write('}');
 
-  var file = await new File('menus/' + menu.menuName + '/manifest.webmanifest');
-  file.create(recursive: true);
-  file.writeAsString(buffer.toString());
+  await new File('menus/' + menu.menuName + '/manifest.webmanifest')
+    ..create(recursive: true)
+    ..writeAsString(buffer.toString());
 }
