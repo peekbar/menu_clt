@@ -19,7 +19,6 @@ void main(List<String> arguments) async {
     case 't':
     case 'test':
       print('This command is only for testing purposes.');
-      // print('test');
       // Menu menu = Menu();
       // menu.companyName = 'test';
       // menu.menuName = 'testMenu';
@@ -66,8 +65,8 @@ void main(List<String> arguments) async {
       print(' - upgrade menu_name (upgrades only menu_name to a newer version');
       print(' -   or creates it from the database if it is not yet available,');
       print(' -   please make sure the menu_name is in the right format)');
-      print(
-          ' - list (lists all the created menus and also the menus in the database)');
+      print(' - list (lists all the created menus and also the menus in the');
+      print('     database)');
       print(' - help (prints help instructions)');
       exit(1);
       break;
@@ -121,6 +120,7 @@ void addIndex(Menu menu) async {
   var index;
 
   new File('web/index.html').readAsString().then((String contents) {
+    contents.replaceAll('preekbar:homepage', menu.homepage);
     contents.replaceAll('preekbar:phone', menu.imprint.phone);
     contents.replaceAll('peekbar:title', menu.companyName);
     contents.replaceAll('peekbar:categories', menu.getCategories());

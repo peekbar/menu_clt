@@ -3,6 +3,7 @@ import 'models.dart';
 class Menu {
   String menuName;
   String companyName;
+  String homepage;
   String icon;
   List<Category> categories;
   Imprint imprint;
