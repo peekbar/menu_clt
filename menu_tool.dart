@@ -16,16 +16,15 @@ void main(List<String> arguments) async {
   }
 
   switch (results.rest[0]) {
-    case 'i':
-    case 'init':
-      print('init');
+    case 't':
+    case 'test':
+      print('test');
       Menu menu = Menu();
       menu.companyName = 'test';
       menu.menuName = 'testMenu';
-      await addWebmanifest('', menu);
-      // if argument init: init this program
-      // create database: don't do this when there is a database in database dir
-      // don't run upgade as the database is empty
+      copyAllFilesTo(menu);
+      //await addWebmanifest(menu);
+      //await addIndex(menu);
       break;
     case 'u':
     case 'upgrade':
@@ -51,18 +50,28 @@ void main(List<String> arguments) async {
       break;
     case 'l':
     case 'list':
-      // returns all menus in the menus/ folder
       // returns all menus in the database
+      print('All the available menus in the database:');
+
+      // prints all menus in the menus/ directory
+      print('The menus already generated once:');
+      Directory('menus')
+          .list(recursive: false, followLinks: false)
+          .listen((FileSystemEntity entity) {
+        print(entity.path.replaceAll('menus/', ''));
+      });
       break;
     case 'h':
     case 'help':
       print('Welcome to the help center.');
       print('Available commands:');
-      print(' - init (initialize the program)');
+      print(' - test (this command is here for testing purposes)');
       print(' - upgrade (upgrades all menus to a newer version, if available)');
       print(' - upgrade menu_name (upgrades only menu_name to a newer version');
       print(' -   or creates it from the database if it is not yet available,');
       print(' -   please make sure the menu_name is in the right format)');
+      print(
+          ' - list (lists all the created menus and also the menus in the database)');
       print(' - help (prints help instructions)');
       exit(1);
       break;
@@ -91,33 +100,12 @@ List<Menu> getMenus(String menuName) {
   return menus;
 }
 
-// creates a menu from the database and returns it
-void generateWeb(Menu menu) {
-  String categories = menu.getCategories();
-  var products = new StringBuffer();
-
-  var i = menu.categories.length;
-  for (Category category in menu.categories) {
-    i--;
-    products.write(category.getProducts());
-    if (i != 0) {
-      products.write(',');
-    }
-  }
-
-  products.write(',' + menu.imprint.toWeb());
-
-  addToIndex('menus/' + menu.menuName + '/index.html', menu.companyName,
-      categories, products.toString());
-  addWebmanifest('menus/' + menu.menuName + '/manifest.webmanifest', menu);
-}
-
 // add all the files to the new directory (delete before copying)
-void copyAllFilesTo(String path) {
-  final dir = Directory(path);
+void copyAllFilesTo(Menu menu) {
+  final dir = Directory('menus/' + menu.menuName);
   dir.deleteSync(recursive: true);
 
-  new Directory('menus/company_name')
+  new Directory('menus/' + menu.menuName)
       .create(recursive: true)
       .then((Directory directory) {
     print(directory.path);
@@ -126,16 +114,24 @@ void copyAllFilesTo(String path) {
 }
 
 // adds all the information to the index.html
-void addToIndex(
-    String path, String companyName, String categories, String products) {
-  // load in menu_name/index.html
-  // add the companyName to peekbar:title
-  // add the categories to peekbar:categories
-  // add the products to 'peekbar:products'
+void addIndex(Menu menu) async {
+  var index;
+
+  new File('web/index.html').readAsString().then((String contents) {
+    contents.replaceAll('preekbar:phone', menu.imprint.phone);
+    contents.replaceAll('peekbar:title', menu.companyName);
+    contents.replaceAll('peekbar:categories', menu.getCategories());
+    contents.replaceAll('\'peekbar:products\'', menu.getAllContent());
+    index = contents;
+  });
+
+  var file = await new File('menus/' + menu.menuName + '/index.html');
+  file.create(recursive: true);
+  file.writeAsString(index);
 }
 
 // adds all the necessary information to the web manifest
-void addWebmanifest(String path, Menu menu) async {
+void addWebmanifest(Menu menu) async {
   var buffer = StringBuffer();
   buffer.write('{');
   buffer.write('"name": "' + menu.companyName + '",');
@@ -147,7 +143,7 @@ void addWebmanifest(String path, Menu menu) async {
   buffer.write('"description": "A digital menu made by peekbar."');
   buffer.write('}');
 
-  var file = await new File('menus/' + menu.menuName + '/manifest.webmanifest')
-      .create(recursive: true);
+  var file = await new File('menus/' + menu.menuName + '/manifest.webmanifest');
+  file.create(recursive: true);
   file.writeAsString(buffer.toString());
 }
