@@ -23,16 +23,6 @@ void main(List<String> arguments) async {
   }
 
   switch (results.rest[0]) {
-    case 't':
-    case 'test':
-      print('This command is only for testing purposes.');
-      // Menu menu = Menu();
-      // menu.companyName = 'test';
-      // menu.menuName = 'testMenu';
-      // await copyAllFilesTo(menu);
-      // await addWebmanifest(menu);
-      //await addIndex(menu);
-      break;
     case 'u':
     case 'upgrade':
       if (results.rest.length > 1) {
