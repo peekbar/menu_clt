@@ -5,6 +5,8 @@ class Product {
   String description;
   String price;
 
+  Product(this.id, this.shortName, this.name, this.description, this.price);
+
   String toWeb() {
     var buffer = new StringBuffer();
     buffer.write('<div class="product"><table><tr><th>');

@@ -8,6 +8,8 @@ class Menu {
   List<Category> categories;
   Imprint imprint;
 
+  Menu(this.menuName, this.companyName, this.homepage, this.icon, this.imprint);
+
   String getCategories() {
     var buffer = new StringBuffer();
 

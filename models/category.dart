@@ -6,6 +6,8 @@ class Category {
   String icon;
   List<Product> products;
 
+  Category(this.id, this.name, this.icon);
+
   String toWeb() {
     var buffer = new StringBuffer();
     buffer.write('<div onclick="selectNew(');

@@ -1,10 +1,14 @@
 class Imprint {
+  int id;
   String name;
   String street;
   String city;
   String phone;
   String mail;
-  String taxNumber;
+  String tax;
+
+  Imprint(this.id, this.name, this.street, this.city, this.phone, this.mail,
+      this.tax);
 
   String toWeb() {
     var buffer = new StringBuffer();

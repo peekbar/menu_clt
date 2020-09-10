@@ -6,6 +6,13 @@ import 'package:mysql1/mysql1.dart';
 
 import 'models/models.dart';
 
+var settings = new ConnectionSettings(
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: 'Password',
+    db: 'menus');
+
 void main(List<String> arguments) async {
   var parser = ArgParser();
   var results = parser.parse(arguments);
@@ -53,11 +60,16 @@ void main(List<String> arguments) async {
 
       // prints all menus in the menus/ directory
       print('The menus already generated once:');
-      Directory('menus')
-          .list(recursive: false, followLinks: false)
-          .listen((FileSystemEntity entity) {
-        print(entity.path.replaceAll('menus/', ''));
-      });
+      if (await Directory('menus').exists()) {
+        Directory('menus')
+            .list(recursive: false, followLinks: false)
+            .listen((FileSystemEntity entity) {
+          print(entity.path.replaceAll('menus/', ''));
+        });
+      } else {
+        print('There are no generated menus.');
+      }
+
       break;
     case 'h':
     case 'help':
@@ -88,18 +100,38 @@ void updateFromGit() {
 // creates a list of all the menus available in the database
 Future<List<String>> getAvailableMenus() async {
   List<String> menuNames = [];
-  // get menu names from the database
+
+  var connection = await MySqlConnection.connect(settings);
+  var results = await connection.query('select menu_name from menu');
+  for (var row in results) {
+    menuNames.add(row[0]);
+  }
+
+  await connection.close();
+
   return menuNames;
 }
 
 // get the menu from the database and returns a list of menus
 Future<List<Menu>> getMenus(String menuName) async {
+  List<String> menuNames = [];
   List<Menu> menus = [];
 
-  if (menuName == null || menuName == '') {
-    // return all menus
+  if (menuName == null) {
+    menuNames = await getAvailableMenus();
   } else {
-    // return only the menu with the menuName
+    var connection = await MySqlConnection.connect(settings);
+    var results = await connection
+        .query('select menu_name from menu where menu_name = ?', [menuName]);
+    for (var row in results) {
+      menuNames.add(row[0]);
+    }
+
+    await connection.close();
+  }
+
+  for (String menuName in menuNames) {
+    // generate Menu from menuNames
   }
 
   return menus;
