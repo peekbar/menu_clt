@@ -155,6 +155,7 @@ void addIndex(Menu menu) async {
     contents.replaceAll('preekbar:homepage', menu.homepage);
     contents.replaceAll('preekbar:phone', menu.imprint.phone);
     contents.replaceAll('peekbar:title', menu.companyName);
+    contents.replaceAll('peekbar:categoryNames', menu.getCategoryNames());
     contents.replaceAll('peekbar:categories', menu.getCategories());
     contents.replaceAll('\'peekbar:products\'', menu.getAllContent());
     index = contents;

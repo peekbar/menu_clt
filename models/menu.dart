@@ -34,6 +34,18 @@ class Menu {
     return buffer.toString();
   }
 
+  String getCategoryNames() {
+    var buffer = new StringBuffer();
+
+    for (Category category in categories) {
+      buffer.write('\'' + category.name + '\',');
+    }
+
+    var categoryNames = buffer.toString();
+
+    return categoryNames.substring(0, categoryNames.length - 1);
+  }
+
   String getAllContent() {
     var products = new StringBuffer();
 
