@@ -11,6 +11,8 @@
     <script>
         var selected = 0;
 
+        var categories = ['peekbar:categoryNames']
+
         var products = [
             'peekbar:products','<p>Über diese Seite</p>'
         ]
@@ -21,6 +23,8 @@
             selected = clicked_id;
 
             document.getElementById('content').innerHTML = products[selected];
+
+            document.getElementById('category').innerHTML = categories[selected];
 
             document.getElementById('window').scrollBy({left: document.body.clientWidth, top: 0, behavior:'smooth'});
         }
@@ -72,28 +76,8 @@
         </div>
         <div class="spacer"></div>
         <div onclick="scrollToRight()" class="navigationElement">
-            <p>Vorspeisen</p>
+            <p id="category">Vorspeisen</p>
         </div>
     </div>
 </body>
 </html>
-
-<!-- categoriy without the formatting -->
-<!-- <div onclick="selectNew(this.id)" class="category selected" id="0">
-        <img class="categoryIcon" src="icons/icon1.png" alt="category icon">
-        <p>Vorspeisen</p>
-        <img class="arrow" src="core_icons/arrow_right.svg" alt="go to arrow">
-    </div> -->
-
-<!-- product without the formatting -->
-<!-- <div class="product">
-        <table>
-            <tr>
-                <th>Sommerlicher Salat</th>
-                <td class="price">6,90</td>
-            </tr>
-            <tr>
-                <td>mit Brotkrustln</td>
-            </tr>
-        </table>
-    </div> -->
