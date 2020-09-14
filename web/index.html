@@ -52,16 +52,18 @@
 </head>
 <body onload="init()">
     <div id="window" class="window">
-        <section>
-            <header>
-                <a href="peekbar:homepage"><h1>DemoPage</h1></a>
-                <a href="tel:peekbar:phone"><img src="core_icons/phone.svg" alt="call"></a>
-            </header>
-            <div class="categories">
-                peekbar:categories
-            </div>
-        </section>
-        <section id="content"></section>
+        <div class="section-wrapper">
+            <section>
+                <header>
+                    <a href="peekbar:homepage"><h1>DemoPage</h1></a>
+                    <a href="tel:peekbar:phone"><img src="core_icons/phone.svg" alt="call"></a>
+                </header>
+                <div class="categories">peekbar:categories</div>
+            </section>
+        </div>
+        <div class="section-wrapper">
+            <section id="content"></section>
+        </div>
     </div>
 
     <div class="navigation">

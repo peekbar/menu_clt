@@ -6,6 +6,8 @@
 }
 
 body {
+  padding: 0;
+  margin: 0;
   background-color: white;
   font-family: 'Solway', serif;
 }
@@ -17,6 +19,8 @@ div.window {
   display: -ms-flexbox;
   display: flex;
   -webkit-overflow-scrolling: touch;
+  width: 200vw;
+  height: 100vh;
   overflow-x: scroll;
   overflow-y: hidden;
 }
@@ -25,6 +29,9 @@ header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 header h1 {
@@ -37,11 +44,17 @@ header img {
   height: 2.5em;
 }
 
+div.section-wrapper {
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
 section {
   padding: 1rem;
   padding-bottom: 7em;
-  min-width: 100vw;
-  min-height: 100vh;
   scroll-snap-align: start;
   text-align: center;
   position: relative;
@@ -53,6 +66,11 @@ h1 {
   width: 100%;
   left: 0;
   font-size: 1.5em;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
 }
 
 div.category {

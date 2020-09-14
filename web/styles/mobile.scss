@@ -5,6 +5,8 @@
 }
 
 body {
+    padding: 0;
+    margin: 0;
     background-color: white;
 	font-family: 'Solway', serif;
 }
@@ -12,14 +14,17 @@ body {
 div.window {
 	scroll-snap-type: x mandatory;	
 	display: flex;
-	-webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
+    width: 200vw;
+    height: 100vh;
     overflow-x: scroll;
     overflow-y: hidden;
 }
 
 header {
     display: flex;
-
+    justify-content: space-between;
+    
     h1 {
         text-align: left;
         font-size: 2em;
@@ -31,22 +36,33 @@ header {
     }
 }
 
+div.section-wrapper {
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
 section {
     padding: 1rem;
     padding-bottom: 7em; // height of navigation
-	min-width: 100vw;
-	min-height: 100vh;
 	scroll-snap-align: start;
 	text-align: center;
-	position: relative;
+    position: relative;
 }
 
 h1 {
-	text-align: center;
-	color: black;
-	width: 100%;
+    text-align: center;
+    color: black;
+    width: 100%;
     left: 0;
     font-size: 1.5em;
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
 }
 
 div.category {
