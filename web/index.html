@@ -11,11 +11,11 @@
     <script>
         var selected = 0;
 
-        var categories = ['peekbar:categoryNames']
+        var categories = ['peekbar:categoryNames'];
 
         var products = [
             'peekbar:products','<p>Über diese Seite</p>'
-        ]
+        ];
 
         function selectNew(clicked_id) {
             document.getElementById(selected).classList.remove('selected');
@@ -24,7 +24,7 @@
 
             document.getElementById('content').innerHTML = products[selected];
 
-            document.getElementById('category').innerHTML = categories[selected];
+            //document.getElementById('category').innerHTML = categories[selected];
 
             document.getElementById('window').scrollBy({left: document.body.clientWidth, top: 0, behavior:'smooth'});
         }
@@ -34,15 +34,15 @@
         }
     </script>
     <script>
-        window.onscroll = function() {scrollFunction()};
+        // window.onscroll = function() {scrollFunction()};
 
-        function scrollFunction() {
-            if (document.body.scrollLeft > document.body.width || document.documentElement.scrollLeft > screen.width) {
-                console.log('right');
-            } else {
-                console.log('left');
-            }
-        }
+        // function scrollFunction() {
+        //     if (document.body.scrollLeft > document.body.width || document.documentElement.scrollLeft > screen.width) {
+        //         console.log('right');
+        //     } else {
+        //         console.log('left');
+        //     }
+        // }
     </script>
     <script>
         function scrollToRight() {
