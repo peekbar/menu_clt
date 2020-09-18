@@ -12,7 +12,9 @@ body {
 }
 
 div.window {
-	display: flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 header {
@@ -34,6 +36,7 @@ div.section-wrapper {
     padding: 0;
     margin: 0;
     width: 50vw;
+    max-width: 800px;
     height: 100vh;
     overflow-y: scroll;
 }

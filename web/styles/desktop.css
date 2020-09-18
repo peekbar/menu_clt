@@ -16,6 +16,12 @@ div.window {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 header {
@@ -41,6 +47,7 @@ div.section-wrapper {
   padding: 0;
   margin: 0;
   width: 50vw;
+  max-width: 800px;
   height: 100vh;
   overflow-y: scroll;
 }
