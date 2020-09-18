@@ -7,9 +7,9 @@ import 'package:mysql1/mysql1.dart';
 import 'models/models.dart';
 
 var settings = new ConnectionSettings(
-    host: 'localhost',
+    host: '178.27.74.41',
     port: 3306,
-    user: 'root',
+    user: 'generator',
     password: 'Password',
     db: 'menus');
 
@@ -38,7 +38,6 @@ void main(List<String> arguments) async {
         print(
             'Menu is still not here? Check the available menus with the list command.');
       }
-
       break;
     case 'l':
     case 'list':
@@ -59,7 +58,6 @@ void main(List<String> arguments) async {
       } else {
         print('There are no generated menus.');
       }
-
       break;
     case 'h':
     case 'help':

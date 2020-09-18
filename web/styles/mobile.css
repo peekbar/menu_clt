@@ -10,19 +10,20 @@ body {
   margin: 0;
   background-color: white;
   font-family: 'Solway', serif;
+  width: 100vw;
+  height: 100vh;
 }
 
 div.window {
   -ms-scroll-snap-type: x mandatory;
       scroll-snap-type: x mandatory;
+  overflow-x: scroll;
+  overflow-y: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-overflow-scrolling: touch;
-  width: 200vw;
+  width: 100vw;
   height: 100vh;
-  overflow-x: scroll;
-  overflow-y: hidden;
 }
 
 header {
@@ -49,13 +50,15 @@ div.section-wrapper {
   margin: 0;
   width: 100vw;
   height: 100vh;
-  overflow-y: scroll;
+  scroll-snap-align: start;
 }
 
 section {
   padding: 1rem;
   padding-bottom: 7em;
-  scroll-snap-align: start;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
   text-align: center;
   position: relative;
 }

@@ -8,6 +8,8 @@
 body {
   background-color: white;
   font-family: 'Solway', serif;
+  width: 100vw;
+  height: 100vh;
 }
 
 div.window {
@@ -45,8 +47,6 @@ div.section-wrapper {
 
 section {
   padding: 1rem;
-  width: 50vw;
-  min-height: 100vh;
   text-align: center;
   position: relative;
 }
