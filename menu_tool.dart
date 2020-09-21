@@ -90,7 +90,7 @@ Future<List<String>> getAvailableMenus() async {
   List<String> menuNames = [];
 
   var connection = await MySqlConnection.connect(settings);
-  var results = await connection.query('select menu_name from menu');
+  var results = await connection.query('select name_Menu from menu');
   for (var row in results) {
     menuNames.add(row[0]);
   }
@@ -110,7 +110,7 @@ Future<List<Menu>> getMenus(String menuName) async {
   } else {
     var connection = await MySqlConnection.connect(settings);
     var results = await connection
-        .query('select menu_name from menu where menu_name = ?', [menuName]);
+        .query('select name_Menu from menu where name_Menu = ?', [menuName]);
     for (var row in results) {
       menuNames.add(row[0]);
     }
@@ -120,6 +120,27 @@ Future<List<Menu>> getMenus(String menuName) async {
 
   for (String menuName in menuNames) {
     // generate Menu from menuNames
+    var connection = await MySqlConnection.connect(settings);
+    var menu = await connection
+        .query('select id_Menu, name_Menu, icon_Menu, Imprint_id from menu where name_Menu = ?', [menuName]);
+    // var imprint = await connection
+    //     .query('select * from imprint where imprint_id = ?', [menu[0][]]);
+    for (var row in menu) {
+      var imprint = await connection
+        .query('select * from imprint where id_Imprint = ?', [row[3]]);
+      var categories = await connection
+        .query('select * from Category where id_Menu = ?', [row[0]]);
+      for (var row in categories) {
+        print(row[4]);
+      }
+      for (var row in imprint) {
+        print(row[4]);
+      }
+
+    }
+    
+
+    await connection.close();
   }
 
   return menus;
