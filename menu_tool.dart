@@ -119,50 +119,70 @@ Future<List<Menu>> getMenus(String menuName) async {
   }
 
   for (String menuName in menuNames) {
-    // generate Menu from menuNames
     var connection = await MySqlConnection.connect(settings);
-    var menu = await connection
-        .query('select id_Menu, name_Menu, icon_Menu, Imprint_id from menu where name_Menu = ?', [menuName]);
-    // var imprint = await connection
-    //     .query('select * from imprint where imprint_id = ?', [menu[0][]]);
+    var menu = await connection.query(
+        'select id_Menu, name_Menu, icon_Menu, Imprint_id from menu where name_Menu = ?',
+        [menuName]);
+    var newMenu;
+
     for (var row in menu) {
-      var imprint = await connection
-        .query('select * from imprint where id_Imprint = ?', [row[3]]);
-      var categories = await connection
-        .query('select * from Category where id_Menu = ?', [row[0]]);
-      for (var row in categories) {
-        print(row[4]);
-      }
+      newMenu = Menu(row[0], row[1], row[2]);
+
+      var imprint = await connection.query(
+          'select id_Imprint, name_Imprint, street_Imprint, city_Imprint, phone_Imprint, mail_Imprint, tax_Imprint, homepage_Imprint, companyName_Imprint from imprint where id_Imprint = ?',
+          [newMenu.id]);
       for (var row in imprint) {
-        print(row[4]);
+        newMenu.imprint = Imprint(row[0], row[1], row[2], row[3], row[4],
+            row[5], row[6], row[7], row[8]);
       }
 
+      var categories = await connection.query(
+          'select id_Category, name_Category, icon_Category from Category where id_Menu = ?',
+          [newMenu.id]);
+      for (var row in categories) {
+        var newCategory = Category(row[0], row[1], row[2]);
+
+        var products = await connection.query(
+            'select id_Product, name_Product, shortName_Product, description_Product, price_Product from Product where id_Category = ?',
+            [newCategory.id]);
+        for (var row in products) {
+          newCategory.products
+              .add(new Product(row[0], row[1], row[2], row[3], row[4]));
+        }
+
+        newMenu.categories.add(newCategory);
+      }
     }
-    
+
+    menus.add(newMenu);
 
     await connection.close();
   }
+
+  print('Created Dart Objects from the Database.');
 
   return menus;
 }
 
 void upgrade(List<Menu> menus) async {
   for (Menu menu in menus) {
-    copyAllFilesTo(menu);
-    addIndex(menu);
-    addWebmanifest(menu);
+    await copyAllFilesTo(menu);
+    await addIndex(menu);
+    await addWebmanifest(menu);
   }
 }
 
 // add all the files to the new directory (delete before copying)
 void copyAllFilesTo(Menu menu) async {
-  var directory = new Directory('menus/' + menu.menuName);
+  var directory = await new Directory('menus/' + menu.menuName);
 
   if (await directory.exists()) {
     await directory.deleteSync(recursive: true);
   }
 
-  await Process.run('cp', ['-r', 'web', 'menus/']);
+  await directory.create(recursive: true);
+
+  await Process.runSync('cp', ['-r', 'web', 'menus/web']);
   await new Directory('menus/web').rename('menus/' + menu.menuName);
 }
 
@@ -170,10 +190,12 @@ void copyAllFilesTo(Menu menu) async {
 void addIndex(Menu menu) async {
   var index;
 
-  new File('web/index.html').readAsString().then((String contents) {
-    contents.replaceAll('preekbar:homepage', menu.homepage);
+  await new File('menus' + menu.menuName + '/index.html')
+      .readAsString()
+      .then((String contents) {
+    contents.replaceAll('preekbar:homepage', menu.imprint.homepage);
     contents.replaceAll('preekbar:phone', menu.imprint.phone);
-    contents.replaceAll('peekbar:title', menu.companyName);
+    contents.replaceAll('peekbar:title', menu.imprint.companyName);
     contents.replaceAll('peekbar:categoryNames', menu.getCategoryNames());
     contents.replaceAll('peekbar:categories', menu.getCategories());
     contents.replaceAll('\'peekbar:products\'', menu.getAllContent());
@@ -190,8 +212,8 @@ void addIndex(Menu menu) async {
 void addWebmanifest(Menu menu) async {
   var buffer = StringBuffer();
   buffer.write('{');
-  buffer.write('"name": "' + menu.companyName + '",');
-  buffer.write('"short_name": "' + menu.companyName + '",');
+  buffer.write('"name": "' + menu.imprint.companyName + '",');
+  buffer.write('"short_name": "' + menu.imprint.companyName + '",');
   buffer.write('"start_url": ".",');
   buffer.write('"display": "standalone",');
   buffer.write('"background_color": "#fff",');

@@ -4,7 +4,7 @@ class Category {
   int id;
   String name;
   String icon;
-  List<Product> products;
+  List<Product> products = [];
 
   Category(this.id, this.name, this.icon);
 

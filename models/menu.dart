@@ -1,14 +1,13 @@
 import 'models.dart';
 
 class Menu {
+  int id;
   String menuName;
-  String companyName;
-  String homepage;
   String icon;
-  List<Category> categories;
+  List<Category> categories = [];
   Imprint imprint;
 
-  Menu(this.menuName, this.companyName, this.homepage, this.icon, this.imprint);
+  Menu(this.id, this.menuName, this.icon);
 
   String getCategories() {
     var buffer = new StringBuffer();
