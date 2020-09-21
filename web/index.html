@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height initial-scale=1.0">
     <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="stylesheet" type="text/css" href="styles/mobile.css" media="screen and (orientation: portrait)">
-    <link rel="stylesheet" type="text/css" href="styles/desktop.css" media="screen and (orientation: landscape)">
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Solway:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>peekbar:title</title>
     <script>
         var selected = 0;
@@ -15,7 +14,7 @@
         var categories = ['peekbar:categoryNames'];
 
         var products = [
-            'peekbar:products','<p>Über diese Seite</p>'
+            'peekbar:products'
         ];
 
         function selectNew(clicked_id) {
@@ -25,13 +24,14 @@
 
             document.getElementById('content').innerHTML = products[selected];
 
-            //document.getElementById('category').innerHTML = categories[selected];
+            document.getElementById('category').innerHTML = categories[selected];
 
             document.getElementById('window').scrollBy({left: document.body.clientWidth, top: 0, behavior:'smooth'});
         }
 
         function init() {
             document.getElementById('content').innerHTML = products[selected];
+            document.getElementById('category').innerHTML = 'test';
         }
     </script>
     <script>
@@ -48,41 +48,113 @@
     <script>
         function scrollToRight() {
             document.getElementById('window').scrollBy({left: document.body.clientWidth, top: 0, behavior:'smooth'});
+            document.getElementById('content').scrollTo({top: 0, behavior:'smooth'});
         }
 
         function scrollToLeft() {
             document.getElementById('window').scrollBy({left: -document.body.clientWidth, behavior:'smooth'});
+            document.getElementById('navigation').scrollTo({top: 0, behavior:'smooth'});
         }
     </script>
 </head>
 <body onload="init()">
     <div id="window" class="window">
-        <div class="section-wrapper">
-            <section>
-                <header>
-                    <a href="peekbar:homepage"><h1>DemoPage</h1></a>
-                    <a href="tel:peekbar:phone"><img src="core_icons/phone.svg" alt="call"></a>
+        <div class="container-lg section-wrapper">
+            <section id="navigation">
+                <header class="container">
+                    <div class="row justify-content-between">
+                        <div onclick="alert('to main page')" class="heading"><h1>DemoPage</h1></div>
+                        <a href="tel:peekbar:phone"><img src="core_icons/phone.svg" alt="call"></a>
+                    </div>
                 </header>
-                <div class="categories">peekbar:categories</div>
+                <div class="categories">peekbar:categories
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                    <h1>Test</h1>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalScrollable">
+                        Über diese Seite
+                    </button>
+                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam sunt optio cupiditate? Itaque fugiat blanditiis explicabo iste quibusdam eligendi laboriosam ipsam necessitatibus tempora, repellat id delectus quod, minus, deleniti nobis.
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
+                            <button type="button" class="btn btn-dark" onclick="alert('launch peekbar')">Zu PEEKBAR</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
             </section>
         </div>
-        <div class="section-wrapper">
+        <div class="container-lg section-wrapper">
             <section id="content"></section>
         </div>
     </div>
 
     <div class="navigation">
-        <div onclick="scrollToLeft()" class="navigationElement">
-            <p>Startseite</p>
-        </div>
-        <div class="spacer"></div>
-        <div onclick="scrollToRight()" class="navigationElement">
-            <p id="category">Vorspeisen</p>
+        <div class="container-fluid">
+            <div class="row justify-content-around">
+                <div class="col">
+                    <button onclick="scrollToLeft()" type="button" class="btn btn-dark btn-lg btn-block">
+                        Navigation
+                    </button>
+                </div>
+                <div class="col">
+                    <button onclick="scrollToRight()" id="category" type="button" class="btn btn-dark btn-lg btn-block">
+                        
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </body>
 </html>
