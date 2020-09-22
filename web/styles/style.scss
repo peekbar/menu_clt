@@ -18,10 +18,14 @@
         text-align: center;
         position: relative;
     }
+
+    div.category {
+        width: 100%;
+    }
     
     table {
         padding: 1rem;
-        width: calc(50vw - 2rem);
+        width: 100%;
         text-align: left;
     
         th {
@@ -57,6 +61,7 @@
     div.section-wrapper {
         padding: 0;
         margin: 0;
+        width: 200vw;
         scroll-snap-align: start;
     }
     
@@ -69,10 +74,14 @@
         text-align: center;
         position: relative;
     }
+
+    div.category {
+        width: calc(100vw - 2em);
+    }
     
     table {
         padding: 1rem;
-        width: calc(100vw - 2rem);
+        width: 100%;
         text-align: left;
     
         th {
@@ -170,7 +179,6 @@ div.category {
     align-items: center;
     display: flex;
     font-weight: 700;
-    width: calc(100vw - 2em);
     user-select: none;
 
     p {

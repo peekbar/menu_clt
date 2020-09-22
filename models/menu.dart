@@ -17,18 +17,10 @@ class Menu {
     }
 
     buffer.write('<div onclick="selectNew(');
-    buffer.write(categories.length.toString());
+    buffer.write((categories.length + 1).toString());
     buffer.write(')" class="link" id="');
-    buffer.write(categories.length.toString());
+    buffer.write((categories.length + 1).toString());
     buffer.write('"><p>Impressum</p></div>');
-
-    var aboutId = categories.length + 1;
-
-    buffer.write('<div onclick="selectNew(');
-    buffer.write(aboutId.toString());
-    buffer.write(')" class="link" id="');
-    buffer.write(aboutId.toString());
-    buffer.write('"><p>Über diese Seite</p></div>');
 
     return buffer.toString();
   }
@@ -42,7 +34,7 @@ class Menu {
 
     var categoryNames = buffer.toString();
 
-    return categoryNames.substring(0, categoryNames.length - 1);
+    return categoryNames.substring(1, categoryNames.length - 2);
   }
 
   String getAllContent() {
@@ -51,13 +43,15 @@ class Menu {
     var i = categories.length;
     for (Category category in categories) {
       i--;
+      products.write('\'');
       products.write(category.getProducts());
+      products.write('\'');
       if (i != 0) {
         products.write(',');
       }
     }
 
-    products.write(',' + imprint.toWeb());
+    products.write(',\'' + imprint.toWeb() + '\'');
     return products.toString();
   }
 }

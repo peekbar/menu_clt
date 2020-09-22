@@ -190,20 +190,21 @@ void copyAllFilesTo(Menu menu) async {
 void addIndex(Menu menu) async {
   var index;
 
-  await new File('menus' + menu.menuName + '/index.html')
+  await new File('menus/' + menu.menuName + '/index.html')
       .readAsString()
       .then((String contents) {
-    contents.replaceAll('preekbar:homepage', menu.imprint.homepage);
-    contents.replaceAll('preekbar:phone', menu.imprint.phone);
-    contents.replaceAll('peekbar:title', menu.imprint.companyName);
-    contents.replaceAll('peekbar:categoryNames', menu.getCategoryNames());
-    contents.replaceAll('peekbar:categories', menu.getCategories());
-    contents.replaceAll('\'peekbar:products\'', menu.getAllContent());
+    contents = contents.replaceAll('peekbar:homepage', menu.imprint.homepage);
+    contents = contents.replaceAll('peekbar:phone', menu.imprint.phone);
+    contents = contents.replaceAll('peekbar:title', menu.imprint.companyName);
+    contents =
+        contents.replaceAll('peekbar:categoryNames', menu.getCategoryNames());
+    contents = contents.replaceAll('peekbar:categories', menu.getCategories());
+    contents =
+        contents.replaceAll('\'peekbar:products\'', menu.getAllContent());
     index = contents;
   });
 
   await new File('menus/' + menu.menuName + '/index.html')
-    ..create(recursive: true)
     ..writeAsString(index);
 }
 

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>peekbar:title</title>
     <script>
-        var selected = 0;
+        var selected = 1;
 
         var categories = ['peekbar:categoryNames'];
 
@@ -18,20 +18,21 @@
         ];
 
         function selectNew(clicked_id) {
-            document.getElementById(selected).classList.remove('selected');
+            document.getElementById(selected.toString()).classList.remove('selected');
             document.getElementById(clicked_id).classList.add('selected');
             selected = clicked_id;
 
-            document.getElementById('content').innerHTML = products[selected];
+            document.getElementById('content').innerHTML = products[selected - 1];
 
-            document.getElementById('category').innerHTML = categories[selected];
+            document.getElementById('category').innerHTML = categories[selected - 1];
 
             document.getElementById('window').scrollBy({left: document.body.clientWidth, top: 0, behavior:'smooth'});
         }
 
         function init() {
             document.getElementById('content').innerHTML = products[selected];
-            document.getElementById('category').innerHTML = 'test';
+            document.getElementById('category').innerHTML = categories[selected];
+            document.getElementById(selected).classList.add('selected');
         }
     </script>
     <script>
@@ -59,11 +60,11 @@
 </head>
 <body onload="init()">
     <div id="window" class="window">
-        <div class="container-lg section-wrapper">
+        <div class="container-fluid section-wrapper">
             <section id="navigation">
                 <header class="container">
                     <div class="row justify-content-between">
-                        <div onclick="alert('to main page')" class="heading"><h1>DemoPage</h1></div>
+                        <div onclick="alert('to main page')" class="heading"><h1>peekbar:title</h1></div>
                         <a href="tel:peekbar:phone"><img src="core_icons/phone.svg" alt="call"></a>
                     </div>
                 </header>
