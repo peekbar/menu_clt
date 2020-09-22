@@ -11,15 +11,17 @@ class Menu {
 
   String getCategories() {
     var buffer = new StringBuffer();
+    var position = 0;
 
     for (Category category in categories) {
-      buffer.write(category.toWeb());
+      buffer.write(category.toWeb(position));
+      position++;
     }
 
     buffer.write('<div onclick="selectNew(');
-    buffer.write((categories.length + 1).toString());
+    buffer.write(position.toString());
     buffer.write(')" class="link" id="');
-    buffer.write((categories.length + 1).toString());
+    buffer.write(position.toString());
     buffer.write('"><p>Impressum</p></div>');
 
     return buffer.toString();

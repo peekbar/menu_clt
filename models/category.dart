@@ -8,12 +8,12 @@ class Category {
 
   Category(this.id, this.name, this.icon);
 
-  String toWeb() {
+  String toWeb(int position) {
     var buffer = new StringBuffer();
     buffer.write('<div onclick="selectNew(');
-    buffer.write(id.toString());
+    buffer.write(position.toString());
     buffer.write(')" class="category" id="');
-    buffer.write(id.toString());
+    buffer.write(position.toString());
     buffer.write('"><img class="categoryIcon" src="');
     buffer.write(icon);
     buffer.write('" alt="category icon"><p>');

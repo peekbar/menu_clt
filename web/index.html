@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>peekbar:title</title>
     <script>
-        var selected = 1;
+        var selected = 0;
 
         var categories = ['peekbar:categoryNames'];
 
@@ -22,9 +22,9 @@
             document.getElementById(clicked_id).classList.add('selected');
             selected = clicked_id;
 
-            document.getElementById('content').innerHTML = products[selected - 1];
+            document.getElementById('content').innerHTML = products[selected];
 
-            document.getElementById('category').innerHTML = categories[selected - 1];
+            document.getElementById('category').innerHTML = categories[selected];
 
             document.getElementById('window').scrollBy({left: document.body.clientWidth, top: 0, behavior:'smooth'});
         }
