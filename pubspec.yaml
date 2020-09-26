@@ -6,3 +6,5 @@ environment:
 dependencies:
   args: ^1.6.0
   mysql1: ^0.17.1
+  string_scanner: ^1.0.5
+  liquid_engine: ^0.1.2

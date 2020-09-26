@@ -1,3 +1,5 @@
+import 'package:liquid_engine/liquid_engine.dart';
+
 import 'models.dart';
 
 class Menu {
@@ -9,22 +11,20 @@ class Menu {
 
   Menu(this.id, this.menuName, this.icon);
 
-  String getCategories() {
-    var buffer = new StringBuffer();
-    var position = 0;
+  void getCategoriesContext(Context context) {
+    List<Map> categoriesList = [];
 
     for (Category category in categories) {
-      buffer.write(category.toWeb(position));
-      position++;
+      categoriesList.add(category.toMap());
     }
 
-    buffer.write('<div onclick="selectNew(');
-    buffer.write(position.toString());
-    buffer.write(')" class="link" id="');
-    buffer.write(position.toString());
-    buffer.write('"><p>Impressum</p></div>');
+    context.variables.addAll({'categories': categoriesList});
+  }
 
-    return buffer.toString();
+  void getImprintContext(Context context) {
+    context.variables.addAll({
+      'imprint': {'id': imprint.id.toString()}
+    });
   }
 
   String getCategoryNames() {
@@ -42,18 +42,17 @@ class Menu {
   String getAllContent() {
     var products = new StringBuffer();
 
-    var i = categories.length;
     for (Category category in categories) {
-      i--;
       products.write('\'');
       products.write(category.getProducts());
       products.write('\'');
-      if (i != 0) {
+
+      if (category.id != categories.length - 1) {
         products.write(',');
       }
     }
 
-    products.write(',\'' + imprint.toWeb() + '\'');
+    //products.write(',\'' + imprint.toWeb() + '\'');
     return products.toString();
   }
 }

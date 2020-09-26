@@ -38,10 +38,22 @@
       "languageVersion": "2.3"
     },
     {
+      "name": "liquid_engine",
+      "rootUri": "file:///Users/jonaspoxleitner/.pub-cache/hosted/pub.dartlang.org/liquid_engine-0.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
+    },
+    {
       "name": "logging",
       "rootUri": "file:///Users/jonaspoxleitner/.pub-cache/hosted/pub.dartlang.org/logging-0.11.4",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "meta",
+      "rootUri": "file:///Users/jonaspoxleitner/.pub-cache/hosted/pub.dartlang.org/meta-1.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "1.12"
     },
     {
       "name": "mysql1",
@@ -62,10 +74,28 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "source_span",
+      "rootUri": "file:///Users/jonaspoxleitner/.pub-cache/hosted/pub.dartlang.org/source_span-1.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
+    },
+    {
       "name": "stack_trace",
       "rootUri": "file:///Users/jonaspoxleitner/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.9.5",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "string_scanner",
+      "rootUri": "file:///Users/jonaspoxleitner/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "term_glyph",
+      "rootUri": "file:///Users/jonaspoxleitner/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "1.8"
     },
     {
       "name": "typed_data",
@@ -80,7 +110,7 @@
       "languageVersion": "2.0"
     }
   ],
-  "generated": "2020-09-21T17:56:49.455562Z",
+  "generated": "2020-09-26T11:36:22.848463Z",
   "generator": "pub",
   "generatorVersion": "2.10.0-7.3.beta"
 }
