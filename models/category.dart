@@ -27,14 +27,4 @@ class Category {
       'products': productList
     };
   }
-
-  String getProducts() {
-    var buffer = new StringBuffer();
-
-    for (Product product in products) {
-      buffer.write(product.toWeb());
-    }
-
-    return buffer.toString();
-  }
 }

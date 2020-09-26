@@ -26,33 +26,4 @@ class Menu {
       'imprint': {'id': imprint.id.toString()}
     });
   }
-
-  String getCategoryNames() {
-    var buffer = new StringBuffer();
-
-    for (Category category in categories) {
-      buffer.write('\'' + category.name + '\',');
-    }
-
-    var categoryNames = buffer.toString();
-
-    return categoryNames.substring(1, categoryNames.length - 2);
-  }
-
-  String getAllContent() {
-    var products = new StringBuffer();
-
-    for (Category category in categories) {
-      products.write('\'');
-      products.write(category.getProducts());
-      products.write('\'');
-
-      if (category.id != categories.length - 1) {
-        products.write(',');
-      }
-    }
-
-    //products.write(',\'' + imprint.toWeb() + '\'');
-    return products.toString();
-  }
 }
