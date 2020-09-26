@@ -223,18 +223,17 @@ void addIndex(Menu menu) async {
       }
     });
 
+    // TODO
     contents =
         contents.replaceAll('peekbar:categoryNames', menu.getCategoryNames());
+    contents =
+        contents.replaceAll('\'peekbar:products\'', menu.getAllContent());
 
     menu.getCategoriesContext(context);
     menu.getImprintContext(context);
 
     final template = Template.parse(context, Source.fromString(contents));
-    contents = template.render(context);
-
-    contents =
-        contents.replaceAll('\'peekbar:products\'', menu.getAllContent());
-    index = contents;
+    index = template.render(context);
   });
 
   await new File('menus/' + menu.menuName + '/index.html')
