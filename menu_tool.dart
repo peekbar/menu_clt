@@ -213,13 +213,18 @@ void addIndex(Menu menu) async {
   await new File('menus/' + menu.menuName + '/index.html')
       .readAsString()
       .then((String contents) {
-    contents = contents.replaceAll('peekbar:homepage', menu.imprint.homepage);
-    contents = contents.replaceAll('peekbar:phone', menu.imprint.phone);
-    contents = contents.replaceAll('peekbar:title', menu.imprint.companyName);
+    final context = Context.create();
+
+    context.variables.addAll({
+      'page': {
+        'homepage': menu.imprint.homepage,
+        'phone': menu.imprint.phone,
+        'companyName': menu.imprint.companyName
+      }
+    });
+
     contents =
         contents.replaceAll('peekbar:categoryNames', menu.getCategoryNames());
-
-    final context = Context.create();
 
     menu.getCategoriesContext(context);
     menu.getImprintContext(context);

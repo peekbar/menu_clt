@@ -6,7 +6,7 @@
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" type="text/css" href="styles/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <title>peekbar:title</title>
+    <title>{{ page.companyName }}</title>
     <script>
         var selected = 0;
 
@@ -51,8 +51,8 @@
             <section id="navigation">
                 <header class="container">
                     <div class="row justify-content-between">
-                        <div onclick="window.open('peekbar:homepage', '_blank')" class="heading"><h1>peekbar:title</h1></div>
-                        <a href="tel:peekbar:phone"><img src="core_icons/phone.svg" alt="call"></a>
+                        <div onclick="window.open('{{ page.homepage }}', '_blank')" class="heading"><h1>{{ page.companyName }}</h1></div>
+                        <a href="{{ page.phone }}"><img src="core_icons/phone.svg" alt="call"></a>
                     </div>
                 </header>
                 <div class="categories">
