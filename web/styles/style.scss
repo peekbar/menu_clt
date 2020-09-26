@@ -218,3 +218,15 @@ div.link.selected {
     font-size: 1.3em;
     text-decoration: underline;
 }
+
+div.products {
+    display: none;
+}
+
+div.products.selected {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}

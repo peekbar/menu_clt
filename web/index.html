@@ -10,27 +10,22 @@
     <script>
         var selected = 0;
 
-        var categories = ['peekbar:categoryNames'];
-
-        var products = [
-            'peekbar:products'
-        ];
-
         function selectNew(clicked_id) {
             document.getElementById(selected.toString()).classList.remove('selected');
+            document.getElementsByName(selected.toString())[0].classList.remove('selected');
             document.getElementById(clicked_id).classList.add('selected');
+            document.getElementsByName(clicked_id)[0].classList.add('selected');
             selected = clicked_id;
 
-            document.getElementById('content').innerHTML = products[selected];
-            document.getElementById('category').innerHTML = categories[selected];
+            document.getElementById('category').innerHTML = document.getElementsByName('categoryText')[selected].textContent;
 
             scrollToRight();
         }
 
         function init() {
-            document.getElementById('content').innerHTML = products[selected];
-            document.getElementById('category').innerHTML = categories[selected];
             document.getElementById(selected).classList.add('selected');
+            document.getElementsByName(selected.toString())[0].classList.add('selected');
+            document.getElementById('category').innerHTML = document.getElementsByName('categoryText')[selected].textContent;
         }
     </script>
     <script>
@@ -59,12 +54,12 @@
                     {% for category in categories %}
                     <div onclick="selectNew({{ category.id }})" class="category" id="{{ category.id }}">
                         <img class="categoryIcon" src="{{ category.icon }}" alt="category icon">
-                        <p>{{ category.name }}</p>
+                        <p name="categoryText">{{ category.name }}</p>
                         <img class="arrow" src="core_icons/arrow_right.svg" alt="go to arrow">
                     </div>
                     {% endfor %}
                     <div onclick="selectNew({{ imprint.id }})" class="link" id="{{ imprint.id }}">
-                        <p>Impressum</p>
+                        <p name="categoryText">Impressum</p>
                     </div>
                 </div>
                 <div>
@@ -94,7 +89,17 @@
             </section>
         </div>
         <div class="container-lg section-wrapper">
-            <section id="content"></section>
+            <section id="content" class="content">
+                {% for category in categories %}
+                <div class="products" name="{{ category.id }}">
+                    <p>{{ category.name }}</p>
+                </div>
+                {% endfor %}
+
+                <div class="products" name="{{ imprint.id }}">
+                    <p>Impressum</p>
+                </div>
+            </section>
         </div>
     </div>
 
@@ -107,9 +112,7 @@
                     </button>
                 </div>
                 <div class="col">
-                    <button onclick="scrollToRight()" id="category" type="button" class="btn btn-dark btn-lg btn-block">
-                        
-                    </button>
+                    <button onclick="scrollToRight()" id="category" type="button" class="btn btn-dark btn-lg btn-block"></button>
                 </div>
             </div>
         </div>

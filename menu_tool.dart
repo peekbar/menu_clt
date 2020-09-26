@@ -223,12 +223,6 @@ void addIndex(Menu menu) async {
       }
     });
 
-    // TODO
-    contents =
-        contents.replaceAll('peekbar:categoryNames', menu.getCategoryNames());
-    contents =
-        contents.replaceAll('\'peekbar:products\'', menu.getAllContent());
-
     menu.getCategoriesContext(context);
     menu.getImprintContext(context);
 
