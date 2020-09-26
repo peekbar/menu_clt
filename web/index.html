@@ -92,7 +92,11 @@
             <section id="content" class="content">
                 {% for category in categories %}
                 <div class="products" name="{{ category.id }}">
-                    <p>{{ category.name }}</p>
+                    {% for product in category.products %}
+                    <div class="product">
+                        <p>{{ product.name }}</p>
+                    </div>
+                    {% endfor %}
                 </div>
                 {% endfor %}
 

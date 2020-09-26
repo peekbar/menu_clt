@@ -9,7 +9,23 @@ class Category {
   Category(this.id, this.name, this.icon);
 
   Map toMap() {
-    return {'name': this.name, 'id': this.id.toString(), 'icon': this.icon};
+    List productList = [];
+    for (Product product in products) {
+      productList.add({
+        'id': product.id.toString(),
+        'shortName': product.shortName,
+        'name': product.name,
+        'description': product.description,
+        'price': product.price
+      });
+    }
+
+    return {
+      'name': this.name,
+      'id': this.id.toString(),
+      'icon': this.icon,
+      'products': productList
+    };
   }
 
   String getProducts() {
