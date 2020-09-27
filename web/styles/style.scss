@@ -135,7 +135,6 @@ body {
     padding: 0;
     margin: 0;
     background-color: white;
-    font-family: 'Solway', serif;
     width: 100vw;
     height: 100vh;
 }
@@ -162,11 +161,6 @@ h1 {
     left: 0;
     font-size: 1.5em;
     text-decoration: none;
-    font-family: 'Solway', serif;
-}
-
-p {
-    font-family: 'Solway', serif;
 }
 
 a {
@@ -223,4 +217,16 @@ div.link.selected {
     font-weight: bold;
     font-size: 1.3em;
     text-decoration: underline;
+}
+
+div.products {
+    display: none;
+}
+
+div.products.selected {
+    display: block;
+}
+
+.hidden {
+    display: none;
 }

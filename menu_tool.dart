@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:args/args.dart';
 import 'package:mysql1/mysql1.dart';
+import 'package:liquid_engine/liquid_engine.dart';
 
 import 'models/models.dart';
 
@@ -23,6 +24,23 @@ void main(List<String> arguments) async {
   }
 
   switch (results.rest[0]) {
+    case 'd':
+    case 'demo':
+      print('Generating demo website.');
+      // if (results.rest.length > 1) {
+      //   print('Only upgrading \'' +
+      //       results.rest[1].toString() +
+      //       '\' to a new version.');
+      //   await upgrade(await getMenus(results.rest[1].toString()));
+      //   print('The menu should be up to date now.');
+      // } else {
+      //   print('Upgrading all menus to a new version.');
+      //   await upgrade(await getMenus(null));
+      //   print('All menus in the database should be up to date now.');
+      //   print(
+      //       'Menu is still not here? Check the available menus with the list command.');
+      // }
+      break;
     case 'u':
     case 'upgrade':
       if (results.rest.length > 1) {
@@ -128,19 +146,12 @@ Future<List<Menu>> getMenus(String menuName) async {
     for (var row in menu) {
       newMenu = Menu(row[0], row[1], row[2]);
 
-      var imprint = await connection.query(
-          'select id_Imprint, name_Imprint, street_Imprint, city_Imprint, phone_Imprint, mail_Imprint, tax_Imprint, homepage_Imprint, companyName_Imprint from imprint where id_Imprint = ?',
-          [newMenu.id]);
-      for (var row in imprint) {
-        newMenu.imprint = Imprint(row[0], row[1], row[2], row[3], row[4],
-            row[5], row[6], row[7], row[8]);
-      }
-
       var categories = await connection.query(
-          'select id_Category, name_Category, icon_Category from Category where id_Menu = ?',
+          'select name_Category, icon_Category from Category where id_Menu = ?',
           [newMenu.id]);
+      int counter = 0;
       for (var row in categories) {
-        var newCategory = Category(row[0], row[1], row[2]);
+        var newCategory = Category(counter, row[0], row[1]);
 
         var products = await connection.query(
             'select id_Product, name_Product, shortName_Product, description_Product, price_Product from Product where id_Category = ?',
@@ -162,6 +173,15 @@ Future<List<Menu>> getMenus(String menuName) async {
         }
 
         newMenu.categories.add(newCategory);
+        counter++;
+      }
+
+      var imprint = await connection.query(
+          'select name_Imprint, street_Imprint, city_Imprint, phone_Imprint, mail_Imprint, tax_Imprint, homepage_Imprint, companyName_Imprint from imprint where id_Imprint = ?',
+          [newMenu.id]);
+      for (var row in imprint) {
+        newMenu.imprint = Imprint(newMenu.categories.length, row[0], row[1],
+            row[2], row[3], row[4], row[5], row[6], row[7]);
       }
     }
 
@@ -204,15 +224,21 @@ void addIndex(Menu menu) async {
   await new File('menus/' + menu.menuName + '/index.html')
       .readAsString()
       .then((String contents) {
-    contents = contents.replaceAll('peekbar:homepage', menu.imprint.homepage);
-    contents = contents.replaceAll('peekbar:phone', menu.imprint.phone);
-    contents = contents.replaceAll('peekbar:title', menu.imprint.companyName);
-    contents =
-        contents.replaceAll('peekbar:categoryNames', menu.getCategoryNames());
-    contents = contents.replaceAll('peekbar:categories', menu.getCategories());
-    contents =
-        contents.replaceAll('\'peekbar:products\'', menu.getAllContent());
-    index = contents;
+    final context = Context.create();
+
+    context.variables.addAll({
+      'page': {
+        'homepage': menu.imprint.homepage,
+        'phone': menu.imprint.phone,
+        'companyName': menu.imprint.companyName
+      }
+    });
+
+    menu.getCategoriesContext(context);
+    menu.getImprintContext(context);
+
+    final template = Template.parse(context, Source.fromString(contents));
+    index = template.render(context);
   });
 
   await new File('menus/' + menu.menuName + '/index.html')
