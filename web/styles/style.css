@@ -164,6 +164,10 @@ h1 {
   text-decoration: none;
 }
 
+p {
+  margin-bottom: 0;
+}
+
 a {
   text-decoration: none;
 }
@@ -189,7 +193,6 @@ div.category {
 div.category p {
   font-weight: bold;
   font-size: 1.6em;
-  padding: 1em;
 }
 
 div.category img.categoryIcon {
@@ -201,16 +204,6 @@ div.category img.arrow {
   margin: 1em;
   height: 2.5em;
   width: 2.5em;
-}
-
-div.category.selected p {
-  font-weight: bolder;
-  font-size: 1.8em;
-}
-
-div.category.selected img.categoryIcon {
-  height: 7em;
-  width: 7em;
 }
 
 div.link {
