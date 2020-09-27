@@ -146,8 +146,19 @@ Future<List<Menu>> getMenus(String menuName) async {
             'select id_Product, name_Product, shortName_Product, description_Product, price_Product from Product where id_Category = ?',
             [newCategory.id]);
         for (var row in products) {
+
+          List<String> additives = [];
+          var ads = await connection.query(
+            'SELECT name_Additive FROM menus.Product_has_Additive NATURAL JOIN menus.Additive WHERE id_Product = ?',
+            [row[0]]);
+          for (var additive in ads) {
+            if (additive != null) {
+            additives.add(additive[0]);
+            }
+          }
+
           newCategory.products
-              .add(new Product(row[0], row[1], row[2], row[3], row[4]));
+              .add(new Product(row[0], row[1], row[2], row[3], row[4], additives));
         }
 
         newMenu.categories.add(newCategory);

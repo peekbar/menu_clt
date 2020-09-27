@@ -4,8 +4,9 @@ class Product {
   String name;
   String description;
   String price;
+  List<String> additives;
 
-  Product(this.id, this.name, this.shortName, this.description, this.price);
+  Product(this.id, this.name, this.shortName, this.description, this.price, this.additives);
 
   String toWeb() {
     var buffer = new StringBuffer();
