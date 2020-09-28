@@ -16,7 +16,8 @@ class Category {
         'shortName': product.shortName,
         'name': product.name,
         'description': product.description,
-        'price': product.price
+        'price': product.price,
+        'additives': product.additives
       });
     }
 

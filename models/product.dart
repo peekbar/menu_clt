@@ -4,7 +4,8 @@ class Product {
   String name;
   String description;
   String price;
-  List<String> additives;
+  String additives;
+  String test = 'test';
 
   Product(this.id, this.name, this.shortName, this.description, this.price, this.additives);
 
