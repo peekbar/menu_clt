@@ -147,31 +147,31 @@ Future<List<Menu>> getMenus(String menuName) async {
       newMenu = Menu(row[0], row[1], row[2]);
 
       var categories = await connection.query(
-          'select name_Category, icon_Category from Category where id_Menu = ?',
+          'select name_Category, icon_Category, id_Category from Category where id_Menu = ?',
           [newMenu.id]);
       int counter = 0;
       for (var row in categories) {
-        var newCategory = Category(counter, row[0], row[1]);
+        var newCategory = Category(row[2], row[0], row[1]);
 
         var products = await connection.query(
             'select id_Product, name_Product, shortName_Product, description_Product, price_Product from Product where id_Category = ?',
             [newCategory.id]);
         for (var row in products) {
-
           List<String> additives = [];
           var ads = await connection.query(
-            'SELECT name_Additive FROM menus.Product_has_Additive NATURAL JOIN menus.Additive WHERE id_Product = ?',
-            [row[0]]);
+              'SELECT name_Additive FROM menus.Product_has_Additive NATURAL JOIN menus.Additive WHERE id_Product = ?',
+              [row[0]]);
           for (var additive in ads) {
             if (additive != null) {
-            additives.add(additive[0]);
+              additives.add(additive[0]);
             }
           }
 
-          newCategory.products
-              .add(new Product(row[0], row[1], row[2], row[3], row[4], additives));
+          newCategory.products.add(
+              new Product(row[0], row[1], row[2], row[3], row[4], additives));
         }
 
+        newCategory.id = counter;
         newMenu.categories.add(newCategory);
         counter++;
       }
