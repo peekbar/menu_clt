@@ -101,11 +101,10 @@
     div.navigation {
         border-radius: 0.5em;
         margin: 1em;
-        padding: 0.5em;
+        padding: 1em;
         display: flex;
-        background-color: lightgray;
         width: calc(100vw - 2em);
-        position: fixed;
+        position: sticky;
         bottom: 0;
         user-select: none;
     
