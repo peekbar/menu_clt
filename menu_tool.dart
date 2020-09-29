@@ -166,10 +166,9 @@ Future<List<Menu>> getMenus(String menuName) async {
               additives.add(additive[0]);
             }
           }
-      
-          newCategory.products
-              .add(new Product(row[0], row[1], row[2], row[3], row[4], additives.join(' ,')));
-          print(newCategory.products.last.additives);
+
+          newCategory.products.add(new Product(
+              row[0], row[1], row[2], row[3], row[4], additives.join(', ')));
         }
 
         newCategory.id = counter;
