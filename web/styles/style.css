@@ -206,20 +206,6 @@ div.category img.arrow {
   width: 2.5em;
 }
 
-div.link {
-  padding: 1em;
-  font-weight: normal;
-  font-size: 1.3em;
-  text-decoration: underline;
-}
-
-div.link.selected {
-  padding: 1em;
-  font-weight: bold;
-  font-size: 1.3em;
-  text-decoration: underline;
-}
-
 div.products {
   display: none;
 }
