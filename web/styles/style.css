@@ -25,21 +25,6 @@
   div.category {
     width: 100%;
   }
-  table {
-    padding: 1rem;
-    width: 100%;
-    text-align: left;
-  }
-  table th {
-    font-size: 1.4em;
-    font-weight: bolder;
-  }
-  table td {
-    font-size: 1.4em;
-  }
-  table .price {
-    text-align: right;
-  }
   div.navigation {
     display: none;
   }
@@ -75,21 +60,6 @@
   }
   div.category {
     width: calc(100vw - 2em);
-  }
-  table {
-    padding: 1rem;
-    width: 100%;
-    text-align: left;
-  }
-  table th {
-    font-size: 1.4em;
-    font-weight: bolder;
-  }
-  table td {
-    font-size: 1.4em;
-  }
-  table td.price {
-    text-align: right;
   }
   div.navigation {
     border-radius: 0.5em;

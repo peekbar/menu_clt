@@ -23,25 +23,6 @@
         width: 100%;
     }
     
-    table {
-        padding: 1rem;
-        width: 100%;
-        text-align: left;
-    
-        th {
-            font-size: 1.4em;
-            font-weight: bolder;
-        }
-    
-        td {
-            font-size: 1.4em;
-        }
-    
-        .price {
-            text-align: right;
-        }
-    }
-    
     div.navigation {
         display: none;
     }
@@ -77,25 +58,6 @@
 
     div.category {
         width: calc(100vw - 2em);
-    }
-    
-    table {
-        padding: 1rem;
-        width: 100%;
-        text-align: left;
-    
-        th {
-            font-size: 1.4em;
-            font-weight: bolder;
-        }
-    
-        td {
-            font-size: 1.4em;
-        }
-    
-        td.price {
-            text-align: right;
-        }
     }
     
     div.navigation {

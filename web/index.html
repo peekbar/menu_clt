@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height initial-scale=1.0">
     <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" media="screen">
+    <link rel="stylesheet" type="text/css" href="styles/style.css" media="screen">
     <title>{{ imprint.companyName }}</title>
     <script>
         var selected = 0;
@@ -75,13 +75,13 @@
                             <div class="modal-dialog modal-dialog-scrollable" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                        <h5 class="modal-title" id="exampleModalScrollableTitle">Über diese Seite</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam sunt optio cupiditate? Itaque fugiat blanditiis explicabo iste quibusdam eligendi laboriosam ipsam necessitatibus tempora, repellat id delectus quod, minus, deleniti nobis.
+                                        Diese Seite wurde von dem Unternehmen PEEKBAR für {{ imprint.companyName }} erstellt. Falls Sie Fragen, Probleme oder Verbesserungsvorschläge haben, können Sie sich gerne an uns wenden.
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-dark" onclick="window.open('www.peekbar.de', '_blank')">Zu PEEKBAR</button>
@@ -148,7 +148,7 @@
                             <td><a class="text-white" href="mailto:{{ imprint.mail }}">{{ imprint.mail }}</a></td>
                         </tr>
                         <tr>
-                            <td>Umsatzsteueridentifikationsnummer:</td>
+                            <td>Umsatzsteuer-ID:</td>
                             <td>{{ imprint.tax }}</td>
                         </tr>
                         </tbody>
