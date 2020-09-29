@@ -62,7 +62,7 @@ void main(List<String> arguments) async {
       // returns all menus in the database
       print('All the available menus in the database:');
       for (String menuName in await getAvailableMenus()) {
-        print(menuName);
+        print('- ' + menuName);
       }
 
       // prints all menus in the menus/ directory
@@ -71,7 +71,10 @@ void main(List<String> arguments) async {
         Directory('menus')
             .list(recursive: false, followLinks: false)
             .listen((FileSystemEntity entity) {
-          print(entity.path.replaceAll('menus/', ''));
+          String fileName = entity.path.replaceAll('menus/', '');
+          if (fileName != '.DS_Store') {
+            print('- ' + fileName);
+          }
         });
       } else {
         print('There are no generated menus.');
