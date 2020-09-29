@@ -226,14 +226,6 @@ void addIndex(Menu menu) async {
       .then((String contents) {
     final context = Context.create();
 
-    context.variables.addAll({
-      'page': {
-        'homepage': menu.imprint.homepage,
-        'phone': menu.imprint.phone,
-        'companyName': menu.imprint.companyName
-      }
-    });
-
     menu.getCategoriesContext(context);
     menu.getImprintContext(context);
 

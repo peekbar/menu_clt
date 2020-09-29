@@ -6,28 +6,15 @@
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <title>{{ page.companyName }}</title>
+    <title>{{ imprint.companyName }}</title>
     <script>
         var selected = 0;
 
         function selectNew(clicked_id) {
-            if (document.getElementById(clicked_id).classList.contains('link') && document.getElementById(selected.toString()).classList.contains('link')) {
-                document.getElementById(selected.toString()).classList.remove('selected');
-                document.getElementById(clicked_id).classList.add('selected');
-            } else if (!document.getElementById(clicked_id).classList.contains('link') && document.getElementById(selected.toString()).classList.contains('link')) {
-                document.getElementById(selected.toString()).classList.remove('selected');
-                document.getElementById(clicked_id).classList.remove('btn-outline-dark');
-                document.getElementById(clicked_id).classList.add('btn-dark');
-            } else if (document.getElementById(clicked_id).classList.contains('link') && !document.getElementById(selected.toString()).classList.contains('link')) {
-                document.getElementById(selected.toString()).classList.remove('btn-dark');
-                document.getElementById(selected.toString()).classList.add('btn-outline-dark');
-                document.getElementById(clicked_id).classList.add('selected');
-            } else {
-                document.getElementById(selected.toString()).classList.remove('btn-dark');
-                document.getElementById(selected.toString()).classList.add('btn-outline-dark');
-                document.getElementById(clicked_id).classList.remove('btn-outline-dark');
-                document.getElementById(clicked_id).classList.add('btn-dark');
-            }
+            document.getElementById(selected.toString()).classList.remove('btn-dark');
+            document.getElementById(selected.toString()).classList.add('btn-outline-dark');
+            document.getElementById(clicked_id).classList.remove('btn-outline-dark');
+            document.getElementById(clicked_id).classList.add('btn-dark');
             
             document.getElementsByName(selected.toString())[0].classList.remove('selected');
             document.getElementsByName(clicked_id)[0].classList.add('selected');
@@ -62,8 +49,8 @@
         <div class="container-fluid section-wrapper">
             <section id="navigation">
                 <header class="container justify-content-between">
-                    <div onclick="window.open('{{ page.homepage }}', '_blank')" class="heading"><h1>{{ page.companyName }}</h1></div>
-                    <a href="{{ page.phone }}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-telephone-outbound-fill" xmlns="http://www.w3.org/2000/svg">
+                    <div onclick="window.open('{{ imprint.homepage }}', '_blank')" class="heading"><h1>{{ imprint.companyName }}</h1></div>
+                    <a href="{{ imprint.phone }}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-telephone-outbound-fill" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zM11 .5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V1.707l-4.146 4.147a.5.5 0 0 1-.708-.708L14.293 1H11.5a.5.5 0 0 1-.5-.5z"/>
                       </svg></a>
                 </header>
@@ -137,7 +124,35 @@
                 {% endfor %}
 
                 <div class="products" name="{{ imprint.id }}">
-                    <p>Impressum</p>
+                    <table class="table table-hover table-borderless table-dark rounded">
+                        <thead>
+                        <tr>
+                            <th scope="col">Impressum:</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Name:</td>
+                            <td>{{ imprint.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Anschrift:</td>
+                            <td>{{ imprint.street }}, {{ imprint.city }}</td>
+                        </tr>
+                        <tr>
+                            <td>Telefon:</td>
+                            <td><a class="text-white" href="tel:{{ imprint.phone }}">{{ imprint.phone }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Mail:</td>
+                            <td><a class="text-white" href="mailto:{{ imprint.mail }}">{{ imprint.mail }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Umsatzsteueridentifikationsnummer:</td>
+                            <td>{{ imprint.tax }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
             <div class="navigation">
