@@ -42,14 +42,14 @@
   div.section-wrapper {
     padding: 0;
     margin: 0;
-    width: 100vw;
+    width: 200vw;
     scroll-snap-align: start;
   }
   section {
     padding: 1rem;
     padding-bottom: 7em;
     width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
     overflow: auto;
     text-align: center;
     position: relative;
