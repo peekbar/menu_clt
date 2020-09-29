@@ -95,7 +95,6 @@
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </section>
             <div class="navigation">
@@ -120,7 +119,7 @@
             <section id="content" class="content">
                 {% for category in categories %}
                 <div class="products" name="{{ category.id }}">
-                    <div id="accordion{{category.id}}">
+                    <div id="accordion{{ category.id }}">
                     {% for product in category.products %}
                     <div class="product">
                         <div class="card p-0 mb-1 bg-white border-dark">
@@ -131,7 +130,7 @@
                                 </div>
                             </div>
                             
-                            <div id="collapse{{product.id}}" class="collapse {% if product.first %}show{% endif %}" aria-labelledby="heading{{ product.id }}" data-parent="#accordion{{ category.id }}">
+                            <div id="collapse{{ product.id }}" class="collapse {% if product.first %}show{% endif %}" aria-labelledby="heading{{ product.id }}" data-parent="#accordion{{ category.id }}">
                               <div class="card-body">
                                 <div class="container justify-content-between" data-target="#collapse{{ product.id }}" aria-expanded="true" aria-controls="collapse{{ product.id }}">
                                     <p>{{ product.description }}</p>
