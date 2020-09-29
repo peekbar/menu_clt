@@ -36,6 +36,15 @@
             document.getElementById(selected).classList.add('btn-dark');
             document.getElementsByName(selected.toString())[0].classList.add('selected');
             document.getElementById('category').innerHTML = document.getElementsByName('categoryText')[selected].textContent;
+
+            $('[data-toggle="popover"]').popover({
+                placement : 'top',
+                trigger : 'focus'
+            });
+        }
+
+        function dismissPopover() {
+            $('[data-toggle="popover"]').popover('hide');
         }
 
         function scrollToRight() {
@@ -50,7 +59,7 @@
     </script>
 </head>
 <body onload="init()">
-    <div id="window" class="window">
+    <div id="window" class="window" onscroll="dismissPopover()">
         <div class="container-fluid section-wrapper">
             <section id="navigation">
                 <header class="container justify-content-between">
