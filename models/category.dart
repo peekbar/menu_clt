@@ -10,6 +10,7 @@ class Category {
 
   Map toMap() {
     List productList = [];
+    bool first = true;
     for (Product product in products) {
       productList.add({
         'id': product.id.toString(),
@@ -17,8 +18,10 @@ class Category {
         'name': product.name,
         'description': product.description,
         'price': product.price,
-        'additives': product.additives
+        'additives': product.additives,
+        'first': first
       });
+      first = false;
     }
 
     return {

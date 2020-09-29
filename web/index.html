@@ -36,6 +36,10 @@
             document.getElementById('category').innerHTML = document.getElementsByName('categoryText')[selected].textContent;
 
             scrollToRight();
+            $('[data-toggle="popover"]').popover({
+                placement : 'top',
+                trigger : 'focus'
+            });
         }
 
         function init() {
@@ -130,15 +134,39 @@
             <section id="content" class="content">
                 {% for category in categories %}
                 <div class="products" name="{{ category.id }}">
+                    <div id="accordion{{category.id}}">
                     {% for product in category.products %}
                     <div class="product">
-                        <p>{{ product.name }}</p>
-                        <p>{{ product.additives }}</p>
+                        <div class="card p-0 mb-1 bg-white border-dark">
+                            <div class="card-header bg-dark text-white" id="heading{{product.id}}">
+                            <div class="row justify-content-between " data-toggle="collapse" data-target="#collapse{{product.id}}" aria-expanded="true" aria-controls="collapse{{product.id}}">
+                                <p> {{ product.name }} </p>
+                                <p> {{ product.price }} </p>
+                            </div>
+                            </div>
+                            
+                            
+
+                            <div id="collapse{{product.id}}" class="collapse {% if product.first %}show{% endif %}" aria-labelledby="heading{{product.id}}" data-parent="#accordion{{category.id}}">
+                              <div class="card-body">
+                                <div class="row" data-target="#collapse{{product.id}}" aria-expanded="true" aria-controls="collapse{{product.id}}">
+                                    <p>{{product.description}} <svg tabindex="0" href="#" title="Zusatzstoffe"data-toggle="popover"data-placement="top"data-content=" {{ product.additives }} " width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                        <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z"/>
+                                        <circle cx="8" cy="4.5" r="1"/>
+                                      </svg></p>
+                                </div>
+                              </div>
+                            </div>
+
+
+                          </div>
                     </div>
                     {% endfor %}
                 </div>
+                </div>
                 {% endfor %}
-
+                
                 <div class="products" name="{{ imprint.id }}">
                     <p>Impressum</p>
                 </div>
@@ -158,9 +186,12 @@
             </div>
         </div>
     </div>
-
+    <script>
+        $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+        });
+        </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
 </body>
 </html>
