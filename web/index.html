@@ -4,30 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height initial-scale=1.0">
     <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <title>{{ page.companyName }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" media="screen">
+    <link rel="stylesheet" type="text/css" href="styles/style.css" media="screen">
+    <title>{{ imprint.companyName }}</title>
     <script>
         var selected = 0;
 
         function selectNew(clicked_id) {
-            if (document.getElementById(clicked_id).classList.contains('link') && document.getElementById(selected.toString()).classList.contains('link')) {
-                document.getElementById(selected.toString()).classList.remove('selected');
-                document.getElementById(clicked_id).classList.add('selected');
-            } else if (!document.getElementById(clicked_id).classList.contains('link') && document.getElementById(selected.toString()).classList.contains('link')) {
-                document.getElementById(selected.toString()).classList.remove('selected');
-                document.getElementById(clicked_id).classList.remove('btn-outline-dark');
-                document.getElementById(clicked_id).classList.add('btn-dark');
-            } else if (document.getElementById(clicked_id).classList.contains('link') && !document.getElementById(selected.toString()).classList.contains('link')) {
-                document.getElementById(selected.toString()).classList.remove('btn-dark');
-                document.getElementById(selected.toString()).classList.add('btn-outline-dark');
-                document.getElementById(clicked_id).classList.add('selected');
-            } else {
-                document.getElementById(selected.toString()).classList.remove('btn-dark');
-                document.getElementById(selected.toString()).classList.add('btn-outline-dark');
-                document.getElementById(clicked_id).classList.remove('btn-outline-dark');
-                document.getElementById(clicked_id).classList.add('btn-dark');
-            }
+            document.getElementById(selected.toString()).classList.remove('btn-dark');
+            document.getElementById(selected.toString()).classList.add('btn-outline-dark');
+            document.getElementById(clicked_id).classList.remove('btn-outline-dark');
+            document.getElementById(clicked_id).classList.add('btn-dark');
             
             document.getElementsByName(selected.toString())[0].classList.remove('selected');
             document.getElementsByName(clicked_id)[0].classList.add('selected');
@@ -66,8 +53,8 @@
         <div class="container-fluid section-wrapper">
             <section id="navigation">
                 <header class="container justify-content-between">
-                    <div onclick="window.open('{{ page.homepage }}', '_blank')" class="heading"><h1>{{ page.companyName }}</h1></div>
-                    <a href="{{ page.phone }}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-telephone-outbound-fill" xmlns="http://www.w3.org/2000/svg">
+                    <div onclick="window.open('https:\/\/' + '{{ imprint.homepage }}', '_blank')" class="heading"><h1>{{ imprint.companyName }}</h1></div>
+                    <a href="{{ imprint.phone }}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-telephone-outbound-fill" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zM11 .5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V1.707l-4.146 4.147a.5.5 0 0 1-.708-.708L14.293 1H11.5a.5.5 0 0 1-.5-.5z"/>
                       </svg></a>
                 </header>
@@ -75,51 +62,49 @@
                     {% for category in categories %}
                     <button type="button" onclick="selectNew({{ category.id }})" class="category btn btn-lg btn-block btn-outline-dark" id="{{ category.id }}">
                         <p name="categoryText">{{ category.name }}</p>
-                        <!-- <img class="categoryIcon" src="{{ category.icon }}" alt="category icon"> -->
-                        
-                        <!-- <img class="arrow" src="core_icons/arrow_right.svg" alt="go to arrow"> -->
                     </button>
                     {% endfor %}
-                    <div onclick="selectNew({{ imprint.id }})" class="link" id="{{ imprint.id }}">
-                        <p name="categoryText">Impressum</p>
+
+                    <div class="row justify-content-center m-2">
+                        <button type="button" onclick="selectNew({{ imprint.id }})" class="category btn btn-outline-dark" id="{{ imprint.id }}">
+                            <p name="categoryText">Impressum</p>
+                        </button>
                     </div>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalScrollable">
+                    
+                    <div class="row justify-content-center m-2">
+                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalScrollable">
                         Über diese Seite
-                    </button>
-                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-scrollable" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam sunt optio cupiditate? Itaque fugiat blanditiis explicabo iste quibusdam eligendi laboriosam ipsam necessitatibus tempora, repellat id delectus quod, minus, deleniti nobis.
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-dark" onclick="window.open('www.peekbar.de', '_blank')">Zu PEEKBAR</button>
+                        </button>
+                        <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalScrollableTitle">Über diese Seite</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Diese Seite wurde von dem Unternehmen PEEKBAR für {{ imprint.companyName }} erstellt. Falls Sie Fragen, Probleme oder Verbesserungsvorschläge haben, können Sie sich gerne an uns wenden.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-dark" onclick="window.open('https:\/\/www.peekbar.de', '_blank')">Zu PEEKBAR</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </section>
             <div class="navigation">
                 <div class="container-fluid">
                     <div class="row justify-content-around">
                         <div class="col">
-                            <button onclick="scrollToRight()" id="" type="button" class="btn btn-dark btn-block row">
-                                <div class="col">
+                            <button onclick="scrollToRight()" id="" type="button" class="btn btn-dark btn-block">
+                                <div class="row justify-content-center align-items-center">
                                     <p id="category"></p>
-                                </div>
-                                <div class="col">
-                                    <p> </p>
-                                </div>
-                                <div>
+                                    <p>&ensp;</p>
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                                     </svg>
@@ -168,7 +153,35 @@
                 {% endfor %}
                 
                 <div class="products" name="{{ imprint.id }}">
-                    <p>Impressum</p>
+                    <table class="table table-hover table-borderless table-dark rounded">
+                        <thead>
+                        <tr>
+                            <th scope="col">Impressum:</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Name:</td>
+                            <td>{{ imprint.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Anschrift:</td>
+                            <td>{{ imprint.street }}, {{ imprint.city }}</td>
+                        </tr>
+                        <tr>
+                            <td>Telefon:</td>
+                            <td><a class="text-white" href="tel:{{ imprint.phone }}">{{ imprint.phone }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Mail:</td>
+                            <td><a class="text-white" href="mailto:{{ imprint.mail }}">{{ imprint.mail }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Umsatzsteuer-ID:</td>
+                            <td>{{ imprint.tax }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
             <div class="navigation">
@@ -176,9 +189,12 @@
                     <div class="row justify-content-around">
                         <div class="col">
                             <button onclick="scrollToLeft()" type="button" class="btn btn-dark btn-block">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-                                </svg> Navigation
+                                <div class="row justify-content-center align-items-center">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                                    </svg>
+                                <p>&ensp;Navigation</p>
+                                </div>
                             </button>
                         </div>
                     </div>

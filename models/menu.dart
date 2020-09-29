@@ -23,7 +23,17 @@ class Menu {
 
   void getImprintContext(Context context) {
     context.variables.addAll({
-      'imprint': {'id': imprint.id.toString()}
+      'imprint': {
+        'id': imprint.id.toString(),
+        'name': imprint.name,
+        'street': imprint.street,
+        'city': imprint.city,
+        'phone': imprint.phone,
+        'mail': imprint.mail,
+        'tax': imprint.tax,
+        'homepage': imprint.homepage,
+        'companyName': imprint.companyName
+      }
     });
   }
 }

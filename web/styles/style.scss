@@ -23,25 +23,6 @@
         width: 100%;
     }
     
-    table {
-        padding: 1rem;
-        width: 100%;
-        text-align: left;
-    
-        th {
-            font-size: 1.4em;
-            font-weight: bolder;
-        }
-    
-        td {
-            font-size: 1.4em;
-        }
-    
-        .price {
-            text-align: right;
-        }
-    }
-    
     div.navigation {
         display: none;
     }
@@ -77,25 +58,6 @@
 
     div.category {
         width: calc(100vw - 2em);
-    }
-    
-    table {
-        padding: 1rem;
-        width: 100%;
-        text-align: left;
-    
-        th {
-            font-size: 1.4em;
-            font-weight: bolder;
-        }
-    
-        td {
-            font-size: 1.4em;
-        }
-    
-        td.price {
-            text-align: right;
-        }
     }
     
     div.navigation {
@@ -193,20 +155,6 @@ div.category {
         height: 2.5em;
         width: 2.5em;
     }
-}
-
-div.link {
-    padding: 1em;
-    font-weight: normal;
-    font-size: 1.3em;
-    text-decoration: underline;
-}
-
-div.link.selected {
-    padding: 1em;
-    font-weight: bold;
-    font-size: 1.3em;
-    text-decoration: underline;
 }
 
 div.products {
