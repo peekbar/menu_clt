@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:async';
 
-import 'package:args/args.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:liquid_engine/liquid_engine.dart';
+import 'package:dart_console/dart_console.dart';
 
 import 'models/models.dart';
 
@@ -14,90 +14,132 @@ var settings = new ConnectionSettings(
     password: 'Password',
     db: 'menus');
 
+ConsoleColor primaryColor = ConsoleColor.brightYellow;
+String prompt = '>>> ';
+
 void main(List<String> arguments) async {
-  var parser = ArgParser();
-  var results = parser.parse(arguments);
+  final console = Console();
+  console.clearScreen();
 
-  if (results.rest.isEmpty) {
-    print('Sorry, but you have to add a command.');
-    exit(1);
-  }
+  console.write('Welcome to ');
+  console.setForegroundColor(primaryColor);
+  console.write('Menu by PEEKBAR');
+  console.resetColorAttributes();
+  console.writeLine(
+      '. This tool helps you to create or update the menus in the database.');
 
-  switch (results.rest[0]) {
-    case 'd':
-    case 'demo':
-      print('Generating demo website.');
-      // if (results.rest.length > 1) {
-      //   print('Only upgrading \'' +
-      //       results.rest[1].toString() +
-      //       '\' to a new version.');
-      //   await upgrade(await getMenus(results.rest[1].toString()));
-      //   print('The menu should be up to date now.');
-      // } else {
-      //   print('Upgrading all menus to a new version.');
-      //   await upgrade(await getMenus(null));
-      //   print('All menus in the database should be up to date now.');
-      //   print(
-      //       'Menu is still not here? Check the available menus with the list command.');
-      // }
-      break;
-    case 'u':
-    case 'upgrade':
-      if (results.rest.length > 1) {
-        print('Only upgrading \'' +
-            results.rest[1].toString() +
-            '\' to a new version.');
-        await upgrade(await getMenus(results.rest[1].toString()));
-        print('The menu should be up to date now.');
-      } else {
-        print('Upgrading all menus to a new version.');
-        await upgrade(await getMenus(null));
-        print('All menus in the database should be up to date now.');
-        print(
-            'Menu is still not here? Check the available menus with the list command.');
-      }
-      break;
-    case 'l':
-    case 'list':
-      // returns all menus in the database
-      print('All the available menus in the database:');
-      for (String menuName in await getAvailableMenus()) {
-        print('- ' + menuName);
-      }
+  console.writeLine('');
 
-      // prints all menus in the menus/ directory
-      print('The menus already generated once:');
-      if (await Directory('menus').exists()) {
-        Directory('menus')
-            .list(recursive: false, followLinks: false)
-            .listen((FileSystemEntity entity) {
-          String fileName = entity.path.replaceAll('menus/', '');
-          if (fileName != '.DS_Store') {
-            print('- ' + fileName);
+  console.write('You can get help by typing the ');
+  console.setForegroundColor(primaryColor);
+  console.write('help');
+  console.resetColorAttributes();
+  console.writeLine(' command.');
+  console.writeLine('Enter a blank line or press Ctrl+C to exit.');
+
+  while (true) {
+    console.write(prompt);
+    final response = console.readLine(cancelOnBreak: true);
+    if (response == null || response.isEmpty) {
+      console.setForegroundColor(primaryColor);
+      console.writeLine('Goodbye.');
+      console.resetColorAttributes();
+      exit(0);
+    } else {
+      var arguments = response.split(' ');
+      switch (arguments[0]) {
+        case 'u':
+        case 'upgrade':
+          if (arguments.length > 1) {
+            console.setForegroundColor(primaryColor);
+            console.writeLine(
+                'Only upgrading \'' + arguments[1] + ' to a new version.');
+            console.resetColorAttributes();
+
+            await upgrade(await getMenus(arguments[1]));
+            console.writeLine('The menu should be up to date now.');
+          } else {
+            console.setForegroundColor(primaryColor);
+            console.writeLine('Upgrading all menus to a new version.');
+            console.resetColorAttributes();
+
+            await upgrade(await getMenus(null));
+            console.writeLine(
+                'All menus in the database should be up to date now.');
           }
-        });
-      } else {
-        print('There are no generated menus.');
+          break;
+        case 'l':
+        case 'list':
+          console.setForegroundColor(primaryColor);
+          console.writeLine('Listing all the available menus.');
+          console.resetColorAttributes();
+
+          console.writeLine('All the available menus in the database:');
+          for (String menuName in await getAvailableMenus()) {
+            console.writeLine('- ' + menuName);
+          }
+
+          console.writeLine('The menus already generated once:');
+          if (await Directory('menus').exists()) {
+            Directory('menus')
+                .list(recursive: false, followLinks: false)
+                .listen((FileSystemEntity entity) {
+              String fileName = entity.path.replaceAll('menus/', '');
+              if (fileName != '.DS_Store') {
+                console.writeLine('- ' + fileName);
+              }
+            });
+          } else {
+            console.writeLine('There are no generated menus.');
+          }
+          break;
+        case 'h':
+        case 'help':
+          console.writeLine('Welcome to the help center.');
+          console.writeLine('Available commands:');
+
+          console.write(' - ');
+          console.setForegroundColor(primaryColor);
+          console.write('test');
+          console.resetColorAttributes();
+          console.writeLine(': this command is here for testing purposes');
+
+          console.write(' - ');
+          console.setForegroundColor(primaryColor);
+          console.write('upgrade');
+          console.resetColorAttributes();
+          console.writeLine(
+              ': upgrades all menus to a newer version, if available');
+
+          console.write(' - ');
+          console.setForegroundColor(primaryColor);
+          console.write('upgrade menu_name');
+          console.resetColorAttributes();
+          console.writeLine(': upgrades only menu_name to a newer version');
+
+          console.write(' - ');
+          console.setForegroundColor(primaryColor);
+          console.write('list');
+          console.resetColorAttributes();
+          console.writeLine(
+              ': lists all the created menus and also the menus in the database');
+
+          console.write(' - ');
+          console.setForegroundColor(primaryColor);
+          console.write('help');
+          console.resetColorAttributes();
+          console.writeLine(': prints these help instructions');
+          break;
+        default:
+          console.writeLine('Sorry, but this command is not supported.');
+          console.write('Please use ');
+          console.setForegroundColor(primaryColor);
+          console.write('help');
+          console.resetColorAttributes();
+          console
+              .writeLine(' for more information about the available commands.');
       }
-      break;
-    case 'h':
-    case 'help':
-      print('Welcome to the help center.');
-      print('Available commands:');
-      print(' - test (this command is here for testing purposes)');
-      print(' - upgrade (upgrades all menus to a newer version, if available)');
-      print(' - upgrade menu_name (upgrades only menu_name to a newer version');
-      print(' -   or creates it from the database if it is not yet available,');
-      print(' -   please make sure the menu_name is in the right format)');
-      print(' - list (lists all the created menus and also the menus in the');
-      print('     database)');
-      print(' - help (prints help instructions)');
-      exit(1);
-      break;
-    default:
-      print('Sorry, but this command is not supported.');
-      print('Please use \'help\' for more information about this program.');
-      exit(1);
+    }
   }
 }
 
@@ -263,6 +305,7 @@ void addWebmanifest(Menu menu) async {
   buffer.write('}');
 
   await new File('menus/' + menu.menuName + '/manifest.webmanifest')
-    ..create(recursive: true)
-    ..writeAsString(buffer.toString());
+      .create(recursive: true);
+  await new File('menus/' + menu.menuName + '/manifest.webmanifest')
+      .writeAsString(buffer.toString());
 }
