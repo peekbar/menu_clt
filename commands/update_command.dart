@@ -1,14 +1,8 @@
-import 'dart:io';
-
 import 'package:dart_console/dart_console.dart';
 
-import 'package:liquid_engine/liquid_engine.dart';
-
-import '../models/models.dart';
-import 'database_helper.dart';
 import 'command.dart';
-import 'local_file_helper.dart';
-import 'templating_helper.dart';
+import '../models/models.dart';
+import '../helper_classes/helper_classes.dart';
 
 class UpdateCommand extends Command {
   String shortcut = 'u';
