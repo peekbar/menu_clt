@@ -1,21 +1,50 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dart_console/dart_console.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:liquid_engine/liquid_engine.dart';
-import 'models/models.dart';
 
-var settings = new ConnectionSettings(
-    host: '178.27.74.41',
-    port: 3306,
-    user: 'generator',
-    password: 'Password',
-    db: 'menus');
+import '../models/models.dart';
+import 'command.dart';
 
-class Tool {
-  // updates the web directory to the newest version from Github
-  void updateFromGit() {
-    // update
+class UpdateCommand extends Command {
+  String shortcut = 'u';
+  String name = 'update';
+  String definition = 'updates all the existing menus';
+  Map<dynamic, dynamic> map;
+  var settings = new ConnectionSettings(
+      host: '178.27.74.41',
+      port: 3306,
+      user: 'generator',
+      password: 'Password',
+      db: 'menus');
+
+  UpdateCommand(Console console, ConsoleColor highlightColor)
+      : super(console, highlightColor);
+
+  void setMap(Map<dynamic, dynamic> map) {
+    this.map = map;
+  }
+
+  void exec() async {
+    if (map['argument'] != null && map['argument' != '']) {
+      console.setForegroundColor(this.highlightColor);
+      console.writeLine(
+          'Only updating \'' + map['argument'] + ' to a new version.');
+      console.resetColorAttributes();
+
+      await upgrade(await getMenus(map['argument']));
+      console.writeLine('The menu should be up to date now.');
+    } else {
+      console.setForegroundColor(this.highlightColor);
+      console.writeLine('Upgrading all menus to a new version.');
+      console.resetColorAttributes();
+
+      await upgrade(await getMenus(null));
+      console
+          .writeLine('All menus from the database should be up to date now.');
+    }
   }
 
   // creates a list of all the menus available in the database
