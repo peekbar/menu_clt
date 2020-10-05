@@ -33,18 +33,23 @@ class GenerateCommand extends Command {
     }
 
     List<Menu> availableMenus = await dbHelper.getMenus(map['argument']);
-    List<String> localMenus = lfHelper.getLocalMenuNames();
 
-    for (Menu menu in availableMenus) {
-      if (!localMenus.contains(menu.menuName)) {
-        lfHelper.copyAllFilesTo(menu);
-        tempHelper.editIndex(menu);
-        tempHelper.addWebmanifest(menu);
-      } else {
-        console.writeLine(menu.menuName + ' was already generated once.');
+    if (availableMenus != null) {
+      List<String> localMenus = lfHelper.getLocalMenuNames();
+
+      for (Menu menu in availableMenus) {
+        if (!localMenus.contains(menu.menuName)) {
+          lfHelper.copyAllFilesTo(menu);
+          tempHelper.editIndex(menu);
+          tempHelper.addWebmanifest(menu);
+        } else {
+          console.writeLine(menu.menuName + ' was already generated once.');
+        }
       }
-    }
 
-    console.writeLine('Done.');
+      console.writeLine('Done.');
+    } else {
+      console.writeLine('The database is not responding.');
+    }
   }
 }

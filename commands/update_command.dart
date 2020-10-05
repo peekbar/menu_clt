@@ -34,19 +34,24 @@ class UpdateCommand extends Command {
     }
 
     List<Menu> availableMenus = await dbHelper.getMenus(map['argument']);
-    List<String> localMenus = lfHelper.getLocalMenuNames();
 
-    for (Menu menu in availableMenus) {
-      if (localMenus.contains(menu.menuName)) {
-        lfHelper.copyAllFilesTo(menu);
-        tempHelper.editIndex(menu);
-        tempHelper.addWebmanifest(menu);
-      } else {
-        console.writeLine(
-            menu.menuName + ' is not available local, so it wont be updated.');
+    if (availableMenus != null) {
+      List<String> localMenus = lfHelper.getLocalMenuNames();
+
+      for (Menu menu in availableMenus) {
+        if (localMenus.contains(menu.menuName)) {
+          lfHelper.copyAllFilesTo(menu);
+          tempHelper.editIndex(menu);
+          tempHelper.addWebmanifest(menu);
+        } else {
+          console.writeLine(menu.menuName +
+              ' is not available local, so it wont be updated.');
+        }
       }
-    }
 
-    console.writeLine('Done.');
+      console.writeLine('Done.');
+    } else {
+      console.writeLine('The database is not responding.');
+    }
   }
 }

@@ -24,20 +24,20 @@ class CleanCommand extends Command {
     console.writeLine('Cleaning local files.');
     console.resetColorAttributes();
 
-    List<Menu> availableMenus = await dbHelper.getMenus(null);
-    List<String> availableMenuNames = [];
-    for (Menu menu in availableMenus) {
-      availableMenuNames.add(menu.menuName);
-    }
+    List<String> availableMenuNames = await dbHelper.getAvailableMenus();
 
-    List<String> localMenuNames = lfHelper.getLocalMenuNames();
+    if (availableMenuNames != null) {
+      List<String> localMenuNames = lfHelper.getLocalMenuNames();
 
-    for (String localMenuName in localMenuNames) {
-      if (!availableMenuNames.contains(localMenuName)) {
-        lfHelper.deleteLocalMenu(localMenuName);
+      for (String localMenuName in localMenuNames) {
+        if (!availableMenuNames.contains(localMenuName)) {
+          lfHelper.deleteLocalMenu(localMenuName);
+        }
       }
-    }
 
-    console.writeLine('Done.');
+      console.writeLine('Done.');
+    } else {
+      console.writeLine('The database is not responding.');
+    }
   }
 }

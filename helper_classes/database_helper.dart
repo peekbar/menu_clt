@@ -16,13 +16,17 @@ class DatabaseHelper {
   Future<List<String>> getAvailableMenus() async {
     List<String> menuNames = [];
 
-    var connection = await MySqlConnection.connect(settings);
-    var results = await connection.query('select name_Menu from menu');
-    for (var row in results) {
-      menuNames.add(row[0]);
-    }
+    try {
+      var connection = await MySqlConnection.connect(settings);
+      var results = await connection.query('select name_Menu from menu');
+      for (var row in results) {
+        menuNames.add(row[0]);
+      }
 
-    await connection.close();
+      await connection.close();
+    } catch (e) {
+      return null;
+    }
 
     return menuNames;
   }
@@ -32,75 +36,81 @@ class DatabaseHelper {
     List<String> menuNames = [];
     List<Menu> menus = [];
 
-    if (menuName == null) {
-      menuNames = await getAvailableMenus();
-    } else {
+    try {
       var connection = await MySqlConnection.connect(settings);
-      var results = await connection
-          .query('select name_Menu from menu where name_Menu = ?', [menuName]);
-      for (var row in results) {
-        menuNames.add(row[0]);
+
+      if (menuName == null) {
+        menuNames = await getAvailableMenus();
+      } else {
+        var results = await connection.query(
+            'select name_Menu from menu where name_Menu = ?', [menuName]);
+        for (var row in results) {
+          menuNames.add(row[0]);
+        }
       }
 
-      await connection.close();
+      for (String menuName in menuNames) {
+        menus.add(await getMenu(menuName, connection));
+      }
+
+      connection.close();
+
+      print('Created Dart Objects from the Database.');
+
+      return menus;
+    } catch (e) {
+      return null;
     }
+  }
 
-    for (String menuName in menuNames) {
-      var connection = await MySqlConnection.connect(settings);
-      var menu = await connection.query(
-          'select id_Menu, name_Menu, icon_Menu, Imprint_id from menu where name_Menu = ?',
-          [menuName]);
-      var newMenu;
+  Future<Menu> getMenu(String menuName, MySqlConnection connection) async {
+    var menu = await connection.query(
+        'select id_Menu, name_Menu, icon_Menu, Imprint_id from menu where name_Menu = ?',
+        [menuName]);
+    var newMenu;
 
-      for (var row in menu) {
-        newMenu = Menu(row[0], row[1], row[2]);
+    for (var row in menu) {
+      newMenu = Menu(row[0], row[1], row[2]);
 
-        var categories = await connection.query(
-            'select name_Category, icon_Category, id_Category from Category where id_Menu = ?',
-            [newMenu.id]);
-        int counter = 0;
-        for (var row in categories) {
-          var newCategory = Category(row[2], row[0], row[1]);
+      var categories = await connection.query(
+          'select name_Category, icon_Category, id_Category from Category where id_Menu = ?',
+          [newMenu.id]);
+      int counter = 0;
+      for (var row in categories) {
+        var newCategory = Category(row[2], row[0], row[1]);
 
-          var products = await connection.query(
-              'select id_Product, name_Product, shortName_Product, description_Product, price_Product from Product where id_Category = ?',
-              [newCategory.id]);
-          for (var row in products) {
-            List<String> additives = [];
-            var ads = await connection.query(
-                'SELECT name_Additive FROM menus.Product_has_Additive NATURAL JOIN menus.Additive WHERE id_Product = ?',
-                [row[0]]);
-            for (var additive in ads) {
-              if (additive != null) {
-                additives.add(additive[0]);
-              }
+        var products = await connection.query(
+            'select id_Product, name_Product, shortName_Product, description_Product, price_Product from Product where id_Category = ?',
+            [newCategory.id]);
+        for (var row in products) {
+          List<String> additives = [];
+          var ads = await connection.query(
+              'SELECT name_Additive FROM menus.Product_has_Additive NATURAL JOIN menus.Additive WHERE id_Product = ?',
+              [row[0]]);
+          for (var additive in ads) {
+            if (additive != null) {
+              additives.add(additive[0]);
             }
-
-            newCategory.products.add(new Product(
-                row[0], row[1], row[2], row[3], row[4], additives.join(', ')));
           }
 
-          newCategory.id = counter;
-          newMenu.categories.add(newCategory);
-          counter++;
+          newCategory.products.add(new Product(
+              row[0], row[1], row[2], row[3], row[4], additives.join(', ')));
         }
 
-        var imprint = await connection.query(
-            'select name_Imprint, street_Imprint, city_Imprint, phone_Imprint, mail_Imprint, tax_Imprint, homepage_Imprint, companyName_Imprint from imprint where id_Imprint = ?',
-            [newMenu.id]);
-        for (var row in imprint) {
-          newMenu.imprint = Imprint(newMenu.categories.length, row[0], row[1],
-              row[2], row[3], row[4], row[5], row[6], row[7]);
-        }
+        newCategory.id = counter;
+        newMenu.categories.add(newCategory);
+        counter++;
       }
 
-      menus.add(newMenu);
-
-      await connection.close();
+      var imprint = await connection.query(
+          'select name_Imprint, street_Imprint, city_Imprint, phone_Imprint, mail_Imprint, tax_Imprint, homepage_Imprint, companyName_Imprint from imprint where id_Imprint = ?',
+          [newMenu.id]);
+      for (var row in imprint) {
+        newMenu.imprint = Imprint(newMenu.categories.length, row[0], row[1],
+            row[2], row[3], row[4], row[5], row[6], row[7]);
+      }
     }
 
-    print('Created Dart Objects from the Database.');
-
-    return menus;
+    return newMenu;
   }
 }
