@@ -19,5 +19,5 @@ class Command {
     return ' - ' + this.name + ': ' + definition;
   }
 
-  void exec() async {}
+  void exec() {}
 }

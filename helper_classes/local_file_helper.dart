@@ -3,7 +3,7 @@ import 'dart:io';
 import '../models/models.dart';
 
 class LocalFileHelper {
-  // add all the files to the new directory (delete before copying)
+  // copies all files inside the web direcory to a local menu
   void copyAllFilesTo(Menu menu) {
     var directory = getMenuDirectory(menu);
 
@@ -14,6 +14,7 @@ class LocalFileHelper {
     Process.runSync('cp', ['-r', 'web/*', getMenuDirectory(menu).path]);
   }
 
+  // returns a list of the local menu names
   List<String> getLocalMenuNames() {
     List<String> localMenus = [];
     List<FileSystemEntity> entityList =
@@ -28,10 +29,12 @@ class LocalFileHelper {
     return localMenus;
   }
 
+  // returns true, if the menu is locally present
   bool isLocalMenuPresent(Menu menu) {
     return getMenuDirectory(menu).existsSync();
   }
 
+  // returns the local directory of a menu
   Directory getMenuDirectory(Menu menu) {
     if (menu.firebase) {
       return Directory('menus/' + menu.menuName + '/public');
@@ -40,6 +43,7 @@ class LocalFileHelper {
     }
   }
 
+  // returns the local file
   File getFile(Menu menu, String fileName) {
     if (menu.firebase) {
       return File('menus/' + menu.menuName + '/public/' + fileName);
@@ -48,6 +52,7 @@ class LocalFileHelper {
     }
   }
 
+  // deletes a local menu by the menu name
   void deleteLocalMenu(String menuName) {
     Process.runSync('rm', ['-r', 'menus/' + menuName]);
   }

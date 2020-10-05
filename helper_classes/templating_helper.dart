@@ -7,7 +7,8 @@ import 'helper_classes.dart';
 
 class TemplatingHelper {
   LocalFileHelper lfHelper = LocalFileHelper();
-  // adds all the information to the index.html and writes it in the menu directory
+
+  // templates the index.html file of a menu
   void editIndex(Menu menu) {
     File indexFile = lfHelper.getFile(menu, 'index.html');
     String indexContents = indexFile.readAsStringSync();
@@ -19,8 +20,7 @@ class TemplatingHelper {
     indexFile.writeAsStringSync(template.render(context));
   }
 
-  // adds all the necessary information to the web manifest and copies it to the right directory
-  // always use after copyAllFilesTo()
+  // generates the webmanifest file inside a local menu directory
   void addWebmanifest(Menu menu) {
     var buffer = StringBuffer();
     buffer.write('{');
@@ -37,6 +37,7 @@ class TemplatingHelper {
     mFile.writeAsStringSync(buffer.toString());
   }
 
+  // returns the full context of a menu
   Context getFullContext(Menu menu) {
     final templatingContext = Context.create();
 

@@ -29,6 +29,7 @@ class Controller {
     commandList.add(cleanCommand);
   }
 
+  // launches a new command
   void launch(String shortcut, [String argument]) async {
     var found = false;
 
@@ -51,6 +52,7 @@ class Controller {
     }
   }
 
+  // prints help if no command was found
   void noCommand() {
     console.writeLine('Sorry, but this command is not supported.');
     console.write('Please use ');

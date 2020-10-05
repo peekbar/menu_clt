@@ -12,7 +12,7 @@ class DatabaseHelper {
       password: 'Password',
       db: 'menus');
 
-  // creates a list of all the menus available in the database
+  // returns a list of all the menu names in the database
   Future<List<String>> getAvailableMenus() async {
     List<String> menuNames = [];
 
@@ -27,7 +27,7 @@ class DatabaseHelper {
     return menuNames;
   }
 
-  // get the menu from the database and returns a list of menus
+  // get a list menu names and returns a list of menus with the names
   Future<List<Menu>> getMenus(String menuName) async {
     List<String> menuNames = [];
     List<Menu> menus = [];
