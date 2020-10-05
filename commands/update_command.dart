@@ -33,16 +33,20 @@ class UpdateCommand extends Command {
       console.resetColorAttributes();
     }
 
-    await upgrade(await dbHelper.getMenus(map['argument']));
+    List<Menu> availableMenus = await dbHelper.getMenus(map['argument']);
+    List<String> localMenus = lfHelper.getLocalMenuNames();
+
+    for (Menu menu in availableMenus) {
+      if (localMenus.contains(menu.menuName)) {
+        lfHelper.copyAllFilesTo(menu);
+        tempHelper.editIndex(menu);
+        tempHelper.addWebmanifest(menu);
+      } else {
+        console.writeLine(
+            menu.menuName + ' is not available local, so it wont be updated');
+      }
+    }
 
     console.writeLine('Done.');
-  }
-
-  void upgrade(List<Menu> menus) async {
-    for (Menu menu in menus) {
-      await lfHelper.copyAllFilesTo(menu);
-      await tempHelper.addIndex(menu);
-      await tempHelper.addWebmanifest(menu);
-    }
   }
 }

@@ -6,7 +6,7 @@ import '../models/models.dart';
 
 class DatabaseHelper {
   var settings = new ConnectionSettings(
-      host: '178.27.74.41',
+      host: '178.27.74.43',
       port: 3306,
       user: 'generator',
       password: 'Password',

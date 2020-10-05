@@ -4,16 +4,47 @@ import '../models/models.dart';
 
 class LocalFileHelper {
   // add all the files to the new directory (delete before copying)
-  void copyAllFilesTo(Menu menu) async {
-    var directory = await new Directory('menus/' + menu.menuName);
+  void copyAllFilesTo(Menu menu) {
+    var directory = getMenuDirectory(menu);
 
-    if (await directory.exists()) {
-      await directory.deleteSync(recursive: true);
+    if (directory.existsSync()) {
+      Process.runSync('rm', ['-r', getMenuDirectory(menu).path + '/*']);
     }
 
-    await directory.create(recursive: true);
+    Process.runSync('cp', ['-r', 'web/*', getMenuDirectory(menu).path]);
+  }
 
-    await Process.runSync('cp', ['-r', 'web', 'menus/web']);
-    await new Directory('menus/web').rename('menus/' + menu.menuName);
+  List<String> getLocalMenuNames() {
+    List<String> localMenus = [];
+    List<FileSystemEntity> entityList =
+        Directory('menus').listSync(recursive: false, followLinks: false);
+
+    for (FileSystemEntity entity in entityList) {
+      if (FileSystemEntity.isDirectorySync(entity.path)) {
+        var path = entity.path.split('/');
+        localMenus.add(path[path.length - 1]);
+      }
+    }
+    return localMenus;
+  }
+
+  bool isLocalMenuPresent(Menu menu) {
+    return getMenuDirectory(menu).existsSync();
+  }
+
+  Directory getMenuDirectory(Menu menu) {
+    if (menu.firebase) {
+      return Directory('menus/' + menu.menuName + '/public');
+    } else {
+      return Directory('menus/' + menu.menuName);
+    }
+  }
+
+  File getFile(Menu menu, String fileName) {
+    if (menu.firebase) {
+      return File('menus/' + menu.menuName + '/public/' + fileName);
+    } else {
+      return File('menus/' + menu.menuName + '/' + fileName);
+    }
   }
 }

@@ -6,6 +6,7 @@ class Menu {
   int id;
   String menuName;
   String icon;
+  bool firebase = false; //default for now
   List<Category> categories = [];
   Imprint imprint;
 

@@ -3,39 +3,25 @@ import 'dart:io';
 import 'package:liquid_engine/liquid_engine.dart';
 
 import '../models/models.dart';
+import 'helper_classes.dart';
 
 class TemplatingHelper {
+  LocalFileHelper lfHelper = LocalFileHelper();
   // adds all the information to the index.html and writes it in the menu directory
-  void addIndex(Menu menu) async {
-    var index;
+  void editIndex(Menu menu) {
+    File indexFile = lfHelper.getFile(menu, 'index.html');
+    String indexContents = indexFile.readAsStringSync();
 
-    await new File('menus/' + menu.menuName + '/index.html')
-        .readAsString()
-        .then((String contents) {
-      final context = Context.create();
+    Context context = getFullContext(menu);
 
-      context.variables.addAll({
-        'page': {
-          'homepage': menu.imprint.homepage,
-          'phone': menu.imprint.phone,
-          'companyName': menu.imprint.companyName
-        }
-      });
+    final template = Template.parse(context, Source.fromString(indexContents));
 
-      menu.getCategoriesContext(context);
-      menu.getImprintContext(context);
-
-      final template = Template.parse(context, Source.fromString(contents));
-      index = template.render(context);
-    });
-
-    await new File('menus/' + menu.menuName + '/index.html')
-      ..writeAsString(index);
+    indexFile.writeAsStringSync(template.render(context));
   }
 
   // adds all the necessary information to the web manifest and copies it to the right directory
   // always use after copyAllFilesTo()
-  void addWebmanifest(Menu menu) async {
+  void addWebmanifest(Menu menu) {
     var buffer = StringBuffer();
     buffer.write('{');
     buffer.write('"name": "' + menu.imprint.companyName + '",');
@@ -46,10 +32,25 @@ class TemplatingHelper {
     buffer.write('"theme_color": "#fff",');
     buffer.write('"description": "A digital menu made by peekbar."');
     buffer.write('}');
+    File mFile = lfHelper.getFile(menu, 'manifest.webmanifest');
+    mFile.createSync(recursive: true);
+    mFile.writeAsStringSync(buffer.toString());
+  }
 
-    await new File('menus/' + menu.menuName + '/manifest.webmanifest')
-        .create(recursive: true);
-    await new File('menus/' + menu.menuName + '/manifest.webmanifest')
-        .writeAsString(buffer.toString());
+  Context getFullContext(Menu menu) {
+    final templatingContext = Context.create();
+
+    templatingContext.variables.addAll({
+      'page': {
+        'homepage': menu.imprint.homepage,
+        'phone': menu.imprint.phone,
+        'companyName': menu.imprint.companyName
+      }
+    });
+
+    menu.getCategoriesContext(templatingContext);
+    menu.getImprintContext(templatingContext);
+
+    return templatingContext;
   }
 }
