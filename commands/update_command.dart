@@ -43,7 +43,7 @@ class UpdateCommand extends Command {
         tempHelper.addWebmanifest(menu);
       } else {
         console.writeLine(
-            menu.menuName + ' is not available local, so it wont be updated');
+            menu.menuName + ' is not available local, so it wont be updated.');
       }
     }
 

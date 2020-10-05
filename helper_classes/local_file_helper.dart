@@ -47,4 +47,8 @@ class LocalFileHelper {
       return File('menus/' + menu.menuName + '/' + fileName);
     }
   }
+
+  void deleteLocalMenu(String menuName) {
+    Process.runSync('rm', ['-r', 'menus/' + menuName]);
+  }
 }

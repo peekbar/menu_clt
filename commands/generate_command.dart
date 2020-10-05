@@ -1,6 +1,7 @@
 import 'package:dart_console/dart_console.dart';
 
 import 'command.dart';
+import '../models/models.dart';
 import '../helper_classes/helper_classes.dart';
 
 class GenerateCommand extends Command {
@@ -19,17 +20,31 @@ class GenerateCommand extends Command {
     this.map = map;
   }
 
-  void exec() {
-    List<String> localMenus = lfHelper.getLocalMenuNames();
-    //   console.writeLine('Welcome to the help center.');
-    //   console.writeLine('Available commands:');
+  void exec() async {
+    if (map['argument'] != null && map['argument' != '']) {
+      console.setForegroundColor(this.highlightColor);
+      console.writeLine('Only generating \'' + map['argument'] + '.');
+      console.resetColorAttributes();
+    } else {
+      map['argument'] = null;
+      console.setForegroundColor(this.highlightColor);
+      console.writeLine('Generating all new menus.');
+      console.resetColorAttributes();
+    }
 
-    //   for (Command command in map['commandList']) {
-    //     console.write(' - ');
-    //     console.setForegroundColor(this.highlightColor);
-    //     console.write(command.name);
-    //     console.resetColorAttributes();
-    //     console.writeLine(': ' + command.definition);
-    //   }
+    List<Menu> availableMenus = await dbHelper.getMenus(map['argument']);
+    List<String> localMenus = lfHelper.getLocalMenuNames();
+
+    for (Menu menu in availableMenus) {
+      if (!localMenus.contains(menu.menuName)) {
+        lfHelper.copyAllFilesTo(menu);
+        tempHelper.editIndex(menu);
+        tempHelper.addWebmanifest(menu);
+      } else {
+        console.writeLine(menu.menuName + ' was already generated once.');
+      }
+    }
+
+    console.writeLine('Done.');
   }
 }

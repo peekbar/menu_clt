@@ -1,6 +1,7 @@
 import 'package:dart_console/dart_console.dart';
 
 import 'commands.dart';
+import 'generate_command.dart';
 
 class Controller {
   Console console;
@@ -10,6 +11,8 @@ class Controller {
 
   Command helpCommand;
   Command updateCommand;
+  Command generateCommand;
+  Command cleanCommand;
 
   Controller(console, highlightColor) {
     this.console = console;
@@ -17,9 +20,13 @@ class Controller {
 
     helpCommand = new HelpCommand(this.console, this.highlightColor);
     updateCommand = new UpdateCommand(this.console, this.highlightColor);
+    generateCommand = new GenerateCommand(this.console, this.highlightColor);
+    cleanCommand = new CleanCommand(this.console, this.highlightColor);
 
     commandList.add(helpCommand);
     commandList.add(updateCommand);
+    commandList.add(generateCommand);
+    commandList.add(cleanCommand);
   }
 
   void launch(String shortcut, [String argument]) async {
