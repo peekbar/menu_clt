@@ -1,4 +1,15 @@
+#peekbar
 menus
-.dart_tool
+#pub
+.dart_tool/
 .packages
+build/
+pubspec.lock
+#dartdoc
+doc/api/
+#environment
+*.iml
+*.ipr
+*.iws
+.idea/
 .DS_Store
