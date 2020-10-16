@@ -1,17 +1,15 @@
 import 'dart:io';
 
-import '../models/models.dart';
-
 class LocalFileHelper {
   // copies all files inside the web direcory to a local menu
-  void copyAllFilesTo(Menu menu) {
-    var directory = getMenuDirectory(menu);
+  void copyAllFilesTo(String name) {
+    var directory = getMenuDirectory(name);
 
     if (directory.existsSync()) {
-      Process.runSync('rm', ['-r', getMenuDirectory(menu).path + '/*']);
+      Process.runSync('rm', ['-r', getMenuDirectory(name).path + '/*']);
     }
 
-    Process.runSync('cp', ['-r', 'web/*', getMenuDirectory(menu).path]);
+    Process.runSync('cp', ['-r', 'web/*', getMenuDirectory(name).path]);
   }
 
   // returns a list of the local menu names
@@ -26,34 +24,27 @@ class LocalFileHelper {
         localMenus.add(path[path.length - 1]);
       }
     }
+
     return localMenus;
   }
 
   // returns true, if the menu is locally present
-  bool isLocalMenuPresent(Menu menu) {
-    return getMenuDirectory(menu).existsSync();
+  bool isLocalMenuPresent(String name) {
+    return getMenuDirectory(name).existsSync();
   }
 
   // returns the local directory of a menu
-  Directory getMenuDirectory(Menu menu) {
-    if (menu.firebase) {
-      return Directory('menus/' + menu.menuName + '/public');
-    } else {
-      return Directory('menus/' + menu.menuName);
-    }
+  Directory getMenuDirectory(String name) {
+    return Directory('menus/' + name);
   }
 
   // returns the local file
-  File getFile(Menu menu, String fileName) {
-    if (menu.firebase) {
-      return File('menus/' + menu.menuName + '/public/' + fileName);
-    } else {
-      return File('menus/' + menu.menuName + '/' + fileName);
-    }
+  File getFile(String name, String fileName) {
+    return File('menus/' + name + '/' + fileName);
   }
 
   // deletes a local menu by the menu name
-  void deleteLocalMenu(String menuName) {
-    Process.runSync('rm', ['-r', 'menus/' + menuName]);
+  void deleteLocalMenu(String name) {
+    Process.runSync('rm', ['-r', 'menus/' + name]);
   }
 }

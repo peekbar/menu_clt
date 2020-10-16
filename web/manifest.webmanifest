@@ -1,0 +1,9 @@
+    {
+    "name": "{{ imprint.companyName }}",
+    "short_name": "{{ imprint.companyName }}",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff",
+    "theme_color": "#fff",
+    "description": "A digital menu made by peekbar."
+    }

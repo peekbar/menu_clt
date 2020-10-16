@@ -1,7 +1,7 @@
 import 'package:dart_console/dart_console.dart';
 
 import 'command.dart';
-import '../models/models.dart';
+
 import '../helper_classes/helper_classes.dart';
 
 class CleanCommand extends Command {
@@ -9,7 +9,7 @@ class CleanCommand extends Command {
   String name = 'clean';
   String definition = 'deletes menus, which are not in the database';
   Map<dynamic, dynamic> map;
-  DatabaseHelper dbHelper = DatabaseHelper();
+  Fetcher fetcher = Fetcher();
   LocalFileHelper lfHelper = LocalFileHelper();
 
   CleanCommand(Console console, ConsoleColor highlightColor)
@@ -24,7 +24,7 @@ class CleanCommand extends Command {
     console.writeLine('Cleaning local files.');
     console.resetColorAttributes();
 
-    List<String> availableMenuNames = await dbHelper.getAvailableMenus();
+    List<String> availableMenuNames = await fetcher.getAvailableMenus();
 
     if (availableMenuNames != null) {
       List<String> localMenuNames = lfHelper.getLocalMenuNames();
