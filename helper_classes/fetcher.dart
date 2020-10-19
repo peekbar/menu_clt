@@ -61,6 +61,8 @@ class Fetcher {
               'SELECT id, name, shortname, description, price, position FROM "Product" WHERE "Category_id" = @categoryId',
               substitutionValues: {'categoryId': categoryId});
 
+          bool first = true;
+
           for (var row in products) {
             var productId = row[0];
             List<String> additivesList = [];
@@ -83,7 +85,9 @@ class Fetcher {
               'price': row[4],
               'position': row[5],
               'additives': additivesList.join(', '),
+              'first': first,
             });
+            first = false;
           }
 
           categoriesList.add({
