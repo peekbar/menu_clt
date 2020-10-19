@@ -9,7 +9,6 @@ class GenerateCommand extends Command {
   String name = 'generate';
   String definition = 'generates new menus';
   Map<dynamic, dynamic> map;
-  Fetcher fetcher = Fetcher();
   LocalFileHelper lfHelper = LocalFileHelper();
   TemplatingHelper tempHelper = TemplatingHelper();
 
@@ -21,6 +20,8 @@ class GenerateCommand extends Command {
   }
 
   void exec() async {
+    Fetcher fetcher = map['fetcher'];
+
     List<String> availableMenus = await fetcher.getAvailableMenus();
     List<String> localMenus = lfHelper.getLocalMenuNames();
 

@@ -2,10 +2,12 @@ import 'package:dart_console/dart_console.dart';
 
 import 'commands.dart';
 import 'generate_command.dart';
+import '../helper_classes/helper_classes.dart';
 
 class Controller {
   Console console;
   ConsoleColor highlightColor;
+  Fetcher fetcher;
 
   List<Command> commandList = [];
 
@@ -14,9 +16,10 @@ class Controller {
   Command generateCommand;
   Command cleanCommand;
 
-  Controller(console, highlightColor) {
+  Controller(console, highlightColor, fetcher) {
     this.console = console;
     this.highlightColor = highlightColor;
+    this.fetcher = fetcher;
 
     helpCommand = new HelpCommand(this.console, this.highlightColor);
     updateCommand = new UpdateCommand(this.console, this.highlightColor);
@@ -36,7 +39,7 @@ class Controller {
     for (Command command in commandList) {
       if (command.shortcut == shortcut) {
         Map map = Map();
-        map.addAll({'commandList': commandList});
+        map.addAll({'commandList': commandList, 'fetcher': fetcher});
         if (argument != null) {
           map.addAll({'argument': argument});
         }

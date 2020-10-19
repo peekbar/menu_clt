@@ -6,10 +6,10 @@ class LocalFileHelper {
     var directory = getMenuDirectory(name);
 
     if (directory.existsSync()) {
-      Process.runSync('rm', ['-r', getMenuDirectory(name).path + '/*']);
+      Process.runSync('rm', ['-rf', getMenuDirectory(name).path]);
     }
 
-    Process.runSync('cp', ['-r', 'web/*', getMenuDirectory(name).path]);
+    Process.runSync('cp', ['-rf', 'web', getMenuDirectory(name).path]);
   }
 
   // returns a list of the local menu names

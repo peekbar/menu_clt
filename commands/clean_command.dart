@@ -9,7 +9,6 @@ class CleanCommand extends Command {
   String name = 'clean';
   String definition = 'deletes menus, which are not in the database';
   Map<dynamic, dynamic> map;
-  Fetcher fetcher = Fetcher();
   LocalFileHelper lfHelper = LocalFileHelper();
 
   CleanCommand(Console console, ConsoleColor highlightColor)
@@ -20,6 +19,8 @@ class CleanCommand extends Command {
   }
 
   void exec() async {
+    Fetcher fetcher = map['fetcher'];
+
     console.setForegroundColor(this.highlightColor);
     console.writeLine('Cleaning local files.');
     console.resetColorAttributes();

@@ -3,13 +3,18 @@ import 'dart:io';
 import 'package:dart_console/dart_console.dart';
 
 import 'commands/controller.dart';
+import 'helper_classes/fetcher.dart';
 
 ConsoleColor primaryColor = ConsoleColor.brightYellow;
 String prompt = '>>> ';
 
 void main(List<String> arguments) async {
   final console = Console();
-  final controller = Controller(console, primaryColor);
+
+  final fetcher = Fetcher();
+  await fetcher.openConnection();
+
+  final controller = Controller(console, primaryColor, fetcher);
 
   console.clearScreen();
 

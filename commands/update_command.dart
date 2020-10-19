@@ -9,7 +9,6 @@ class UpdateCommand extends Command {
   String name = 'update';
   String definition = 'updates all the existing menus';
   Map<dynamic, dynamic> map;
-  Fetcher fetcher = Fetcher();
   LocalFileHelper lfHelper = LocalFileHelper();
   TemplatingHelper tempHelper = TemplatingHelper();
 
@@ -21,6 +20,8 @@ class UpdateCommand extends Command {
   }
 
   void exec() async {
+    Fetcher fetcher = map['fetcher'];
+
     List<String> availableMenus = await fetcher.getAvailableMenus();
     List<String> localMenus = lfHelper.getLocalMenuNames();
 
