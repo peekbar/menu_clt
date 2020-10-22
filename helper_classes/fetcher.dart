@@ -80,15 +80,15 @@ class Fetcher {
             var productId = row[0];
             List<String> additivesList = [];
 
-            // List<List<dynamic>> ads = await connection.query(
-            //     'SELECT name_Additive FROM menus.Product_has_Additive NATURAL JOIN menus.Additive WHERE Product_id = @productId',
-            //     substitutionValues: {'productId': productId});
+            List<List<dynamic>> ads = await connection.query(
+                'Select name FROM "Product_Additive" INNER JOIN "Additive" ON "Additive".id = "Product_Additive"."Additive_id" WHERE "Product_id" = @productId',
+                substitutionValues: {'productId': productId});
 
-            // for (var additive in ads) {
-            //   if (additive != null) {
-            //     additivesList.add(additive[0]);
-            //   }
-            // }
+            for (var additive in ads) {
+              if (additive != null) {
+                additivesList.add(additive[0]);
+              }
+            }
 
             productsList.add({
               'id': productId,
