@@ -131,7 +131,18 @@
         <div class="container-lg section-wrapper">
             <section id="content" class="content">
                 {% for category in categories %}
+
+                    {% for info in category.infoCategory %}
+                            <div class="card p-0 mb-1" style="border-color: #bb7057!important;"> 
+                                <div class="card-header bg-dark text-white pointer" style="background-color: #bb7057!important;">{{ info.title }}</div>
+                                {% if info.text != '' %}
+                                <div class="card-body">{{ info.text }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
                 <div class="products" name="{{ category.id }}">
+
                     <div id="accordion{{ category.id }}">
                     {% for product in category.products %}
                     <div class="product">

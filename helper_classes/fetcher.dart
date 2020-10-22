@@ -61,6 +61,19 @@ class Fetcher {
               'SELECT id, name, shortname, description, price, position FROM "Product" WHERE "Category_id" = @categoryId',
               substitutionValues: {'categoryId': categoryId});
 
+          List<List<dynamic>> infoCategory = await connection.query(
+            'SELECT title, text FROM "InfoCategory" WHERE "Category_id" = @categoryId',
+              substitutionValues: {'categoryId': categoryId}
+          );
+          
+          List<Map> infoCategoryList = [];
+
+          for (var row in infoCategory) {
+            infoCategoryList.add({
+              'title': row[0],
+              'text': row[1]
+            });
+          }
           bool first = true;
 
           for (var row in products) {
@@ -96,6 +109,7 @@ class Fetcher {
             'icon': row[2],
             'position': row[3],
             'products': productsList,
+            'infoCategory': infoCategoryList
           });
 
           counter++;
