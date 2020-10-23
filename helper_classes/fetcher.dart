@@ -4,7 +4,7 @@ import 'package:liquid_engine/liquid_engine.dart';
 import 'package:postgres/postgres.dart';
 
 class Fetcher {
-  var connection = PostgreSQLConnection("192.168.1.20", 5432, "menu",
+  var connection = PostgreSQLConnection("192.168.1.5", 5432, "menu",
       username: "generator", password: "Password");
 
   void openConnection() async {
