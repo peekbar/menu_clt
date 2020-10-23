@@ -73,6 +73,15 @@
                     </a>
                 </header>
                 <div class="categories">
+                    {% for info in infoMenu %}
+                            <div class="card p-0 mb-1" style="border-color: #bb7057!important; border-width: 2px!important;"> 
+                                <div class="card-header bg-dark text-white pointer" style="background-color: #bb7057!important;">{{ info.title }}</div>
+                                {% if info.text != '' %}
+                                <div class="card-body">{{ info.text }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
                     {% for category in categories %}
                     <button type="button" onclick="selectNew({{ category.id }})" class="category btn btn-lg btn-block btn-outline-dark" id="{{ category.id }}">
                         <p name="categoryText">{{ category.name }}</p>

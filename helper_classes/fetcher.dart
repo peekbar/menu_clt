@@ -4,7 +4,7 @@ import 'package:liquid_engine/liquid_engine.dart';
 import 'package:postgres/postgres.dart';
 
 class Fetcher {
-  var connection = PostgreSQLConnection("192.168.1.5", 5432, "menu",
+  var connection = PostgreSQLConnection("192.168.1.20", 5432, "menu",
       username: "generator", password: "Password");
 
   void openConnection() async {
@@ -46,10 +46,23 @@ class Fetcher {
         var menuId = row[0];
         var imprintId = row[2];
         List<Map> categoriesList = [];
+        List<Map> infoMenuList = [];
 
         List<List<dynamic>> categories = await connection.query(
             'SELECT id, name, icon, position FROM "Category" WHERE "Menu_id" = @menuId',
             substitutionValues: {'menuId': menuId});
+
+        List<List<dynamic>> infoMenu = await connection.query(
+          'SELECT title, text FROM "InfoMenu" WHERE "Menu_id" = @menuId',
+              substitutionValues: {'menuId': menuId}
+        );
+        
+        for (var row in infoMenu) {
+          infoMenuList.add({
+            'title': row[0],
+            'text': row[1]
+          });
+        }
 
         var counter = 0;
 
@@ -116,6 +129,7 @@ class Fetcher {
         }
 
         context.variables.addAll({'categories': categoriesList});
+        context.variables.addAll({'infoMenu': infoMenuList});
 
         List<List<dynamic>> imprint = await connection.query(
             'SELECT id, holder, street, city, phone, mail, tax, homepage, companyname FROM "Imprint" WHERE id = @imprintId',
