@@ -46,10 +46,23 @@ class Fetcher {
         var menuId = row[0];
         var imprintId = row[2];
         List<Map> categoriesList = [];
+        List<Map> infoMenuList = [];
 
         List<List<dynamic>> categories = await connection.query(
             'SELECT id, name, icon, position FROM "Category" WHERE "Menu_id" = @menuId',
             substitutionValues: {'menuId': menuId});
+
+        List<List<dynamic>> infoMenu = await connection.query(
+          'SELECT title, text FROM "InfoMenu" WHERE "Menu_id" = @menuId',
+              substitutionValues: {'menuId': menuId}
+        );
+        
+        for (var row in infoMenu) {
+          infoMenuList.add({
+            'title': row[0],
+            'text': row[1]
+          });
+        }
 
         var counter = 0;
 
@@ -61,21 +74,34 @@ class Fetcher {
               'SELECT id, name, shortname, description, price, position FROM "Product" WHERE "Category_id" = @categoryId',
               substitutionValues: {'categoryId': categoryId});
 
+          List<List<dynamic>> infoCategory = await connection.query(
+            'SELECT title, text FROM "InfoCategory" WHERE "Category_id" = @categoryId',
+              substitutionValues: {'categoryId': categoryId}
+          );
+          
+          List<Map> infoCategoryList = [];
+
+          for (var row in infoCategory) {
+            infoCategoryList.add({
+              'title': row[0],
+              'text': row[1]
+            });
+          }
           bool first = true;
 
           for (var row in products) {
             var productId = row[0];
             List<String> additivesList = [];
 
-            // List<List<dynamic>> ads = await connection.query(
-            //     'SELECT name_Additive FROM menus.Product_has_Additive NATURAL JOIN menus.Additive WHERE Product_id = @productId',
-            //     substitutionValues: {'productId': productId});
+            List<List<dynamic>> ads = await connection.query(
+                'Select name FROM "Product_Additive" INNER JOIN "Additive" ON "Additive".id = "Product_Additive"."Additive_id" WHERE "Product_id" = @productId',
+                substitutionValues: {'productId': productId});
 
-            // for (var additive in ads) {
-            //   if (additive != null) {
-            //     additivesList.add(additive[0]);
-            //   }
-            // }
+            for (var additive in ads) {
+              if (additive != null) {
+                additivesList.add(additive[0]);
+              }
+            }
 
             productsList.add({
               'id': productId,
@@ -96,12 +122,14 @@ class Fetcher {
             'icon': row[2],
             'position': row[3],
             'products': productsList,
+            'infoCategory': infoCategoryList
           });
 
           counter++;
         }
 
         context.variables.addAll({'categories': categoriesList});
+        context.variables.addAll({'infoMenu': infoMenuList});
 
         List<List<dynamic>> imprint = await connection.query(
             'SELECT id, holder, street, city, phone, mail, tax, homepage, companyname FROM "Imprint" WHERE id = @imprintId',
