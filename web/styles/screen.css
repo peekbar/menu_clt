@@ -7,13 +7,17 @@
         -ms-flex-pack: center;
             justify-content: center;
     overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100vw;
   }
   div.section-wrapper {
     padding: 0;
     margin: 0;
+    max-width: 50vw;
     max-width: 700px;
   }
   section {
+    max-width: 50vw;
     padding: 1rem;
     text-align: center;
     position: relative;
@@ -178,6 +182,22 @@ div.products {
 
 div.products.selected {
   display: block;
+}
+
+div.horizental {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+div.space-between {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .hidden {

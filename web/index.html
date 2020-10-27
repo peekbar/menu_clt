@@ -73,6 +73,7 @@
                     </a>
                 </header>
                 <div class="categories">
+
                     {% for category in categories %}
                     <button type="button" onclick="selectNew({{ category.id }})" class="category btn btn-lg btn-block btn-outline-dark" id="{{ category.id }}">
                         <p name="categoryText">{{ category.name }}</p>
@@ -133,12 +134,18 @@
                 {% for category in categories %}
                 <div class="products" name="{{ category.id }}">
                     <div id="accordion{{ category.id }}">
+
                     {% for product in category.products %}
                     <div class="product">
                         <div class="card p-0 mb-1 bg-white border-dark">
                             <div class="card-header bg-dark text-white pointer" id="heading{{ product.id }}" data-toggle="collapse" data-target="#collapse{{ product.id }}" aria-expanded="true" aria-controls="collapse{{ product.id }}">
-                                <div class="row justify-content-between">
-                                    <p> {{ product.name }} </p>
+                                <div class="horizental space-between">
+                                    {% if product.shortname != '' %}
+                                    <p> {{ product.shortname}} </p>
+                                    <div class="px-2"></div>
+                                    {% endif %}
+                                    <p style="max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> {{ product.name }} </p>
+                                    <div class="px-2"></div>
                                     <p> {{ product.price }} </p>
                                 </div>
                             </div>

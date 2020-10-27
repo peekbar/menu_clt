@@ -41,6 +41,9 @@ void main(List<String> arguments) async {
       console.setForegroundColor(primaryColor);
       console.writeLine('Goodbye.');
       console.resetColorAttributes();
+
+      await fetcher.closeConnection();
+
       exit(0);
     } else {
       var trimmed = response.trim();

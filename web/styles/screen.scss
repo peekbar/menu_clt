@@ -3,15 +3,19 @@
         display: flex;
         justify-content: center;
         overflow-y: scroll;
+        overflow-x: hidden;
+        width: 100vw;
     }
     
     div.section-wrapper {
         padding: 0;
         margin: 0;
+        max-width: 50vw;
         max-width: 700px;
     }
     
     section {
+        max-width: 50vw;
         padding: 1rem;
         text-align: center;
         position: relative;
@@ -161,6 +165,15 @@ div.products {
 
 div.products.selected {
     display: block;
+}
+
+div.horizental {
+    display: flex;
+    flex-direction: row;
+}
+
+div.space-between {
+    justify-content: space-between;
 }
 
 .hidden {

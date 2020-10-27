@@ -80,7 +80,7 @@ class Fetcher {
             productsList.add({
               'id': productId,
               'name': row[1],
-              'shortname': row[2],
+              'shortname': row[2].toString().trim(),
               'description': row[3],
               'price': row[4],
               'position': row[5],
