@@ -53,15 +53,11 @@ class Fetcher {
             substitutionValues: {'menuId': menuId});
 
         List<List<dynamic>> infoMenu = await connection.query(
-          'SELECT title, text FROM "InfoMenu" WHERE "Menu_id" = @menuId',
-              substitutionValues: {'menuId': menuId}
-        );
-        
+            'SELECT title, text FROM "InfoMenu" WHERE "Menu_id" = @menuId',
+            substitutionValues: {'menuId': menuId});
+
         for (var row in infoMenu) {
-          infoMenuList.add({
-            'title': row[0],
-            'text': row[1]
-          });
+          infoMenuList.add({'title': row[0], 'text': row[1]});
         }
 
         var counter = 0;
@@ -75,17 +71,13 @@ class Fetcher {
               substitutionValues: {'categoryId': categoryId});
 
           List<List<dynamic>> infoCategory = await connection.query(
-            'SELECT title, text FROM "InfoCategory" WHERE "Category_id" = @categoryId',
-              substitutionValues: {'categoryId': categoryId}
-          );
-          
+              'SELECT title, text FROM "InfoCategory" WHERE "Category_id" = @categoryId',
+              substitutionValues: {'categoryId': categoryId});
+
           List<Map> infoCategoryList = [];
 
           for (var row in infoCategory) {
-            infoCategoryList.add({
-              'title': row[0],
-              'text': row[1]
-            });
+            infoCategoryList.add({'title': row[0], 'text': row[1]});
           }
           bool first = true;
 
@@ -103,10 +95,17 @@ class Fetcher {
               }
             }
 
+            var shortname = row[2];
+            if (shortname == null) {
+              shortname = '';
+            } else {
+              shortname = shortname.toString().trim();
+            }
+
             productsList.add({
               'id': productId,
               'name': row[1],
-              'shortname': row[2].toString().trim(),
+              'shortname': shortname,
               'description': row[3],
               'price': row[4],
               'position': row[5],
