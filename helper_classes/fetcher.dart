@@ -146,6 +146,7 @@ class Fetcher {
               'tax': row[6],
               'homepage': row[7],
               'companyname': row[8],
+              'menuname': menuName
             }
           });
         }

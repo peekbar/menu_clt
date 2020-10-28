@@ -10,8 +10,36 @@
     <title>{{ imprint.companyname }}</title>
     <script>
         var selected = 0;
+        var menuName = '{{ imprint.menuname }}'.trim();
+        var pageTitle = document.getElementsByTagName("title")[0].innerHTML;
 
-        function selectNew(clicked_id) {
+        function init() {
+            document.getElementById(selected).classList.remove('btn-outline-dark');
+            document.getElementById(selected).classList.add('btn-dark');
+            document.getElementsByName(selected.toString())[0].classList.add('selected');
+
+            document.getElementById('category').innerHTML = document.getElementsByName('categoryText')[selected].innerHTML;
+
+            $('[data-toggle="popover"]').popover({
+                placement : 'top',
+                trigger : 'focus'
+            });
+
+            addState(selected.toString());
+
+            var href = location.href.split('?');
+            selectNew(href[1].replace('page=', ''), true);
+
+            window.addEventListener('popstate', (event) => {
+                var href = location.href.split('?');
+                selectNew(href[1].replace('page=', ''), true);
+                scrollToLeft();
+            });
+
+            document.title = pageTitle + ' - ' + document.getElementsByName('categoryText')[selected].textContent;
+        }
+
+        function selectNew(clicked_id, noAdd) {
             document.getElementById(selected.toString()).classList.remove('btn-dark');
             document.getElementById(selected.toString()).classList.add('btn-outline-dark');
             document.getElementById(clicked_id).classList.remove('btn-outline-dark');
@@ -21,7 +49,9 @@
             document.getElementsByName(clicked_id)[0].classList.add('selected');
             selected = clicked_id;
 
-            document.getElementById('category').innerHTML = document.getElementsByName('categoryText')[selected].textContent;
+            var categoryName = document.getElementsByName('categoryText')[selected].textContent;
+
+            document.getElementById('category').innerHTML = categoryName;
 
             scrollToRight();
 
@@ -29,22 +59,18 @@
                 placement : 'top',
                 trigger : 'focus'
             });
+
+            document.title = pageTitle + ' - ' + categoryName;
+
+            if (!noAdd) {
+                addState(selected.toString());
+            }
         }
 
-        function init() {
-            document.getElementById(selected).classList.remove('btn-outline-dark');
-            document.getElementById(selected).classList.add('btn-dark');
-            document.getElementsByName(selected.toString())[0].classList.add('selected');
-            document.getElementById('category').innerHTML = document.getElementsByName('categoryText')[selected].textContent;
-
-            $('[data-toggle="popover"]').popover({
-                placement : 'top',
-                trigger : 'focus'
-            });
-        }
-
-        function dismissPopover() {
-            $('[data-toggle="popover"]').popover('hide');
+        function addState(clicked) {
+            var stateName = document.getElementsByName('categoryText')[clicked].innerHTML;
+            var href = location.href.split(menuName);
+            history.pushState({}, pageTitle + ' - ' + stateName, href[0] + menuName + '?page=' + clicked);
         }
 
         function scrollToRight() {
@@ -55,6 +81,11 @@
         function scrollToLeft() {
             document.getElementById('window').scrollBy({left: -document.body.clientWidth, behavior:'smooth'});
             document.getElementById('navigation').scrollTo({top: 0, behavior:'smooth'});
+        }
+    </script>
+    <script>
+        function dismissPopover() {
+            $('[data-toggle="popover"]').popover('hide');
         }
     </script>
 </head>
