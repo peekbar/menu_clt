@@ -10,7 +10,6 @@
     <title>{{ imprint.companyname }}</title>
     <script>
         var selected = 0;
-        var menuName = '{{ imprint.menuname }}'.trim();
         var pageTitle = document.getElementsByTagName("title")[0].innerHTML;
 
         function init() {
@@ -28,18 +27,18 @@
             addState(selected.toString());
 
             var href = location.href.split('?');
-            selectNew(href[1].replace('page=', ''), true);
+            selectNew(href[1].replace('page=', ''), false, true);
 
             window.addEventListener('popstate', (event) => {
                 var href = location.href.split('?');
-                selectNew(href[1].replace('page=', ''), true);
+                selectNew(href[1].replace('page=', ''), true, true);
                 scrollToLeft();
             });
 
             document.title = pageTitle + ' - ' + document.getElementsByName('categoryText')[selected].textContent;
         }
 
-        function selectNew(clicked_id, noAdd) {
+        function selectNew(clicked_id, noAdd, noScroll) {
             document.getElementById(selected.toString()).classList.remove('btn-dark');
             document.getElementById(selected.toString()).classList.add('btn-outline-dark');
             document.getElementById(clicked_id).classList.remove('btn-outline-dark');
@@ -53,7 +52,9 @@
 
             document.getElementById('category').innerHTML = categoryName;
 
-            scrollToRight();
+            if (!noScroll) {
+                scrollToRight();
+            }
 
             $('[data-toggle="popover"]').popover({
                 placement : 'top',
@@ -69,8 +70,8 @@
 
         function addState(clicked) {
             var stateName = document.getElementsByName('categoryText')[clicked].innerHTML;
-            var href = location.href.split(menuName);
-            history.pushState({}, pageTitle + ' - ' + stateName, href[0] + menuName + '?page=' + clicked);
+            var href = location.href.split('?');
+            history.pushState({}, pageTitle + ' - ' + stateName, href[0] + '?page=' + clicked);
         }
 
         function scrollToRight() {
@@ -94,7 +95,7 @@
         <div class="container-fluid section-wrapper">
             <section id="navigation">
                 <header class="container justify-content-between align-items-center">
-                    <div onclick="window.open('https:\/\/' + '{{ imprint.homepage }}', '_blank')" class="heading">
+                    <div onclick="window.open('{{ imprint.homepage }}', '_blank')" class="heading">
                         <h1>{{ imprint.companyname }}</h1>
                     </div>
                     <a href="tel:{{ imprint.phone }}">
