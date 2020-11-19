@@ -2,8 +2,8 @@
     div.window {
         display: flex;
         justify-content: center;
-        overflow-y: scroll;
         overflow-x: hidden;
+        overflow-y: scroll;
         width: 100vw;
     }
     
@@ -32,59 +32,31 @@
 
 @media screen and (orientation: portrait) {
     div.window {
-        scroll-snap-type: x mandatory;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        display: flex;
-        width: 100vw;
-        height: 100vh;
+        // scroll-snap-type: y mandatory;
+        overflow-x: hidden;
+        overflow-y: none;
+        display: block;
+        width: 100%;
         position: relative;
     }
     
     div.section-wrapper {
         padding: 0;
         margin: 0;
-        width: 200vw;
+        width: 100%;
         scroll-snap-align: start;
     }
     
     section {
         padding: 1rem;
-        padding-bottom: 7em; // height of navigation
-        width: 100vw;
-        height: 100vh;
-        overflow: auto;
+        width: 100%;
+        min-height: 100vh;
         text-align: center;
         position: relative;
     }
 
     div.category {
         width: calc(100vw - 2em);
-    }
-    
-    div.navigation {
-        border-radius: 0.5em;
-        margin: 1em;
-        padding: 1em;
-        display: flex;
-        width: calc(100vw - 2em);
-        position: sticky;
-        bottom: 0;
-        user-select: none;
-    
-        div.spacer {
-            width: 0.1em;
-        }
-        
-        div.navigationElement {
-            margin: 0.5em;
-            height: 3em;
-            border-radius: 1em;
-            padding: 1em;
-            width: calc(50vw - 1em);
-            text-align: center;
-            background-color: lightgray;
-        }
     }
 }
 
