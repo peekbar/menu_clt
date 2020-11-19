@@ -21,69 +21,92 @@
     <link href="icons/icon-hires.png" rel="icon" sizes="192x192" />
     <link href="icons/icon-normal.png" rel="icon" sizes="128x128" />
     <script>
-        var selected = 0;
+        const start = 0;
         var pageTitle = document.getElementsByTagName("title")[0].innerHTML;
 
         function init() {
-            document.getElementById(selected).classList.remove('btn-outline-dark');
-            document.getElementById(selected).classList.add('btn-dark');
-            document.getElementsByName(selected.toString())[0].classList.add('selected');
-
-            document.getElementById('category').innerHTML = document.getElementsByName('categoryText')[selected].innerHTML;
+            if (!location.href.includes('?')) {
+                beatify();
+                deselectEverything();
+                selectCategory(start, false, true);
+            } else {
+                selectCategory(location.href.split('?')[1].replace('page=', ''), false, true);
+            }
 
             $('[data-toggle="popover"]').popover({
                 placement : 'top',
                 trigger : 'focus'
             });
-
-            addState(selected.toString());
-
-            var href = location.href.split('?');
-            selectNew(href[1].replace('page=', ''), false, true);
 
             window.addEventListener('popstate', (event) => {
                 var href = location.href.split('?');
-                selectNew(href[1].replace('page=', ''), true, true);
+                selectCategory(href[1].replace('page=', ''), true);
                 scrollToLeft();
             });
-
-            document.title = pageTitle + ' - ' + document.getElementsByName('categoryText')[selected].textContent;
         }
 
-        function selectNew(clicked_id, noAdd, noScroll) {
-            document.getElementById(selected.toString()).classList.remove('btn-dark');
-            document.getElementById(selected.toString()).classList.add('btn-outline-dark');
-            document.getElementById(clicked_id).classList.remove('btn-outline-dark');
-            document.getElementById(clicked_id).classList.add('btn-dark');
-            
-            document.getElementsByName(selected.toString())[0].classList.remove('selected');
-            document.getElementsByName(clicked_id)[0].classList.add('selected');
-            selected = clicked_id;
+        function selectCategory(clicked_id, popstate, noScroll) {
+            state(clicked_id, popstate);
 
-            var categoryName = document.getElementsByName('categoryText')[selected].textContent;
+            deselectEverything();
 
-            document.getElementById('category').innerHTML = categoryName;
+            var category = location.href.split('?')[1].replace('page=', '');
+            selectButton(category);
+            selectContent(category);
+
+            document.getElementById('category').innerHTML = document.getElementsByName('categoryText')[category].textContent;
 
             if (!noScroll) {
-                scrollToRight();
-            }
-
-            $('[data-toggle="popover"]').popover({
-                placement : 'top',
-                trigger : 'focus'
-            });
-
-            document.title = pageTitle + ' - ' + categoryName;
-
-            if (!noAdd) {
-                addState(selected.toString());
+               scrollToRight(); 
             }
         }
 
-        function addState(clicked) {
+        function selectButton(category) {
+            document.getElementById(category).classList.remove('btn-outline-dark');
+            document.getElementById(category).classList.add('btn-dark');
+        }
+
+        function selectContent(category) {
+            document.getElementsByName(category)[0].classList.add('selected');
+            
+        }
+
+        function beatify() {
+            var href = location.href.split('?');
+            var newhref = href[0];
+
+            if (href[0].endsWith('/')) {
+                newhref = href[0].substring(0, href[0].length - 2);
+            }
+
+            state(start, true);
+        }
+
+        function deselectEverything() {
+            // deselect all buttons
+            var buttons = document.getElementsByClassName('category');
+            for (let b of buttons) {
+                b.classList.remove('btn-dark');
+                b.classList.add('btn-outline-dark');
+            }
+
+            // hides all content
+            var products = document.getElementsByClassName('products');
+            for (let i = 0; i < products.length; i++) {
+                products[i].classList.remove('selected');
+            }
+        }
+
+        function state(clicked, update) {
+            document.title = pageTitle + ' - ' + document.getElementsByName('categoryText')[clicked].textContent;
             var stateName = document.getElementsByName('categoryText')[clicked].innerHTML;
             var href = location.href.split('?');
-            history.pushState({}, pageTitle + ' - ' + stateName, href[0] + '?page=' + clicked);
+
+            if (update) {
+                history.replaceState({}, document.title, href[0] + '?page=' + clicked);
+            } else {
+                history.pushState({}, document.title, href[0] + '?page=' + clicked);
+            }
         }
 
         function scrollToRight() {
@@ -95,8 +118,7 @@
             document.getElementById('window').scrollBy({left: -document.body.clientWidth, behavior:'smooth'});
             document.getElementById('navigation').scrollTo({top: 0, behavior:'smooth'});
         }
-    </script>
-    <script>
+
         function dismissPopover() {
             $('[data-toggle="popover"]').popover('hide');
         }
@@ -127,13 +149,13 @@
                     {% endfor %}
 
                     {% for category in categories %}
-                    <button type="button" onclick="selectNew({{ category.id }})" class="category btn btn-lg btn-block btn-outline-dark" id="{{ category.id }}">
+                    <button type="button" onclick="selectCategory({{ category.id }})" class="category btn btn-lg btn-block btn-outline-dark" id="{{ category.id }}">
                         <p name="categoryText">{{ category.name }}</p>
                     </button>
                     {% endfor %}
 
                     <div class="row justify-content-center m-2">
-                        <button type="button" onclick="selectNew({{ imprint.id }})" class="category btn btn-outline-dark" id="{{ imprint.id }}">
+                        <button type="button" onclick="selectCategory({{ imprint.id }})" class="category btn btn-outline-dark" id="{{ imprint.id }}">
                             <p name="categoryText">Impressum</p>
                         </button>
                     </div>
