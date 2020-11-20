@@ -32,8 +32,11 @@
 
 @media screen and (orientation: portrait) {
   div.window {
+    -ms-scroll-snap-type: y proximity;
+        scroll-snap-type: y proximity;
     overflow-x: hidden;
-    overflow-y: none;
+    overflow-y: scroll;
+    height: 100vh;
     display: block;
     width: 100%;
     position: relative;
@@ -68,7 +71,6 @@ body {
   margin: 0;
   background-color: white;
   width: 100vw;
-  height: 100vh;
 }
 
 header {
