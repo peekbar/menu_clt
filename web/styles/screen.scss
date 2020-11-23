@@ -1,10 +1,7 @@
 @media screen and (orientation: landscape) {
-    div.window {
+    body {
         display: flex;
         justify-content: center;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        width: 100vw;
     }
     
     div.section-wrapper {
@@ -31,21 +28,16 @@
 }
 
 @media screen and (orientation: portrait) {
-    div.window {
-        scroll-snap-type: y proximity;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        height: 100vh;
+    body {
+        //scroll-snap-type: y proximity;
         display: block;
-        width: 100%;
-        position: relative;
     }
     
     div.section-wrapper {
         padding: 0;
         margin: 0;
         width: 100%;
-        scroll-snap-align: start;
+        //scroll-snap-align: start;
     }
     
     section {
@@ -72,6 +64,8 @@ body {
     margin: 0;
     background-color: white;
     width: 100vw;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 header {
