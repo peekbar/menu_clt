@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
@@ -7,13 +8,15 @@
     <!-- Webmanifest -->
     <link rel="manifest" href="/manifest.webmanifest">
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" media="screen">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"
+        media="screen">
     <link rel="stylesheet" type="text/css" href="styles/screen.css" media="screen">
     <link rel="stylesheet" type="text/css" href="styles/print.css" media="print">
     <!-- Web -->
-    <link rel="shortcut icon" type="image/jpg" href="icons/favicon.jpg"/>
+    <link rel="shortcut icon" type="image/jpg" href="icons/favicon.jpg" />
     <!-- iOS -->
-    <link href="icons/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/>
+    <link href="icons/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120" />
     <link href="icons/apple-touch-icon-152x152.png" rel="apple-touch-icon" sizes="152x152" />
     <link href="icons/apple-touch-icon-167x167.png" rel="apple-touch-icon" sizes="167x167" />
     <link href="icons/apple-touch-icon-180x180.png" rel="apple-touch-icon" sizes="180x180" />
@@ -25,41 +28,35 @@
         var pageTitle = document.getElementsByTagName("title")[0].innerHTML;
 
         function init() {
-            if (location.hash.length == 0 || location.hash.length == 1) {
-                //beautify();
-                location.hash = 0;
-                select(true);
-            } else {
-                select(false);
-            }
-
             $('[data-toggle="popover"]').popover({
-                placement : 'top',
-                trigger : 'focus'
+                placement: 'top',
+                trigger: 'focus'
             });
 
             window.addEventListener('hashchange', (event) => {
-                console.log('The hash has changed!');
+                if (location.hash.replace('#', '').length == 0) {
+                    location.hash = 0;
+                } else {
+                    select();
+                }
             }, false);
 
-            window.addEventListener('popstate', (event) => {
-                if (location.hash.length != 1) {
-                    select(true);
-                } else {
-                    location.hash = 0;
-                    select(true);
-                }
-            });
+            var hash = location.hash.replace('#', '');
+
+            if (hash.length == 0) {
+                location.hash = 0;
+            } else {
+                select();
+            }
         }
 
-        function select(init) {
+        function select() {
             clicked = location.hash.replace('#', '');
 
-            state(clicked, init);
+            state(clicked);
             deselectEverything();
             selectButton(clicked);
             selectContent(clicked);
-            document.getElementById('content').focus();
         }
 
         function selectButton(clicked) {
@@ -70,17 +67,6 @@
 
         function selectContent(clicked) {
             document.getElementById(clicked).classList.add('selected');
-        }
-
-        function beautify() {
-            var href = location.href.split('?');
-            var newhref = href[0];
-
-            if (href[0].endsWith('/')) {
-                newhref = href[0].substring(0, href[0].length - 2);
-            }
-
-            history.replaceState({}, document.title, newhref);
         }
 
         function deselectEverything() {
@@ -98,14 +84,10 @@
             }
         }
 
-        function state(clicked, update) {
-            document.title = pageTitle + ' - ' + document.getElementsByName('categoryText')[clicked].textContent;
+        function state(clicked) {
+            //document.title = pageTitle + ' - ' + document.getElementsByName('categoryText')[clicked].textContent;
 
-            if (update) {
-                history.replaceState({}, document.title, location.href);
-            } else {
-                history.pushState({}, document.title, location.href);
-            }
+            history.replaceState({}, document.title, location.href);
         }
 
         function dismissPopover() {
@@ -113,127 +95,144 @@
         }
     </script>
 </head>
-<body onload="init()" onscroll="dismissPopover()">
-    <div class="container-fluid section-wrapper">
-        <section id="navigation" tabindex="0">
-            <header class="container justify-content-between align-items-center">
-                <div onclick="window.open('{{ imprint.homepage }}', '_blank')" class="heading">
-                    <h1>{{ imprint.companyname }}</h1>
-                </div>
-                <a href="tel:{{ imprint.phone }}">
-                    <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-telephone-outbound-fill" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zM11 .5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V1.707l-4.146 4.147a.5.5 0 0 1-.708-.708L14.293 1H11.5a.5.5 0 0 1-.5-.5z"/>
-                    </svg>
-                </a>
-            </header>
-            <div class="categories">
-                {% for info in infoMenu %}
-                    <div class="card p-0 mb-1" style="border-color: #bb7057!important; border-width: 2px!important;"> 
-                        <div class="card-header bg-dark text-white pointer" style="background-color: #bb7057!important;">{{ info.title }}</div>
-                        {% if info.text != '' %}
-                        <div class="card-body">{{ info.text }}</div>
-                        {% endif %}
-                    </div>
-                {% endfor %}
 
-                {% for category in categories %}
-                <a role="button" href="#{{category.id}}" class="category btn btn-lg btn-block btn-outline-dark"">
-                    <p name="categoryText">{{ category.name }}</p>
-                </a>
-                {% endfor %}
+<body onload="init()" onscroll="dismissPopover()" class="container-fluid">
+    <section id="navigation">
+        <header class="container justify-content-between align-items-center">
+            <div onclick="window.open('{{ imprint.homepage }}', '_blank')" class="heading">
+                <h1>{{ imprint.companyname }}</h1>
+            </div>
+            <a href="tel:{{ imprint.phone }}">
+                <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-telephone-outbound-fill"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zM11 .5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V1.707l-4.146 4.147a.5.5 0 0 1-.708-.708L14.293 1H11.5a.5.5 0 0 1-.5-.5z" />
+                </svg>
+            </a>
+        </header>
+        <div class="categories">
+            {% for info in infoMenu %}
+            <div class="card p-0 mb-1" style="border-color: #bb7057!important; border-width: 2px!important;">
+                <div class="card-header bg-dark text-white pointer" style="background-color: #bb7057!important;">
+                    {{ info.title }}</div>
+                {% if info.text != '' %}
+                <div class="card-body">{{ info.text }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
 
-                <div class="row justify-content-center m-2">
-                    <a role="button" href="#{{imprint.id}}" class="category btn btn-outline-dark"">
-                        <p name="categoryText">Impressum</p>
-                    </a>
-                </div>
-                
-                <div class="row justify-content-center m-2">
-                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalScrollable">
+            {% for category in categories %}
+            <a role="button" href="#{{category.id}}" class="category btn btn-lg btn-block btn-outline-dark"">
+                    <p name=" categoryText">{{ category.name }}</p>
+            </a>
+            {% endfor %}
+
+            <div class="row justify-content-center m-2">
+                <a role="button" href="#{{imprint.id}}" class="category btn btn-outline-dark"">
+                        <p name=" categoryText">Impressum</p>
+                </a>
+            </div>
+
+            <div class="row justify-content-center m-2">
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalScrollable">
                     Über diese Seite
-                    </button>
-                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-scrollable" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalScrollableTitle">Über diese Seite</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Diese Seite wurde von dem Unternehmen PEEKBAR für {{ imprint.companyname }} erstellt. Falls Sie Fragen, Probleme oder Verbesserungsvorschläge haben, können Sie sich gerne an uns wenden.
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-dark" onclick="window.open('https:\/\/www.peekbar.de', '_blank')">Zu PEEKBAR</button>
-                                </div>
+                </button>
+                <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalScrollableTitle">Über diese Seite</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Diese Seite wurde von dem Unternehmen PEEKBAR für {{ imprint.companyname }} erstellt.
+                                Falls Sie Fragen, Probleme oder Verbesserungsvorschläge haben, können Sie sich gerne an
+                                uns wenden.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-dark"
+                                    onclick="window.open('https:\/\/www.peekbar.de', '_blank')">Zu PEEKBAR</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
-    <div class="container-lg section-wrapper">
-        <section id="content" class="content" tabindex="1">
-            {% for category in categories %}
-            <div class="products" id="{{ category.id }}">
+        </div>
+    </section>
+    <section id="content" class="content">
+        {% for category in categories %}
+        <div class="products" id="{{ category.id }}">
 
-                {% for info in category.infoCategory %}
-                    <div class="card p-0 mb-1" style="border-color: #bb7057!important;"> 
-                        <div class="card-header bg-dark text-white pointer" style="background-color: #bb7057!important;">{{ info.title }}</div>
-                        {% if info.text != '' %}
-                        <div class="card-body">{{ info.text }}</div>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+            {% for info in category.infoCategory %}
+            <div class="card p-0 mb-1" style="border-color: #bb7057!important;">
+                <div class="card-header bg-dark text-white pointer" style="background-color: #bb7057!important;">
+                    {{ info.title }}</div>
+                {% if info.text != '' %}
+                <div class="card-body">{{ info.text }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
 
-                <div id="accordion{{ category.id }}">
+            <div id="accordion{{ category.id }}">
 
                 {% for product in category.products %}
                 <div class="product">
                     <div class="card p-0 mb-1 bg-white border-dark">
-                        <div class="card-header bg-dark text-white pointer" id="heading{{ product.id }}" data-toggle="collapse" data-target="#collapse{{ product.id }}" aria-expanded="true" aria-controls="collapse{{ product.id }}">
+                        <div class="card-header bg-dark text-white pointer" id="heading{{ product.id }}"
+                            data-toggle="collapse" data-target="#collapse{{ product.id }}" aria-expanded="true"
+                            aria-controls="collapse{{ product.id }}">
                             <div class="horizental space-between">
                                 {% if product.shortname != '' %}
                                 <p> {{ product.shortname}} </p>
                                 <div class="px-2"></div>
                                 {% endif %}
-                                <p style="max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> {{ product.name }} </p>
+                                <p
+                                    style="max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    {{ product.name }} </p>
                                 <div class="px-2"></div>
                                 <p> {{ product.price }} </p>
                             </div>
                         </div>
-                        
-                        <div id="collapse{{ product.id }}" class="collapse {% if product.first %}show{% endif %}" aria-labelledby="heading{{ product.id }}" data-parent="#accordion{{ category.id }}">
+
+                        <div id="collapse{{ product.id }}" class="collapse {% if product.first %}show{% endif %}"
+                            aria-labelledby="heading{{ product.id }}" data-parent="#accordion{{ category.id }}">
                             <div class="card-body">
-                            <div class="container justify-content-between" data-target="#collapse{{ product.id }}" aria-expanded="true" aria-controls="collapse{{ product.id }}">
-                                <p>{{ product.description }}</p>
-                                {% if product.additives != '' %}
-                                <svg tabindex="0" href="#" title="Zusatzstoffe" data-toggle="popover" data-placement="top" data-content="{{ product.additives }}" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle m-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                    <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z"/>
-                                    <circle cx="8" cy="4.5" r="1"/>
-                                </svg>
-                                {% endif %}
-                            </div>
+                                <div class="container justify-content-between" data-target="#collapse{{ product.id }}"
+                                    aria-expanded="true" aria-controls="collapse{{ product.id }}">
+                                    <p>{{ product.description }}</p>
+                                    {% if product.additives != '' %}
+                                    <svg tabindex="0" href="#" title="Zusatzstoffe" data-toggle="popover"
+                                        data-placement="top" data-content="{{ product.additives }}" width="1em"
+                                        height="1em" viewBox="0 0 16 16" class="bi bi-info-circle m-1"
+                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                        <path
+                                            d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
+                                        <circle cx="8" cy="4.5" r="1" />
+                                    </svg>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-            </div>
-            {% endfor %}
-            
-            <div class="products" id="{{ imprint.id }}">
-                <table class="table table-hover table-borderless table-dark rounded">
-                    <thead>
+        </div>
+        {% endfor %}
+
+        <div class="products" id="{{ imprint.id }}">
+            <table class="table table-hover table-borderless table-dark rounded">
+                <thead>
                     <tr>
                         <th scope="col">Impressum:</th>
                     </tr>
-                    </thead>
-                    <tbody>
+                </thead>
+                <tbody>
                     <tr>
                         <td>Name:</td>
                         <td>{{ imprint.holder }}</td>
@@ -254,17 +253,21 @@
                         <td>Umsatzsteuer-ID:</td>
                         <td>{{ imprint.tax }}</td>
                     </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    </div>
+                </tbody>
+            </table>
+        </div>
+    </section>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('[data-toggle="popover"]').popover();
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"
+        integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous">
+    </script>
 </body>
+
 </html>
