@@ -36,10 +36,12 @@
     margin: 0;
     width: 100%;
   }
+  #content {
+    min-height: 100vh;
+  }
   section {
     padding: 1rem;
     width: 100%;
-    min-height: 100vh;
     text-align: center;
     position: relative;
   }

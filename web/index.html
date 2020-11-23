@@ -44,10 +44,10 @@
 
             window.addEventListener('popstate', (event) => {
                 if (location.hash.length != 1) {
-                    select(false);
+                    select(true);
                 } else {
                     location.hash = 0;
-                    select(false);
+                    select(true);
                 }
             });
         }
@@ -59,14 +59,13 @@
             deselectEverything();
             selectButton(clicked);
             selectContent(clicked);
-            document.getElementById(clicked).focus();
+            document.getElementById('content').focus();
         }
 
         function selectButton(clicked) {
             var button = document.getElementsByClassName('category')[clicked];
             button.classList.remove('btn-outline-dark');
             button.classList.add('btn-dark');
-            //button.focus();
         }
 
         function selectContent(clicked) {
@@ -82,8 +81,6 @@
             }
 
             history.replaceState({}, document.title, newhref);
-
-            state(start, true);
         }
 
         function deselectEverything() {
@@ -101,9 +98,8 @@
             }
         }
 
-        function state(update) {
-            document.title = pageTitle + ' - ' + document.getElementsByName('categoryText')[location.hash.replace('#', '')].textContent;
-            var stateName = document.getElementsByName('categoryText')[location.hash.replace('#', '')].innerHTML;
+        function state(clicked, update) {
+            document.title = pageTitle + ' - ' + document.getElementsByName('categoryText')[clicked].textContent;
 
             if (update) {
                 history.replaceState({}, document.title, location.href);
@@ -119,7 +115,7 @@
 </head>
 <body onload="init()" onscroll="dismissPopover()">
     <div class="container-fluid section-wrapper">
-        <section id="navigation">
+        <section id="navigation" tabindex="0">
             <header class="container justify-content-between align-items-center">
                 <div onclick="window.open('{{ imprint.homepage }}', '_blank')" class="heading">
                     <h1>{{ imprint.companyname }}</h1>
@@ -179,7 +175,7 @@
         </section>
     </div>
     <div class="container-lg section-wrapper">
-        <section id="content" class="content">
+        <section id="content" class="content" tabindex="1">
             {% for category in categories %}
             <div class="products" id="{{ category.id }}">
 
@@ -230,7 +226,7 @@
             </div>
             {% endfor %}
             
-            <div class="products" name="{{ imprint.id }}">
+            <div class="products" id="{{ imprint.id }}">
                 <table class="table table-hover table-borderless table-dark rounded">
                     <thead>
                     <tr>
