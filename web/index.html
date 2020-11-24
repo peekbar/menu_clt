@@ -85,8 +85,7 @@
         }
 
         function state(clicked) {
-            //document.title = pageTitle + ' - ' + document.getElementsByName('categoryText')[clicked].textContent;
-
+            document.title = pageTitle + ' - ' + document.getElementsByName('categoryText')[clicked].textContent;
             history.replaceState({}, document.title, location.href);
         }
 
@@ -123,13 +122,13 @@
 
             {% for category in categories %}
             <a role="button" href="#{{category.id}}" class="category btn btn-lg btn-block btn-outline-dark"">
-                    <p name=" categoryText">{{ category.name }}</p>
+                <p name="categoryText">{{ category.name }}</p>
             </a>
             {% endfor %}
 
             <div class="row justify-content-center m-2">
                 <a role="button" href="#{{imprint.id}}" class="category btn btn-outline-dark"">
-                        <p name=" categoryText">Impressum</p>
+                    <p name="categoryText">Impressum</p>
                 </a>
             </div>
 
@@ -148,7 +147,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Diese Seite wurde von dem Unternehmen PEEKBAR für {{ imprint.companyname }} erstellt.
+                                Diese Seite wurde von dem Unternehmen PEEKBAR für '{{ imprint.companyname }}' erstellt.
                                 Falls Sie Fragen, Probleme oder Verbesserungsvorschläge haben, können Sie sich gerne an
                                 uns wenden.
                             </div>
