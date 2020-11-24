@@ -188,12 +188,9 @@
                                 <p> {{ product.shortname}} </p>
                                 <div class="px-2"></div>
                                 {% endif %}
-                                <div>
-                                    <p style="max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> {{ product.name }} </p>
-                                    <div class="px-2"></div>
-                                    <p style="max-width: 100%; text-align: right;"> {{ product.price }} </p>
-                                </div>
+                                <p style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> {{ product.name }} </p>
                             </div>
+                            <p style="width: 100%; text-align: right; font-size: 0.8rem;"> {{ product.price }} </p>
                         </div>
 
                         <div id="collapse{{ product.id }}" class="collapse {% if product.first %}show{% endif %}"
