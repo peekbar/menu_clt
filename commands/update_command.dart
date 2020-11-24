@@ -1,3 +1,4 @@
+import 'package:cli_menu/cli_menu.dart';
 import 'package:dart_console/dart_console.dart';
 
 import 'command.dart';
@@ -12,7 +13,7 @@ class UpdateCommand extends Command {
   LocalFileHelper lfHelper = LocalFileHelper();
   TemplatingHelper tempHelper = TemplatingHelper();
 
-  UpdateCommand(Console console, ConsoleColor highlightColor)
+  UpdateCommand(console, ConsoleColor highlightColor)
       : super(console, highlightColor);
 
   void setMap(Map<dynamic, dynamic> map) {
@@ -30,25 +31,22 @@ class UpdateCommand extends Command {
       return;
     }
 
-    if (map['argument'] != null && map['argument' != '']) {
-      console.setForegroundColor(this.highlightColor);
-      console.writeLine(
-          'Only updating \'' + map['argument'] + ' to a new version.');
-      console.resetColorAttributes();
+    console.writeLine('Please choose, which menus should be updated.');
 
-      var name = map['argument'];
+    List<String> options = [];
+    options.add('Update all.');
+    options.addAll(localMenus);
+    options.add('<- MAIN MENU');
+    final menu = Menu(options);
+    final result = menu.choose();
 
-      if (localMenus.contains(name)) {
-        var context = await fetcher.getContext(name);
-        lfHelper.copyAllFilesTo(name);
-        tempHelper.editIndex(name, context);
-        tempHelper.editManifest(name, context);
-      } else {
-        console.writeLine(name + ' is not available locally.');
-      }
+    console.clearScreen();
 
-      console.writeLine('Done.');
-    } else {
+    if (result.index == options.length - 1) {
+      return;
+    }
+
+    if (result.index == 0) {
       map['argument'] = null;
       console.setForegroundColor(this.highlightColor);
       console.writeLine('Updating all menus to a new version.');
@@ -62,9 +60,23 @@ class UpdateCommand extends Command {
           tempHelper.editManifest(name, context);
         } else {
           console.writeLine(
-              name + ' is not available locally, so it wont be updated.');
+              name + ' is not available locally, so it won\'t be updated.');
         }
       }
+
+      console.writeLine('Done.');
+    } else {
+      console.setForegroundColor(this.highlightColor);
+      console.writeLine(
+          'Only updating \'' + options[result.index] + '\' to a new version.');
+      console.resetColorAttributes();
+
+      var name = options[result.index];
+
+      var context = await fetcher.getContext(name);
+      lfHelper.copyAllFilesTo(name);
+      tempHelper.editIndex(name, context);
+      tempHelper.editManifest(name, context);
 
       console.writeLine('Done.');
     }

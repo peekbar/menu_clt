@@ -1,3 +1,4 @@
+import 'package:cli_menu/cli_menu.dart';
 import 'package:dart_console/dart_console.dart';
 
 import 'command.dart';
@@ -30,24 +31,22 @@ class GenerateCommand extends Command {
       return;
     }
 
-    if (map['argument'] != null && map['argument' != '']) {
-      console.setForegroundColor(this.highlightColor);
-      console.writeLine('Only generating \'' + map['argument'] + '.');
-      console.resetColorAttributes();
+    console.writeLine('Please choose, which menus should be generated.');
 
-      var name = map['argument'];
+    List<String> options = [];
+    options.add('Generate all.');
+    options.addAll(availableMenus);
+    options.add('<- MAIN MENU');
+    final menu = Menu(options);
+    final result = menu.choose();
 
-      if (!localMenus.contains(name)) {
-        var context = await fetcher.getContext(name);
-        lfHelper.copyAllFilesTo(name);
-        tempHelper.editIndex(name, context);
-        tempHelper.editManifest(name, context);
-      } else {
-        console.writeLine(name + ' was already generated once.');
-      }
-      console.writeLine('Done.');
-    } else {
-      map['argument'] = null;
+    console.clearScreen();
+
+    if (result.index == options.length - 1) {
+      return;
+    }
+
+    if (result.index == 0) {
       console.setForegroundColor(this.highlightColor);
       console.writeLine('Generating all new menus.');
       console.resetColorAttributes();
@@ -61,6 +60,23 @@ class GenerateCommand extends Command {
         } else {
           console.writeLine(name + ' was already generated once.');
         }
+      }
+
+      console.writeLine('Done.');
+    } else {
+      console.setForegroundColor(this.highlightColor);
+      console.writeLine('Only generating \'' + options[result.index] + '\'.');
+      console.resetColorAttributes();
+
+      var name = options[result.index];
+
+      if (!localMenus.contains(name)) {
+        var context = await fetcher.getContext(name);
+        lfHelper.copyAllFilesTo(name);
+        tempHelper.editIndex(name, context);
+        tempHelper.editManifest(name, context);
+      } else {
+        console.writeLine(name + ' was already generated once.');
       }
 
       console.writeLine('Done.');

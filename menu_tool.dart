@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cli_menu/cli_menu.dart';
 import 'package:dart_console/dart_console.dart';
 
 import 'commands/controller.dart';
@@ -35,27 +36,28 @@ void main(List<String> arguments) async {
   console.writeLine('Enter a blank line or press Ctrl+C to exit.');
 
   while (true) {
-    console.write(prompt);
-    final response = console.readLine(cancelOnBreak: true);
-    if (response == null || response.isEmpty) {
+    console.writeLine('-----------------------------');
+    console.setForegroundColor(primaryColor);
+    console.writeLine('MAIN MENU');
+    console.resetColorAttributes();
+    console.writeLine('-----------------------------');
+    console.writeLine('Please choose:');
+
+    List<String> options = controller.getOptions();
+    final menu = Menu(options);
+    final result = menu.choose();
+
+    if (result.index == options.length - 1) {
+      console.clearScreen();
       console.setForegroundColor(primaryColor);
       console.writeLine('Goodbye.');
-      console.resetColorAttributes();
 
       await fetcher.closeConnection();
 
       exit(0);
     } else {
-      var trimmed = response.trim();
-      var arguments = trimmed.split(' ');
-
-      if (arguments.length == 0 || arguments[0] == '') {
-        controller.noCommand();
-      } else if (arguments.length > 1) {
-        await controller.launch(arguments[0][0], arguments[1]);
-      } else {
-        await controller.launch(arguments[0][0]);
-      }
+      console.clearScreen();
+      await controller.launch(result.index);
     }
   }
 }

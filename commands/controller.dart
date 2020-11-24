@@ -33,26 +33,9 @@ class Controller {
   }
 
   // launches a new command
-  void launch(String shortcut, [String argument]) async {
-    var found = false;
-
-    for (Command command in commandList) {
-      if (command.shortcut == shortcut) {
-        Map map = Map();
-        map.addAll({'commandList': commandList, 'fetcher': fetcher});
-        if (argument != null) {
-          map.addAll({'argument': argument});
-        }
-        command.setMap(map);
-        await command.exec();
-        found = true;
-        break;
-      }
-    }
-
-    if (!found) {
-      this.noCommand();
-    }
+  void launch(int index) async {
+    commandList[index].setMap({'commandList': commandList, 'fetcher': fetcher});
+    await commandList[index].exec();
   }
 
   // prints help if no command was found
@@ -63,5 +46,18 @@ class Controller {
     console.write('help');
     console.resetColorAttributes();
     console.writeLine(' for more information about the available commands.');
+  }
+
+  // returns the options
+  List<String> getOptions() {
+    List<String> titleList = [];
+
+    commandList.forEach((element) {
+      titleList.add(element.name);
+    });
+
+    titleList.add('EXIT');
+
+    return titleList;
   }
 }
