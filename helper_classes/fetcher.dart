@@ -1,23 +1,39 @@
 import 'dart:async';
 
+import 'package:dart_console/dart_console.dart';
 import 'package:liquid_engine/liquid_engine.dart';
 import 'package:postgres/postgres.dart';
 
 class Fetcher {
   var connection = PostgreSQLConnection("192.168.1.5", 5432, "menu",
       username: "generator", password: "Password");
+  Console console;
 
+  Fetcher(this.console);
+
+  // opens a connection to the database
   void openConnection() async {
-    await connection.open();
+    try {
+      await connection.open();
+    } catch (e) {
+      this.notResponding();
+    }
   }
 
+  // closes the connection to the database
   void closeConnection() async {
-    await connection.close();
+    try {
+      await connection.close();
+    } catch (e) {
+      this.notResponding();
+    }
   }
 
   // returns a list of all the menu names in the database
   Future<List<String>> getAvailableMenus() async {
     List<String> menuNames = [];
+
+    console.writeLine('Trying to fetch data from the database.');
 
     try {
       List<List<dynamic>> results =
@@ -27,6 +43,7 @@ class Fetcher {
         menuNames.add(row[0]);
       }
     } catch (e) {
+      this.notResponding();
       return null;
     }
 
@@ -152,9 +169,17 @@ class Fetcher {
         }
       }
     } catch (e) {
-      print('something is wrong');
+      this.notResponding();
     }
 
     return context;
+  }
+
+  // lets the user know, if the database is not reachable
+  void notResponding() {
+    console.writeLine();
+    console.writeLine(
+        'Please note: A connection to the database was not possible.');
+    console.writeLine();
   }
 }

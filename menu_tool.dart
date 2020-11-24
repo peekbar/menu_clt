@@ -12,11 +12,6 @@ String prompt = '>>> ';
 void main(List<String> arguments) async {
   final console = Console();
 
-  final fetcher = Fetcher();
-  await fetcher.openConnection();
-
-  final controller = Controller(console, primaryColor, fetcher);
-
   console.clearScreen();
   console.hideCursor();
 
@@ -25,16 +20,20 @@ void main(List<String> arguments) async {
   console.write('menu by PEEKBAR');
   console.resetColorAttributes();
   console.writeLine(
-      '\'. This tool helps you to create or update the menus in the database.');
+      '\'. This tool helps you to create or update the menus from the database.');
 
   console.writeLine('');
 
-  console.write('You can get help by typing the ');
+  console.write('You can get help by choosing the ');
   console.setForegroundColor(primaryColor);
   console.write('help');
   console.resetColorAttributes();
-  console.writeLine(' command.');
+  console.writeLine(' option.');
   console.writeLine('Please choose EXIT to quit the program.');
+
+  final fetcher = Fetcher(console);
+  final controller = Controller(console, primaryColor, fetcher);
+  await fetcher.openConnection();
 
   while (true) {
     console.writeLine('-----------------------------');

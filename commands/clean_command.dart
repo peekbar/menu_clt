@@ -6,7 +6,7 @@ import '../helper_classes/helper_classes.dart';
 
 class CleanCommand extends Command {
   String shortcut = 'c';
-  String name = 'clean';
+  String name = 'Clean';
   String definition = 'deletes menus, which are not in the database';
   Map<dynamic, dynamic> map;
   LocalFileHelper lfHelper = LocalFileHelper();
@@ -21,13 +21,13 @@ class CleanCommand extends Command {
   void exec() async {
     Fetcher fetcher = map['fetcher'];
 
-    console.setForegroundColor(this.highlightColor);
-    console.writeLine('Cleaning local files.');
-    console.resetColorAttributes();
-
     List<String> availableMenuNames = await fetcher.getAvailableMenus();
 
     if (availableMenuNames != null) {
+      console.setForegroundColor(this.highlightColor);
+      console.writeLine('Cleaning local files.');
+      console.resetColorAttributes();
+
       List<String> localMenuNames = lfHelper.getLocalMenuNames();
 
       for (String localMenuName in localMenuNames) {
@@ -37,8 +37,6 @@ class CleanCommand extends Command {
       }
 
       console.writeLine('Done.');
-    } else {
-      console.writeLine('The database is not responding.');
     }
   }
 }

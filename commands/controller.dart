@@ -34,6 +34,11 @@ class Controller {
 
   // launches a new command
   void launch(int index) async {
+    console.setForegroundColor(this.highlightColor);
+    console.writeLine('Launching: ' + commandList[index].name);
+    console.resetColorAttributes();
+    console.writeLine();
+
     commandList[index].setMap({'commandList': commandList, 'fetcher': fetcher});
     await commandList[index].exec();
   }

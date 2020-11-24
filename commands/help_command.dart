@@ -4,7 +4,7 @@ import 'command.dart';
 
 class HelpCommand extends Command {
   String shortcut = 'h';
-  String name = 'help';
+  String name = 'Help';
   String definition = 'prints useful information';
   Map<dynamic, dynamic> map;
 

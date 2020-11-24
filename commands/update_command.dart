@@ -7,7 +7,7 @@ import '../helper_classes/helper_classes.dart';
 
 class UpdateCommand extends Command {
   String shortcut = 'u';
-  String name = 'update';
+  String name = 'Update';
   String definition = 'updates all the existing menus';
   Map<dynamic, dynamic> map;
   LocalFileHelper lfHelper = LocalFileHelper();
@@ -27,7 +27,6 @@ class UpdateCommand extends Command {
     List<String> localMenus = lfHelper.getLocalMenuNames();
 
     if (availableMenus == null) {
-      console.writeLine('The database is not responding.');
       return;
     }
 

@@ -7,7 +7,7 @@ import '../helper_classes/helper_classes.dart';
 
 class GenerateCommand extends Command {
   String shortcut = 'g';
-  String name = 'generate';
+  String name = 'Generate';
   String definition = 'generates new menus';
   Map<dynamic, dynamic> map;
   LocalFileHelper lfHelper = LocalFileHelper();
@@ -27,7 +27,6 @@ class GenerateCommand extends Command {
     List<String> localMenus = lfHelper.getLocalMenuNames();
 
     if (availableMenus == null) {
-      console.writeLine('The database is not responding.');
       return;
     }
 
