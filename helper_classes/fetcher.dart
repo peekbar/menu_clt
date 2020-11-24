@@ -124,7 +124,7 @@ class Fetcher {
               'name': row[1],
               'shortname': shortname,
               'description': row[3],
-              'price': row[4],
+              'price': row[4].toString().replaceAll(', ', '<br>'),
               'position': row[5],
               'additives': additivesList.join(', '),
               'first': first,
