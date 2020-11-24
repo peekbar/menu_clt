@@ -188,11 +188,11 @@
                                 <p> {{ product.shortname}} </p>
                                 <div class="px-2"></div>
                                 {% endif %}
-                                <p
-                                    style="max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                    {{ product.name }} </p>
-                                <div class="px-2"></div>
-                                <p> {{ product.price }} </p>
+                                <div>
+                                    <p style="max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> {{ product.name }} </p>
+                                    <div class="px-2"></div>
+                                    <p style="max-width: 100%; text-align: right;"> {{ product.price }} </p>
+                                </div>
                             </div>
                         </div>
 
