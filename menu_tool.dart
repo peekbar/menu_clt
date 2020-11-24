@@ -18,13 +18,14 @@ void main(List<String> arguments) async {
   final controller = Controller(console, primaryColor, fetcher);
 
   console.clearScreen();
+  console.hideCursor();
 
-  console.write('Welcome to ');
+  console.write('Welcome to \'');
   console.setForegroundColor(primaryColor);
-  console.write('Menu by PEEKBAR');
+  console.write('menu by PEEKBAR');
   console.resetColorAttributes();
   console.writeLine(
-      '. This tool helps you to create or update the menus in the database.');
+      '\'. This tool helps you to create or update the menus in the database.');
 
   console.writeLine('');
 
@@ -33,7 +34,7 @@ void main(List<String> arguments) async {
   console.write('help');
   console.resetColorAttributes();
   console.writeLine(' command.');
-  console.writeLine('Enter a blank line or press Ctrl+C to exit.');
+  console.writeLine('Please choose EXIT to quit the program.');
 
   while (true) {
     console.writeLine('-----------------------------');
@@ -51,6 +52,7 @@ void main(List<String> arguments) async {
       console.clearScreen();
       console.setForegroundColor(primaryColor);
       console.writeLine('Goodbye.');
+      console.showCursor();
 
       await fetcher.closeConnection();
 
