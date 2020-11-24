@@ -66,7 +66,7 @@ class Fetcher {
         List<Map> infoMenuList = [];
 
         List<List<dynamic>> categories = await connection.query(
-            'SELECT id, name, icon, position FROM "Category" WHERE "Menu_id" = @menuId',
+            'SELECT id, name, icon, position FROM "Category" WHERE "Menu_id" = @menuId ORDER BY position ASC',
             substitutionValues: {'menuId': menuId});
 
         List<List<dynamic>> infoMenu = await connection.query(
@@ -84,7 +84,7 @@ class Fetcher {
           List<Map> productsList = [];
 
           List<List<dynamic>> products = await connection.query(
-              'SELECT id, name, shortname, description, price, position FROM "Product" WHERE "Category_id" = @categoryId',
+              'SELECT id, name, shortname, description, price, position FROM "Product" WHERE "Category_id" = @categoryId ORDER BY position ASC',
               substitutionValues: {'categoryId': categoryId});
 
           List<List<dynamic>> infoCategory = await connection.query(
