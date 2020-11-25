@@ -183,14 +183,17 @@
                         <div class="card-header bg-dark text-white pointer" id="heading{{ product.id }}"
                             data-toggle="collapse" data-target="#collapse{{ product.id }}" aria-expanded="true"
                             aria-controls="collapse{{ product.id }}">
-                            <div class="horizental space-between">
-                                {% if product.shortname != '' %}
-                                <p> {{ product.shortname}} </p>
-                                <div class="px-2"></div>
-                                {% endif %}
-                                <p style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> {{ product.name }} </p>
+                            <div class="row space-between">
+                                <div class="col-auto">
+                                    <div class="nowrap row">
+                                        {% if product.shortname != '' %}
+                                        <p>{{product.shortname}}&nbsp;</p>
+                                        {% endif %}
+                                        <p style="max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center;">{{product.name}}</p>
+                                    </div>
+                                </div>
+                                <p style="max-width: 100%; text-align: right; font-size: 0.8rem;">{{product.price}}</p>
                             </div>
-                            <p style="width: 100%; text-align: right; font-size: 0.8rem;"> {{ product.price }} </p>
                         </div>
 
                         <div id="collapse{{ product.id }}" class="collapse {% if product.first %}show{% endif %}"
@@ -222,7 +225,7 @@
         {% endfor %}
 
         <div class="products" id="{{ imprint.id }}">
-            <table class="table table-hover table-borderless table-dark rounded">
+            <table class="table table-hover table-borderless table-dark rounded table-responsive">
                 <thead>
                     <tr>
                         <th scope="col">Impressum:</th>
