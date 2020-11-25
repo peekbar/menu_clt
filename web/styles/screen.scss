@@ -148,3 +148,7 @@ div.space-between {
     display: flex;
     flex-wrap: nowrap;
 }
+
+.noselect {
+    user-select: none;
+}
