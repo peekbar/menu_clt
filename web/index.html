@@ -97,7 +97,7 @@
 
 <body onload="init()" onscroll="dismissPopover()" class="container-fluid">
     <section id="navigation">
-        <header class="container justify-content-between align-items-center">
+        <header class="container justify-content-between align-items-center" style="overflow-x: visible;">
             <div onclick="window.open('{{ imprint.homepage }}', '_blank')" class="heading">
                 <h1>{{ imprint.companyname }}</h1>
             </div>
@@ -183,7 +183,7 @@
                         <div class="card-header bg-dark text-white pointer" id="heading{{ product.id }}"
                             data-toggle="collapse" data-target="#collapse{{ product.id }}" aria-expanded="true"
                             aria-controls="collapse{{ product.id }}">
-                            <div class="row space-between">
+                            <div class="row space-between align-items-center">
                                 <div class="col-auto">
                                     <div class="nowrap row">
                                         {% if product.shortname != '' %}
@@ -198,7 +198,7 @@
 
                         <div id="collapse{{ product.id }}" class="collapse {% if product.first %}show{% endif %}"
                             aria-labelledby="heading{{ product.id }}" data-parent="#accordion{{ category.id }}">
-                            <div class="card-body">
+                            <div class="card-body" style="padding: 0.7rem;">
                                 <div class="container justify-content-between" data-target="#collapse{{ product.id }}"
                                     aria-expanded="true" aria-controls="collapse{{ product.id }}">
                                     <p>{{ product.description }}</p>
