@@ -94,7 +94,7 @@ class LocalFileHelper {
 
   // check for directories and necessary files
   void checkDirectoriesFiles() {
-    List<String> directories = ['templates', 'generated', 'data'];
+    List<String> directories = ['templates', 'generated', 'data', 'languages'];
     List<String> files = ['config.json'];
 
     for (var directory in directories) {
