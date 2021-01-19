@@ -13,3 +13,5 @@ doc/api/
 *.iws
 .idea/
 .DS_Store
+generated/*
+data/*

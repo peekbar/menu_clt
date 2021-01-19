@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:cli_menu/cli_menu.dart';
 import 'package:dart_console/dart_console.dart';
 
-import 'commands/controller.dart';
-import 'helper_classes/fetcher.dart';
+import 'classes/controller.dart';
+import 'classes/helper_classes.dart';
 
 ConsoleColor primaryColor = ConsoleColor.brightYellow;
 String prompt = '>>> ';
@@ -20,9 +20,9 @@ void main(List<String> arguments) async {
   console.write('menu by PEEKBAR');
   console.resetColorAttributes();
   console.writeLine(
-      '\'. This tool helps you to create or update the menus from the database.');
+      '\'. This tool helps you to create digital menus from json-files and templates.');
 
-  console.writeLine('');
+  console.writeLine();
 
   console.write('You can get help by choosing the ');
   console.setForegroundColor(primaryColor);
@@ -31,9 +31,10 @@ void main(List<String> arguments) async {
   console.writeLine(' option.');
   console.writeLine('Please choose EXIT to quit the program.');
 
-  final fetcher = Fetcher(console);
-  final controller = Controller(console, primaryColor, fetcher);
-  await fetcher.openConnection();
+  console.writeLine();
+
+  final controller = Controller(console, primaryColor);
+  LocalFileHelper().checkDirectoriesFiles();
 
   while (true) {
     console.writeLine('-----------------------------');
@@ -52,8 +53,6 @@ void main(List<String> arguments) async {
       console.setForegroundColor(primaryColor);
       console.writeLine('Goodbye.');
       console.showCursor();
-
-      await fetcher.closeConnection();
 
       exit(0);
     } else {

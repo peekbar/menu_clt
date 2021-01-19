@@ -110,12 +110,12 @@
             </a>
         </header>
         <div class="categories">
-            {% for info in infoMenu %}
+            {% for banner in banners %}
             <div class="card p-0 mb-1" style="border-color: #bb7057!important; border-width: 2px!important;">
                 <div class="card-header bg-dark text-white pointer" style="background-color: #bb7057!important;">
-                    {{ info.title }}</div>
-                {% if info.text != '' %}
-                <div class="card-body">{{ info.text }}</div>
+                    {{ banner.title }}</div>
+                {% if banner.text != '' %}
+                <div class="card-body">{{ banner.text }}</div>
                 {% endif %}
             </div>
             {% endfor %}
@@ -127,30 +127,36 @@
             {% endfor %}
 
             <div class="row justify-content-center m-2">
-                <a role="button" href="#{{imprint.id}}" class="category btn btn-outline-dark"">
-                    <p name="categoryText">Impressum</p>
+                <a role="button" href="#{{opening_hours.id}}" class="category btn btn-outline-dark"">
+                    <p name="categoryText">{{system.opening_hours}}</p>
                 </a>
             </div>
 
             <div class="row justify-content-center m-2">
-                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalScrollable">
-                    Über diese Seite
-                </button>
+                <a role="button" href="#{{min_order.id}}" class="category btn btn-outline-dark"">
+                    <p name="categoryText">{{system.min_order}}</p>
+                </a>
+            </div>
+
+            <div class="row justify-content-center m-2">
+                <a role="button" href="#{{imprint.id}}" class="category btn btn-outline-dark"">
+                    <p name="categoryText">{{system.imprint.title}}</p>
+                </a>
+            </div>
+
+            <div class="row justify-content-center m-2">
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalScrollable">{{system.about}}</button>
                 <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalScrollableTitle">Über diese Seite</h5>
+                                <h5 class="modal-title" id="exampleModalScrollableTitle">{{system.about}}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                Diese Seite wurde von dem Unternehmen PEEKBAR für '{{ imprint.companyname }}' erstellt.
-                                Falls Sie Fragen, Probleme oder Verbesserungsvorschläge haben, können Sie sich gerne an
-                                uns wenden.
-                            </div>
+                            <div class="modal-body">{{system.peekbar}}</div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-dark"
                                     onclick="window.open('https:\/\/www.peekbar.de', '_blank')">Zu PEEKBAR</button>
@@ -165,12 +171,12 @@
         {% for category in categories %}
         <div class="products" id="{{ category.id }}">
 
-            {% for info in category.infoCategory %}
+            {% for banner in category.banners %}
             <div class="card p-0 mb-1" style="border-color: #bb7057!important;">
                 <div class="card-header bg-dark text-white pointer" style="background-color: #bb7057!important;">
-                    {{ info.title }}</div>
-                {% if info.text != '' %}
-                <div class="card-body">{{ info.text }}</div>
+                    {{ banner.title }}</div>
+                {% if banner.text != '' %}
+                <div class="card-body">{{ banner.text }}</div>
                 {% endif %}
             </div>
             {% endfor %}
@@ -196,7 +202,7 @@
                             </div>
                         </div>
 
-                        <div id="collapse{{ product.id }}" class="collapse {% if product.first %}show{% endif %}"
+                        <div id="collapse{{ product.id }}" class="collapse {% if forloop.first == true %}show{% endif %}"
                             aria-labelledby="heading{{ product.id }}" data-parent="#accordion{{ category.id }}">
                             {% if product.description != '' or product.additives != '' %}
                             <div class="card-body" style="padding: 0.7rem;">
@@ -228,36 +234,78 @@
         </div>
         {% endfor %}
 
+        <div class="products" id="{{ opening_hours.id }}">
+            <div class="table-responsive">
+                <table class="table table-hover table-borderless table-dark rounded">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{system.opening_hours}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for o in opening_hours.table %}
+                        <tr>
+                            <td>{{o.days}}</td>
+                            <td>{{o.hours}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="products" id="{{ min_order.id }}">
+            <div class="table-responsive">
+                <table class="table table-hover table-borderless table-dark rounded">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{system.min_order}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for m in min_order.table %}
+                        <tr>
+                            <td>{{m.dist}}</td>
+                            <td>{{m.order}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="products" id="{{ imprint.id }}">
-            <table class="table table-hover table-borderless table-dark rounded table-responsive">
-                <thead>
-                    <tr>
-                        <th scope="col">Impressum:</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Name:</td>
-                        <td>{{ imprint.holder }}</td>
-                    </tr>
-                    <tr>
-                        <td>Anschrift:</td>
-                        <td>{{ imprint.street }}, {{ imprint.city }}</td>
-                    </tr>
-                    <tr>
-                        <td>Telefon:</td>
-                        <td><a class="text-white" href="tel:{{ imprint.phone }}">{{ imprint.phone }}</a></td>
-                    </tr>
-                    <tr>
-                        <td>Mail:</td>
-                        <td><a class="text-white" href="mailto:{{ imprint.mail }}">{{ imprint.mail }}</a></td>
-                    </tr>
-                    <tr>
-                        <td>Umsatzsteuer-ID:</td>
-                        <td>{{ imprint.tax }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-hover table-borderless table-dark rounded">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{system.imprint.title}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{system.imprint.name}}:</td>
+                            <td>{{ imprint.holder }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{system.imprint.address}}:</td>
+                            <td>{{ imprint.street }}, {{ imprint.city }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{system.imprint.phone}}:</td>
+                            <td><a class="text-white" href="tel:{{ imprint.phone }}">{{ imprint.phone }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>{{system.imprint.mail}}:</td>
+                            <td><a class="text-white" href="mailto:{{ imprint.mail }}">{{ imprint.mail }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>{{system.imprint.tax}}:</td>
+                            <td>{{ imprint.tax }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
     <script>

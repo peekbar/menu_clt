@@ -1,0 +1,15 @@
+{
+    "opening_hours": "Öffnungszeiten",
+    "imprint": {
+        "title": "Impressum",
+        "name": "Name",
+        "address": "Adresse",
+        "phone": "Telefon",
+        "mail": "Mail",
+        "tax": "Umsatzsteuer-ID"
+    },
+    "min_order": "Mindestbestellwert",
+    "additives": "Zusatzstoffe",
+    "about": "Über diese Seite",
+    "peekbar": "Diese Seite wurde mit einem Tool von PEEKBAR erstellt. Falls Sie Fragen, Probleme oder Verbesserungsvorschläge haben, können Sie sich gerne an PEEKBAR direkt wenden wenden. Wenden Sie sich für inhaltliche Probleme bitte an das Unternehmen."
+}

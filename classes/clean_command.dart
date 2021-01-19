@@ -2,12 +2,13 @@ import 'package:dart_console/dart_console.dart';
 
 import 'command.dart';
 
-import '../helper_classes/helper_classes.dart';
+import 'helper_classes.dart';
 
 class CleanCommand extends Command {
   String shortcut = 'c';
   String name = 'Clean';
-  String definition = 'deletes menus, which are not in the database';
+  String definition =
+      'This command deletes generated menus, which files do not exist in \'data\'.';
   Map<dynamic, dynamic> map;
   LocalFileHelper lfHelper = LocalFileHelper();
 
@@ -19,20 +20,17 @@ class CleanCommand extends Command {
   }
 
   void exec() async {
-    Fetcher fetcher = map['fetcher'];
+    List<String> data = lfHelper.getMenusInData();
+    List<String> generated = lfHelper.getMenusInGenerated();
 
-    List<String> availableMenuNames = await fetcher.getAvailableMenus();
-
-    if (availableMenuNames != null) {
+    if (data.isNotEmpty) {
       console.setForegroundColor(this.highlightColor);
       console.writeLine('Cleaning local files.');
       console.resetColorAttributes();
 
-      List<String> localMenuNames = lfHelper.getLocalMenuNames();
-
-      for (String localMenuName in localMenuNames) {
-        if (!availableMenuNames.contains(localMenuName)) {
-          lfHelper.deleteLocalMenu(localMenuName);
+      for (String menu in generated) {
+        if (!data.contains(menu)) {
+          lfHelper.deleteGeneratedMenu(menu);
         }
       }
 
