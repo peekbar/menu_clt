@@ -15,3 +15,4 @@ doc/api/
 .DS_Store
 generated/*
 data/*
+templates/*
