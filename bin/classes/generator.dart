@@ -33,7 +33,7 @@ class Generator {
   // this function adds ids for each category, group and product
   Map addIDs(Map data) {
     var category = 0;
-    var group = 0;
+    //var group = 0;
     var product = 0;
 
     for (Map<String, dynamic> c in data["categories"]) {

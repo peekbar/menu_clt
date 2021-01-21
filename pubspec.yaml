@@ -4,7 +4,6 @@ publish_to: none
 environment:
   sdk: '>=2.0.0 <3.0.0'
 dependencies:
-  string_scanner: ^1.0.5
   liquid_engine: ^0.1.2
   dart_console: ^0.6.2
   cli_menu: ^0.2.3
