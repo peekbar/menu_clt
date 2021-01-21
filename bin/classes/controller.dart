@@ -1,7 +1,7 @@
 import 'package:dart_console/dart_console.dart';
 
-import 'commands.dart';
-import 'generate_command.dart';
+import '../commands/command.dart';
+import '../commands/commands.dart';
 
 class Controller {
   Console console;

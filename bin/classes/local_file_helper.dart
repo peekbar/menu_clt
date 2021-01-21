@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 class LocalFileHelper {
@@ -15,7 +14,7 @@ class LocalFileHelper {
   List<String> getMenusInData() {
     List<String> menus = [];
     List<FileSystemEntity> entityList =
-        Directory('data').listSync(recursive: false, followLinks: false);
+        Directory('menu/data').listSync(recursive: false, followLinks: false);
 
     for (FileSystemEntity entity in entityList) {
       if (FileSystemEntity.isFileSync(entity.path)) {
@@ -30,8 +29,8 @@ class LocalFileHelper {
   // returns a list of the menu names in generated
   List<String> getMenusInGenerated() {
     List<String> menus = [];
-    List<FileSystemEntity> entityList =
-        Directory('generated').listSync(recursive: false, followLinks: false);
+    List<FileSystemEntity> entityList = Directory('menu/generated')
+        .listSync(recursive: false, followLinks: false);
 
     for (FileSystemEntity entity in entityList) {
       if (FileSystemEntity.isDirectorySync(entity.path)) {
@@ -46,8 +45,8 @@ class LocalFileHelper {
   // returns a list of the available templates
   List<String> getTemplates() {
     List<String> templates = [];
-    List<FileSystemEntity> entityList =
-        Directory('templates').listSync(recursive: false, followLinks: false);
+    List<FileSystemEntity> entityList = Directory('menu/templates')
+        .listSync(recursive: false, followLinks: false);
 
     for (FileSystemEntity entity in entityList) {
       if (FileSystemEntity.isDirectorySync(entity.path)) {
@@ -59,29 +58,6 @@ class LocalFileHelper {
     return templates;
   }
 
-  // returns a list of the supported language codes
-  List<String> getSupportedLanguages() {
-    List<String> languages = [];
-    List<FileSystemEntity> entityList =
-        Directory('languages').listSync(recursive: false, followLinks: false);
-
-    for (FileSystemEntity entity in entityList) {
-      if (FileSystemEntity.isFileSync(entity.path)) {
-        var path = entity.path.split('/');
-        languages.add(path[path.length - 1]
-            .replaceAll('lang_', '')
-            .replaceAll('.json', ''));
-      }
-    }
-
-    return languages;
-  }
-
-  Map getSystemTitles(String langCode) {
-    return jsonDecode(LocalFileHelper()
-        .getContents(File('languages/lang_' + langCode + '.json')));
-  }
-
   // returns the contents of a file
   String getContents(File file) {
     return file.readAsStringSync().trim();
@@ -89,13 +65,17 @@ class LocalFileHelper {
 
   // deletes a generated menu by the menu name
   void deleteGeneratedMenu(String name) {
-    Process.runSync('rm', ['-r', 'generated/' + name]);
+    Process.runSync('rm', ['-r', 'menu/generated/' + name]);
   }
 
   // check for directories and necessary files
   void checkDirectoriesFiles() {
-    List<String> directories = ['templates', 'generated', 'data', 'languages'];
-    List<String> files = ['config.json'];
+    List<String> directories = [
+      'menu/templates',
+      'menu/generated',
+      'menu/data'
+    ];
+    List<String> files = ['menu/config.json'];
 
     for (var directory in directories) {
       if (!Directory(directory).existsSync()) {
