@@ -72,9 +72,7 @@ class GenerateCommand extends Command {
       console.resetColorAttributes();
 
       for (String name in data) {
-        lfHelper.copyAllFilesTo(
-            Directory('templates/' + templates[templateResult.index]),
-            Directory('generated/' + name));
+        lfHelper.copyAllFilesTo(name, templates[templateResult.index]);
         generator.generate(name);
       }
 
@@ -87,9 +85,7 @@ class GenerateCommand extends Command {
 
       var name = options[menuResult.index];
 
-      lfHelper.copyAllFilesTo(
-          Directory('templates/' + templates[templateResult.index]),
-          Directory('generated/' + name));
+      lfHelper.copyAllFilesTo(name, templates[templateResult.index]);
       generator.generate(name);
 
       console.writeLine('Done.');

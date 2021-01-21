@@ -2,12 +2,27 @@ import 'dart:io';
 
 class LocalFileHelper {
   // copies all files inside the web direcory to a local menu
-  void copyAllFilesTo(Directory source, Directory destination) {
-    if (destination.existsSync()) {
-      Process.runSync('rm', ['-rf', destination.path]);
+  void copyAllFilesTo(String menu, String template) {
+    Directory dest = Directory('menu/generated/' + menu);
+    String preTemplate = 'menu/templates/';
+    if (dest.existsSync()) {
+      dest.deleteSync(recursive: true);
     }
 
-    Process.runSync('cp', ['-rf', source.path, destination.path]);
+    List<FileSystemEntity> entityList = Directory(preTemplate + template)
+        .listSync(recursive: true, followLinks: false);
+
+    for (FileSystemEntity entity in entityList) {
+      if (FileSystemEntity.isDirectorySync(entity.path)) {
+        Directory(
+                dest.path + entity.path.replaceAll(preTemplate + template, ''))
+            .createSync(recursive: true);
+      } else {
+        File(dest.path + entity.path.replaceAll(preTemplate + template, ''))
+          ..createSync(recursive: true)
+          ..writeAsStringSync(File(entity.path).readAsStringSync());
+      }
+    }
   }
 
   // returns a list of the menu names in data
@@ -65,7 +80,7 @@ class LocalFileHelper {
 
   // deletes a generated menu by the menu name
   void deleteGeneratedMenu(String name) {
-    Process.runSync('rm', ['-r', 'menu/generated/' + name]);
+    Directory('menu/generated/' + name).deleteSync(recursive: true);
   }
 
   // check for directories and necessary files
