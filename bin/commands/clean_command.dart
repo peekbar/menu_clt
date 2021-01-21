@@ -22,7 +22,7 @@ class CleanCommand extends Command {
     List<String> data = lfHelper.getMenusInData();
     List<String> generated = lfHelper.getMenusInGenerated();
 
-    if (data.isNotEmpty) {
+    if (generated.isNotEmpty) {
       console.writeLine('Cleaning local files.');
 
       for (String menu in generated) {
@@ -32,6 +32,8 @@ class CleanCommand extends Command {
       }
 
       console.writeLine('Done.');
+    } else {
+      console.writeLine('There are no files to clean.');
     }
   }
 }
