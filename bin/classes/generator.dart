@@ -13,7 +13,7 @@ class Generator {
   Generator(this.console);
 
   // returns the context of a menu
-  void generate(String name) {
+  void generate(String name) async {
     try {
       var context = Context.create();
       Map data = jsonDecode(
@@ -21,8 +21,8 @@ class Generator {
       data = addIDs(data);
       data = addSystemTitles(data);
       context.variables = data;
-      this.editIndex(name, context);
-      this.editManifest(name, context);
+      await editIndex(name, context);
+      await editManifest(name, context);
     } catch (e) {
       console.writeLine();
       console.writeLine('It seems like something went wrong.');
@@ -38,22 +38,11 @@ class Generator {
 
     for (Map<String, dynamic> c in data["categories"]) {
       c["id"] = category;
-
       for (Map<String, dynamic> p in c["products"]) {
         p["id"] = product;
         product++;
       }
 
-      category++;
-    }
-
-    if (data.containsKey("opening_hours")) {
-      data["opening_hours"]["id"] = category;
-      category++;
-    }
-
-    if (data.containsKey("min_order")) {
-      data["min_order"]["id"] = category;
       category++;
     }
 
@@ -85,18 +74,19 @@ class Generator {
   }
 
   // templates the index.html file of a menu
-  void editIndex(String name, Context context) {
+  void editIndex(String name, Context context) async {
+    
     File index = File('menu/generated/' + name + '/index.html');
     String contents = LocalFileHelper().getContents(index);
     final template = Template.parse(context, Source.fromString(contents));
-    index.writeAsStringSync(template.render(context));
+    index.writeAsStringSync(await template.render(context));
   }
 
   // templates the index.html file of a menu
-  void editManifest(String name, Context context) {
+  void editManifest(String name, Context context) async {
     File manifest = File('menu/generated/' + name + '/manifest.webmanifest');
     String contents = LocalFileHelper().getContents(manifest);
     final template = Template.parse(context, Source.fromString(contents));
-    manifest.writeAsStringSync(template.render(context));
+    manifest.writeAsStringSync(await template.render(context));
   }
 }

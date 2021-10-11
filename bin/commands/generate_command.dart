@@ -73,7 +73,7 @@ class GenerateCommand extends Command {
 
       for (String name in data) {
         lfHelper.copyAllFilesTo(name, templates[templateResult.index]);
-        generator.generate(name);
+        await generator.generate(name);
       }
 
       console.writeLine('Done.');
@@ -86,7 +86,7 @@ class GenerateCommand extends Command {
       var name = options[menuResult.index];
 
       lfHelper.copyAllFilesTo(name, templates[templateResult.index]);
-      generator.generate(name);
+      await generator.generate(name);
 
       console.writeLine('Done.');
     }
