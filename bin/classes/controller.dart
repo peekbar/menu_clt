@@ -4,14 +4,14 @@ import '../commands/command.dart';
 import '../commands/commands.dart';
 
 class Controller {
-  Console console;
-  ConsoleColor highlightColor;
+  Console? console;
+  ConsoleColor? highlightColor;
 
-  List<Command> commandList = [];
+  List<Command?> commandList = [];
 
-  Command helpCommand;
-  Command generateCommand;
-  Command cleanCommand;
+  Command? helpCommand;
+  Command? generateCommand;
+  Command? cleanCommand;
 
   Controller(console, highlightColor) {
     this.console = console;
@@ -27,22 +27,22 @@ class Controller {
   }
 
   // launches a new command
-  void launch(int index) async {
-    console.setForegroundColor(this.highlightColor);
-    console.writeLine('Launching: ' + commandList[index].name);
-    console.resetColorAttributes();
-    console.writeLine();
+  Future<void> launch(int index) async {
+    console!.setForegroundColor(this.highlightColor!);
+    console!.writeLine('Launching: ' + commandList[index]!.name!);
+    console!.resetColorAttributes();
+    console!.writeLine();
 
-    commandList[index].setMap({'commandList': commandList});
-    await commandList[index].exec();
+    commandList[index]!.setMap({'commandList': commandList});
+    commandList[index]!.exec();
   }
 
   // returns the options
-  List<String> getOptions() {
-    List<String> titleList = [];
+  List<String?> getOptions() {
+    List<String?> titleList = [];
 
     commandList.forEach((element) {
-      titleList.add(element.name);
+      titleList.add(element!.name);
     });
 
     titleList.add('EXIT');

@@ -8,25 +8,25 @@ import 'languages.dart';
 import 'local_file_helper.dart';
 
 class Generator {
-  Console console;
+  Console? console;
 
   Generator(this.console);
 
   // returns the context of a menu
-  void generate(String name) async {
+  Future<void> generate(String name) async {
     try {
       var context = Context.create();
       Map data = jsonDecode(
           LocalFileHelper().getContents(File('menu/data/' + name + '.json')));
       data = addIDs(data);
       data = addSystemTitles(data);
-      context.variables = data;
+      context.variables = data as Map<String, dynamic>;
       await editIndex(name, context);
       await editManifest(name, context);
     } catch (e) {
-      console.writeLine();
-      console.writeLine('It seems like something went wrong.');
-      console.writeLine();
+      console!.writeLine();
+      console!.writeLine('It seems like something went wrong.');
+      console!.writeLine();
     }
   }
 
@@ -37,7 +37,7 @@ class Generator {
       Map data = jsonDecode(jsonData);
       data = addIDs(data);
       data = addSystemTitles(data);
-      context.variables = data;
+      context.variables = data as Map<String, dynamic>;
       await generateIndex(destination+'/index.html', context);
       await generateManifest(destination+'/manifest.webmanifest', context);
     } catch (e) {
@@ -72,7 +72,7 @@ class Generator {
   // this function adds the language specific system titles
   // if no language is given or the given language is not supported, the english language is loaded
   Map addSystemTitles(Map data) {
-    String lang;
+    String? lang;
     List<String> supportedLanguages = Languages().getSupportedLanguages();
 
     if (data.containsKey("language")) {
@@ -89,11 +89,11 @@ class Generator {
   }
 
   // templates the index.html file of a menu
-  void editIndex(String name, Context context) async {
+  Future<void> editIndex(String name, Context context) async {
     await generateIndex('menu/generated/' + name + '/index.html', context);
   }
 
-  void generateIndex(String pathToIndex, Context context) async {
+  Future<void> generateIndex(String pathToIndex, Context context) async {
     File index = File(pathToIndex);
     String contents = LocalFileHelper().getContents(index);
     final template = Template.parse(context, Source.fromString(contents));
@@ -101,11 +101,11 @@ class Generator {
   }
   
   // templates the index.html file of a menu
-  void editManifest(String name, Context context) async {
+  Future<void> editManifest(String name, Context context) async {
     await generateManifest('menu/generated/' + name + '/manifest.webmanifest', context);
   }
 
-  void generateManifest(String pathToManifest, Context context) async {
+  Future<void> generateManifest(String pathToManifest, Context context) async {
     File manifest = File(pathToManifest);
     String contents = LocalFileHelper().getContents(manifest);
     final template = Template.parse(context, Source.fromString(contents));

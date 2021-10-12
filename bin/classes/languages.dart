@@ -43,7 +43,7 @@ class Languages {
     return supported;
   }
 
-  Map getSystemTitles(String langCode) {
-    return _l[langCode];
+  Map? getSystemTitles(String? langCode) {
+    return _l[langCode!];
   }
 }

@@ -1,13 +1,13 @@
 import 'package:dart_console/dart_console.dart';
 
 class Command {
-  String shortcut;
-  String name;
-  String definition;
-  Map<dynamic, dynamic> map;
+  String? shortcut;
+  String? name;
+  String? definition;
+  Map<dynamic, dynamic>? map;
 
-  Console console;
-  ConsoleColor highlightColor;
+  Console? console;
+  ConsoleColor? highlightColor;
 
   Command(this.console, this.highlightColor);
 
@@ -16,8 +16,10 @@ class Command {
   }
 
   String getHelpText() {
-    return ' - ' + this.name + ': ' + definition;
+    return ' - ' + this.name! + ': ' + definition!;
   }
 
-  void exec() {}
+  void exec() {
+
+  }
 }

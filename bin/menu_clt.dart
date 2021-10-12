@@ -45,7 +45,7 @@ void main(List<String> arguments) async {
     console.writeLine('-----------------------------');
     console.writeLine('Please choose:');
 
-    List<String> options = controller.getOptions();
+    List<String?> options = controller.getOptions();
     final menu = Menu(options);
     final result = menu.choose();
 

@@ -2,7 +2,7 @@ name: menu_clt
 version: 1.0.0
 publish_to: none
 environment:
-  sdk: '>=2.0.0 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 dependencies:
   liquid_engine: ^0.2.2
   dart_console: ^1.0.0
