@@ -30,6 +30,21 @@ class Generator {
     }
   }
 
+  // destination contains a copy of the template
+  void generateFrom(String destination, String jsonData) async {
+    try {
+      var context = Context.create();
+      Map data = jsonDecode(jsonData);
+      data = addIDs(data);
+      data = addSystemTitles(data);
+      context.variables = data;
+      await generateIndex(destination+'/index.html', context);
+      await generateManifest(destination+'/manifest.webmanifest', context);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   // this function adds ids for each category, group and product
   Map addIDs(Map data) {
     var category = 0;
@@ -75,18 +90,26 @@ class Generator {
 
   // templates the index.html file of a menu
   void editIndex(String name, Context context) async {
-    
-    File index = File('menu/generated/' + name + '/index.html');
+    await generateIndex('menu/generated/' + name + '/index.html', context);
+  }
+
+  void generateIndex(String pathToIndex, Context context) async {
+    File index = File(pathToIndex);
     String contents = LocalFileHelper().getContents(index);
     final template = Template.parse(context, Source.fromString(contents));
     index.writeAsStringSync(await template.render(context));
   }
-
+  
   // templates the index.html file of a menu
   void editManifest(String name, Context context) async {
-    File manifest = File('menu/generated/' + name + '/manifest.webmanifest');
+    await generateManifest('menu/generated/' + name + '/manifest.webmanifest', context);
+  }
+
+  void generateManifest(String pathToManifest, Context context) async {
+    File manifest = File(pathToManifest);
     String contents = LocalFileHelper().getContents(manifest);
     final template = Template.parse(context, Source.fromString(contents));
     manifest.writeAsStringSync(await template.render(context));
   }
+
 }
