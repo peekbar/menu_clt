@@ -2,23 +2,22 @@ import 'dart:io';
 
 class LocalFileHelper {
   // copies all files inside the web direcory to a local menu
-  void copyAllFilesTo(String menu, String template) {
-    Directory dest = Directory('menu/generated/' + menu);
-    String preTemplate = 'menu/templates/';
+  void copyAllFilesTo(String destination, String source) {
+    Directory dest = Directory(destination);
     if (dest.existsSync()) {
       dest.deleteSync(recursive: true);
     }
 
-    List<FileSystemEntity> entityList = Directory(preTemplate + template)
+    List<FileSystemEntity> entityList = Directory(source)
         .listSync(recursive: true, followLinks: false);
 
     for (FileSystemEntity entity in entityList) {
       if (FileSystemEntity.isDirectorySync(entity.path)) {
         Directory(
-                dest.path + entity.path.replaceAll(preTemplate + template, ''))
+                dest.path + entity.path.replaceAll(source, ''))
             .createSync(recursive: true);
       } else {
-        File(dest.path + entity.path.replaceAll(preTemplate + template, ''))
+        File(dest.path + entity.path.replaceAll(source, ''))
           ..createSync(recursive: true)
           ..writeAsStringSync(File(entity.path).readAsStringSync());
       }
