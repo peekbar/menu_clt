@@ -31,7 +31,7 @@ class Generator {
   }
 
   // destination contains a copy of the template
-  void generateFrom(String destination, String jsonData) async {
+  Future<bool> generateFrom(String destination, String jsonData) async {
     try {
       var context = Context.create();
       Map data = jsonDecode(jsonData);
@@ -40,8 +40,10 @@ class Generator {
       context.variables = data as Map<String, dynamic>;
       await generateIndex(destination+'/index.html', context);
       await generateManifest(destination+'/manifest.webmanifest', context);
+      return true;
     } catch (e) {
       print(e);
+      return false;
     }
   }
 
